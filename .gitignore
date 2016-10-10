@@ -1,0 +1,17 @@
+# binary file
+tmlib/*.pyc
+tmlib/datasets/*.pyc
+tmlib/lda/*.pyc
+tmlib/preprocessing/*.pyc
+# others
+*.pyc
+*.so
+*.pyd
+*~
+.#*
+*.lprof
+*.swp
+*.swo
+.DS_Store
+build
+.idea
