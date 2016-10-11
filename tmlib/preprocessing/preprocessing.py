@@ -10,12 +10,13 @@ tokenizer = RegexpTokenizer(r'\w+')
 p_stemmer = PorterStemmer()
 
 class PreProcessing:
-    def __init__(self, stemmed=False, remove_rare_word=True):
+    def __init__(self, stemmed=False, remove_rare_word=3, remove_common_word=None):
         self.list_doc = list()
         self.vocab = list()
         self.list_doc_freq = list()
         self.stemmed = stemmed
         self.remove_rare_word = remove_rare_word
+	self.remove_common_word = remove_common_word
         self.id_doc = 0
         self.df = list()
 
@@ -39,7 +40,7 @@ class PreProcessing:
         self.id_doc += 1
         return list_word
 
-    def filter(self):
+    def filter(self, rare_word, common_word):
         if self.vocab:
             V = len(self.vocab)
             remove_list = []
@@ -48,7 +49,7 @@ class PreProcessing:
                 #print(V)
                 freq = len(self.df[i])
                 #print(freq)
-                if freq <= 5 or freq > int(0.5*self.id_doc):
+                if freq <= rare_word or freq > common_word:
                     #remove_list.append(i)
                     docs = self.df[i]
                     word = self.vocab[i]
@@ -92,8 +93,9 @@ class PreProcessing:
                     self.list_doc.append(list_word)
                     num += 1
                 line = fread.readline()
-        if self.remove_rare_word:
-            self.filter()
+	if self.remove_common_word is None:
+	    self.remove_common_word = int(self.id_doc*0.5)
+        self.filter(self.remove_rare_word, self.remove_common_word)
 
         numDocs = len(self.list_doc)
         for d in range(0,numDocs):
@@ -143,8 +145,16 @@ class PreProcessing:
             fout.close()
 
 if __name__ == '__main__':
-    p = PreProcessing()
-    p.process("D:\\UCR_TS_Archive_2015\\ap/ap.txt")
-    p.extract_vocab()
-    p.format_freq()
-    p.format_seq()
+    if len(sys.argv) != 2:
+	print('Usage: python preprocessing.py [path file]')
+	exit()
+    pathfile = sys.argv[1]
+    if isfile(pathfile):
+        p = PreProcessing()
+        p.process(pathfile)
+        p.extract_vocab()
+        p.format_freq()
+        p.format_seq()
+    else:
+	print('File not found!')
+	exit()
