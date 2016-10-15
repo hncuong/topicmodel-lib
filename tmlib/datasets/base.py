@@ -149,7 +149,7 @@ class Dataset:
             for i in range(0, size_batch):
                 doc = fp.readline()
                 #check end file
-                if len(doc) < 1:
+                if len(doc) < 5:
                     break
                 list_word = doc.strip().split()
                 N = int(list_word[0])
@@ -183,7 +183,7 @@ class Dataset:
             doc_freqs = []
             for i in range(0,size_batch):
                 doc = fp.readline()
-                if len(doc) < 1:
+                if len(doc) < 5:
                     break
                 list_word = doc.strip().split()
                 N = int(list_word[0])
@@ -217,7 +217,7 @@ class Dataset:
 
 """------------------------------------------------------------------------------------------------------------------"""
 
-"""def read_setting(file_name):
+def read_setting(file_name):
     if isfile(file_name):
         f = open(file_name, 'r')
         settings = f.readlines()
@@ -241,7 +241,27 @@ class Dataset:
         return (ddict)
     else:
         print("Can't find file!")
-        sys.exit()"""
+        sys.exit()
+
+def read_beta(filename):
+    if isfile(filename):
+        f = open(filename)
+        lines = f.readlines()
+        words = lines[0].strip().split()
+        K = len(lines)
+        W = len(words)
+        beta = np.zeros((K,W))
+        for i in xrange(K):
+            words = lines[0].strip().split()
+            if len(words) != W:
+                print('File %s is error' %filename)
+                exit()
+            for j in xrange(W):
+                beta[i][j] = float(words[j])
+        return beta
+    else:
+        print('Unknown file %s' %filename)
+        exit()
 
 """
     Compute document sparsity.
