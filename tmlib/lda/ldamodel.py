@@ -1,17 +1,6 @@
 import sys, os
 import math
 import numpy as np
-from scipy.special import psi
-
-n.random.seed(100000001)
-
-def dirichlet_expectation(alpha):
-    """
-    For a vector theta ~ Dir(alpha), computes E[log(theta)] given alpha.
-    """
-    if (len(alpha.shape) == 1):
-        return(psi(alpha) - psi(n.sum(alpha)))
-    return(psi(alpha) - psi(n.sum(alpha, 1))[:, n.newaxis])
 
 class LdaModel(object):
     """docstring for ClassName"""
@@ -20,21 +9,17 @@ class LdaModel(object):
 	self.num_topics = num_topics
 	self.num_terms = num_terms
 	self.random_type = random_type
-	self.normarlize = normarlize
 	if self.random_type ==0:
 	    self.model = np.random.rand(self.num_topics, self.num_terms) + 1e-10
 	else:
 	    self.model = 1*np.random.gamma(100., 1./100., (self.num_topics, self.num_terms))
-	    self._Elogbeta = dirichlet_expectation(self.beta)
-            self._expElogbeta = n.exp(self._Elogbeta)
-	    
 
     """ normarlize if nessesary (model parameter which is loaded or init is lambda"""
     def normarlize(self):
 	beta_norm = self.model.sum(axis = 1)
-	beta = self.model / beta_norm[:, np.newaxis]
+	self.model = self.model / beta_norm[:, np.newaxis]
 	#self.logbeta = np.log(self.beta)
-	return beta
+	return self.model
 	    
     """
 	display top words of topics:
@@ -53,9 +38,9 @@ class LdaModel(object):
     	vocab = map(lambda x: x.strip(), vocab)
 	if show_topics is not None:
 	    index_list = np.random.random_randint(self.num_topics, size=show_topics)
-	    topic_list = self.beta[index_list,:]
+	    topic_list = self.model[index_list,:]
 	else:
-	    topic_list = self.beta
+	    topic_list = self.model
 	if result_file is not None:   
     	    # open file to write    
     	    fp = open(result_file, 'w')
@@ -82,32 +67,55 @@ class LdaModel(object):
 		print('\n')
 
     """ load model (beta or lambda) from a file which is learnt to learn continue"""
-    def load(self, beta_file)
+    def load(self, beta_file):
         if isfile(beta_file):
-            f = open(beta_file)
-            lines = f.readlines()
-            words = lines[0].strip().split()
-            K = len(lines)
-            W = len(words)
-            beta = np.zeros((K,W))
-            for i in xrange(K):
-                words = lines[0].strip().split()
-                if len(words) != W:
-                    print('File %s is error' %beta_file)
-                    exit()
-                for j in xrange(W):
-                    beta[i][j] = float(words[j])
+	    tail = beta_file.split('.')[-1]
+	    if tail == 'txt':
+		f = open(beta_file)
+		lines = f.readlines()
+		words = lines[0].strip().split()
+		K = len(lines)
+		W = len(words)
+		beta = np.zeros((K,W))
+		for i in xrange(K):
+		    words = lines[0].strip().split()
+		    if len(words) != W:
+			print('File %s is error' %beta_file)
+			exit()
+		    for j in xrange(W):
+			beta[i][j] = float(words[j])
+	    elif tail == 'npy':
+		beta = np.load(beta_file)
+	    else:
+		print('File is not true format. Please convert into .txt (with text file) or .npy (with binary file)!')
+		exit()
 	    self.model = beta
             return beta
         else:
             print('Unknown file %s' %beta_file)
             exit()
 
-    " save model into a file"""
-    def save(self, file_beta):
-    	f = open(file_beta, 'w')
-    	for k in range(self.num_topics):
-            for i in range(self.num_terms - 1):
-                f.write('%.10f ' % (self.model[k][i]))
-            f.write('%.10f\n' % (self.model[k][num_terms - 1]))
-        f.close()
+    """ 
+		save model into a file. 
+		<optional>: type file default is binary, file is saved with tail is .npy
+					type file is text, file is saved with format .txt
+	"""
+    def save(self, file_beta, type='binary'):
+		type_file = type.lower()
+		if type_file == 'text':
+			tail = file_beta.split('.')[-1]
+			filename = file_beta[:-(len(tail))] + 'txt'
+			f = open(filename, 'w')
+			for k in range(self.num_topics):
+				for i in range(self.num_terms - 1):
+					f.write('%.10f ' % (self.model[k][i]))
+				f.write('%.10f\n' % (self.model[k][num_terms - 1]))
+			f.close()
+		else:
+			tail = file_beta.split('.')[-1]
+			filename = file_beta[:-(len(tail))] + 'npy'
+			np.save(filename, self.model)
+			
+if __name__ == '__main__':
+	lda = LdaModel(10, 10)
+	lda.save('abc.txt')
