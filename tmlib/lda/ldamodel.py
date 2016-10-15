@@ -91,7 +91,7 @@ class LdaModel(object):
             W = len(words)
             beta = np.zeros((K,W))
             for i in xrange(K):
-                words = lines[i].strip().split()
+                words = lines[0].strip().split()
                 if len(words) != W:
                     print('File %s is error' %beta_file)
                     exit()
