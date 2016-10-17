@@ -148,9 +148,3 @@ class OnlineVB:
         self._Elogbeta = dirichlet_expectation(self._lambda)
         self._expElogbeta = n.exp(self._Elogbeta)
         self._updatect += 1
-
-    def learning_model(self, bunch, batch_size, passes=1, sav):
-        for iter in range(pass):
-            (wordids, wordcts) = bunch.load_minibatch_term_freq(batch_size)
-            (time_e, time_m, theta) = static_online(wordids, wordcts)
-
