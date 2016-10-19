@@ -27,8 +27,6 @@ class LdaModel(object):
     def normalize(self):
         beta_norm = self.model.sum(axis=1)
         self.model = self.model / beta_norm[:, np.newaxis]
-        # self.logbeta = np.log(self.beta)
-        return self.model
 
     """
     display top words of topics:
