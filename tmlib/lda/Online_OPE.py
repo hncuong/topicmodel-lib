@@ -2,15 +2,17 @@
 
 import time
 import numpy as np
+from ldamodel import LdaModel
+from ldalearning import LdaLearning
 
 
-class OnlineOPE:
+class OnlineOPE(LdaLearning):
     """
     Implements Online-OPE for LDA as described in "Inference in topic models II: provably guaranteed algorithms". 
     """
 
     def __init__(self, num_docs, num_terms, num_topics=100, alpha=0.01, eta=0.01, tau0=1.0, kappa=0.9,
-                 iter_infer=50, beta=None):
+                 iter_infer=50, lda_model=None):
         """
         Arguments:
             num_docs: Number of documents in the corpus.
@@ -23,6 +25,7 @@ class OnlineOPE:
                    (0.5, 1.0] to guarantee asymptotic convergence.
             iter_infer: Number of iterations of FW algorithm.
         """
+        super(OnlineOPE, self).__init__(num_terms, num_topics, lda_model)
         self.num_docs = num_docs
         self.num_topics = num_topics
         self.num_terms = num_terms
@@ -36,11 +39,9 @@ class OnlineOPE:
         # Initialize lambda (variational parameters of topics beta)
         # beta_norm stores values, each of which is sum of elements in each row
         # of _lambda.
-        if beta != None:
-            self._lambda = beta
-        else:
-            self._lambda = np.random.rand(self.num_topics, self.num_terms) + 1e-10
-        self.beta_norm = self._lambda.sum(axis=1)
+        if self.lda_model is None:
+            self.lda_model = LdaModel(num_terms, num_topics)
+        self.beta_norm = self.lda_model.model.sum(axis=1)
 
     def static_online(self, wordids, wordcts):
         """
@@ -94,7 +95,7 @@ class OnlineOPE:
         Returns inferred theta.
         """
         # locate cache memory
-        beta = self._lambda[:, ids]
+        beta = self.lda_model.model[:, ids]
         beta /= self.beta_norm[:, np.newaxis]
         # Initialize theta randomly
         theta = np.random.rand(self.num_topics) + 1.
@@ -126,13 +127,13 @@ class OnlineOPE:
         sstats = np.zeros((self.num_topics, self.num_terms), dtype=float)
         for d in range(batch_size):
             theta_d = theta[d, :]
-            phi_d = self._lambda[:, wordids[d]] * theta_d[:, np.newaxis]
+            phi_d = self.lda_model.model[:, wordids[d]] * theta_d[:, np.newaxis]
             phi_d_norm = phi_d.sum(axis=0)
             sstats[:, wordids[d]] += (wordcts[d] / phi_d_norm) * phi_d
         # Update
         rhot = pow(self.tau0 + self.updatect, -self.kappa)
         self.rhot = rhot
-        self._lambda = self._lambda * (1 - rhot) + \
+        self.lda_model.model = self.lda_model.model * (1 - rhot) + \
                        rhot * (self.eta + self.num_docs * sstats / batch_size)
-        self.beta_norm = self._lambda.sum(axis=1)
+        self.beta_norm = self.lda_model.model.sum(axis=1)
         self.updatect += 1

@@ -36,7 +36,6 @@ class OnlineVB(LdaLearning):
         self._iter_infer = iter_infer
 
         # Initialize the variational distribution q(beta|lambda)
-        self.lda_model.model = 1 * n.random.gamma(100., 1. / 100., (self.num_topics, self.num_terms))
         if self.lda_model is None:
             self.lda_model = LdaModel(num_terms, num_topics, 1)
         self._Elogbeta = dirichlet_expectation(self.lda_model.model)

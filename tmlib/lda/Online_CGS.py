@@ -4,6 +4,8 @@ import numpy as np
 from scipy.special import psi
 import time
 from .utils import util_funcs
+from ldamodel import LdaModel
+from ldalearning import LdaLearning
 
 
 def dirichlet_expectation(alpha):
@@ -15,9 +17,24 @@ def dirichlet_expectation(alpha):
     return (psi(alpha) - psi(np.sum(alpha, 1))[:, np.newaxis])
 
 
-class OnlineCGS:
+class OnlineCGS(LdaLearning):
     def __init__(self, num_docs, num_terms, num_topics=100, alpha=0.01, eta=0.01, tau0=1.0, kappa=0.9,
-                 burn_in=25, samples=25, beta=None):
+                 burn_in=25, samples=25, lda_model=None):
+        """
+
+        Args:
+            num_docs:
+            num_terms:
+            num_topics:
+            alpha:
+            eta:
+            tau0:
+            kappa:
+            burn_in:
+            samples:
+            lda_model:
+        """
+        super(OnlineCGS, self).__init__(num_terms, num_topics, lda_model)
         self.num_docs = num_docs
         self.num_terms = num_terms
         self.num_topics = num_topics
@@ -32,11 +49,9 @@ class OnlineCGS:
         self.update_unit = 1. / samples
 
         # initialize the variational distribution q(beta|lambda)
-        if beta != None:
-            self._lambda = beta
-        else:
-            self._lambda = 1 * np.random.gamma(100., 1. / 100., (self.num_topics, self.num_terms))
-        self._Elogbeta = dirichlet_expectation(self._lambda)
+        if self.lda_model is None:
+            self.lda_model = LdaModel(num_terms, num_topics, 1)
+        self._Elogbeta = dirichlet_expectation(self.lda_model.model)
         self._expElogbeta = np.exp(self._Elogbeta)
 
     def static_online(self, wordtks, lengths):
@@ -65,8 +80,8 @@ class OnlineCGS:
     def update_lambda(self, batch_size, sstats):
         rhot = pow(self._tau0 + self._update_t, -self._kappa)
         self._rhot = rhot
-        self._lambda = self._lambda * (1 - rhot) + \
+        self.lda_model.model = self.lda_model.model * (1 - rhot) + \
                        rhot * (self._eta + (self.num_docs / batch_size) * sstats)
-        self._Elogbeta = dirichlet_expectation(self._lambda)
+        self._Elogbeta = dirichlet_expectation(self.lda_model.model)
         self._expElogbeta = np.exp(self._Elogbeta)
         self._update_t += 1

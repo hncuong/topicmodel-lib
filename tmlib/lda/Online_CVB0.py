@@ -7,12 +7,32 @@ Created on Thu Dec  4 10:47:53 2014
 
 import time
 import numpy as np
+from ldamodel import LdaModel
+from ldalearning import LdaLearning
 
 
-class OnlineCVB0:
+class OnlineCVB0(LdaLearning):
     def __init__(self, num_tokens, num_terms, num_topics=100, alpha=0.01, eta=0.01, tau_phi=1.0,
                  kappa_phi=0.9, s_phi=1.0, tau_theta=10.0,
-                 kappa_theta=0.9, s_theta=1.0, burn_in=25):
+                 kappa_theta=0.9, s_theta=1.0, burn_in=25, lda_model=None):
+        """
+
+        Args:
+            num_tokens:
+            num_terms:
+            num_topics:
+            alpha:
+            eta:
+            tau_phi:
+            kappa_phi:
+            s_phi:
+            tau_theta:
+            kappa_theta:
+            s_theta:
+            burn_in:
+            lda_model:
+        """
+        super(OnlineCVB0, self).__init__(num_terms, num_topics, lda_model)
         self.num_tokens = num_tokens
         self.num_terms = num_terms
         self.num_topics = num_topics
@@ -28,8 +48,11 @@ class OnlineCVB0:
         self.burn_in = burn_in
         self.updatect = 1
 
-        self.N_phi = np.random.rand(num_topics, num_terms)
-        self.N_Z = self.N_phi.sum(axis=1)
+        # self.N_phi = np.random.rand(num_topics, num_terms)
+        # replace N_phi with lda model
+        if self.lda_model is None:
+            self.lda_model = LdaModel(num_terms, num_topics)
+        self.N_Z = self.lda_model.model.sum(axis=1)
 
     def static_online(self, wordtks, lengths):
         # E step
@@ -57,7 +80,7 @@ class OnlineCVB0:
                 # for each token i
                 for i in range(lengths[j]):
                     # update gamma_ij
-                    gamma_ij = self.N_phi[:, wordtks[j][i]] + self.eta
+                    gamma_ij = self.lda_model.model[:, wordtks[j][i]] + self.eta
                     numerator = N_theta[j] + self.alpha
                     gamma_ij = gamma_ij * numerator / denominator
                     gamma_ij = gamma_ij / sum(gamma_ij)
@@ -67,7 +90,7 @@ class OnlineCVB0:
             # for each token i
             for i in range(lengths[j]):
                 # update gamma_ij
-                gamma_ij = self.N_phi[:, wordtks[j][i]] + self.eta
+                gamma_ij = self.lda_model.model[:, wordtks[j][i]] + self.eta
                 numerator = N_theta[j] + self.alpha
                 gamma_ij = gamma_ij * numerator / denominator
                 gamma_ij = gamma_ij / sum(gamma_ij)
@@ -84,8 +107,8 @@ class OnlineCVB0:
     def m_step(self, N_phi, N_Z):
         rhot = self.s_phi * pow(self.tau_phi + self.updatect, -self.kappa_phi)
         self.rhot_phi = rhot
-        self.N_phi *= (1 - rhot)
-        self.N_phi += rhot * N_phi
+        self.lda_model.model *= (1 - rhot)
+        self.lda_model.model += rhot * N_phi
         self.N_Z *= (1 - rhot)
         self.N_Z += rhot * N_Z
         self.updatect += 1

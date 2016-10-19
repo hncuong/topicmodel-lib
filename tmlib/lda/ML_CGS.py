@@ -7,7 +7,9 @@ from __future__ import division
 import numpy as np
 from scipy.special import psi
 import time
-import util_funcs
+from .utils import util_funcs
+from ldamodel import LdaModel
+from ldalearning import LdaLearning
 
 
 def dirichlet_expectation(alpha):
@@ -19,9 +21,22 @@ def dirichlet_expectation(alpha):
     return (psi(alpha) - psi(np.sum(alpha, 1))[:, np.newaxis])
 
 
-class MLCGS:
+class MLCGS(LdaLearning):
     def __init__(self, num_terms, num_topics=100, alpha=0.01, tau0=1.0, kappa=0.9, burn_in=25, samples=25,
-                 beta=None):
+                 lda_model=None):
+        """
+
+        Args:
+            num_terms:
+            num_topics:
+            alpha:
+            tau0:
+            kappa:
+            burn_in:
+            samples:
+            lda_model:
+        """
+        super(MLCGS, self).__init__(num_terms, num_topics, lda_model)
         self.num_terms = num_terms
         self.num_topics = num_topics
         self._alpha = alpha
@@ -34,13 +49,9 @@ class MLCGS:
         self._update_t = 1
 
         # initialize the variational distribution q(beta|lambda)
-        if beta != None:
-            self._lambda = beta
-        else:
-            self._lambda = 1 * np.random.gamma(100., 1. / 100., (self.num_topics, self.num_terms))
-        # normalize lambda
-        _lambda_norm = self._lambda.sum(axis=1)
-        self._lambda /= _lambda_norm[:, np.newaxis]
+        if self.lda_model is None:
+            self.lda_model = LdaModel(num_terms, num_topics)
+        self.lda_model.normalize()
 
     def static_online(self, wordtks, lengths):
         batch_size = len(lengths)
@@ -60,7 +71,7 @@ class MLCGS:
         Ndk = np.zeros((batch_size, self.num_topics), dtype=np.uint32)
         Nkw_mean = np.zeros((self.num_topics, self.num_terms), dtype=np.float64)
         Ndk_mean = np.zeros((batch_size, self.num_topics), dtype=np.float64)
-        util_funcs.sampling(Ndk, Nkw_mean, Ndk_mean, self._lambda, uni_rvs,
+        util_funcs.sampling(Ndk, Nkw_mean, Ndk_mean, self.lda_model.model, uni_rvs,
                             z, wordtks, lengths, self._alpha, self.update_unit,
                             self.samples, self.burn_in)
         # normalize Ndk_mean
@@ -80,6 +91,6 @@ class MLCGS:
         # update _lambda base on ML
         rhot = pow(self._tau0 + self._update_t, -self._kappa)
         self._rhot = rhot
-        self._lambda *= (1 - rhot)
-        self._lambda += _lambda * rhot
+        self.lda_model.model *= (1 - rhot)
+        self.lda_model.model += _lambda * rhot
         self._update_t += 1

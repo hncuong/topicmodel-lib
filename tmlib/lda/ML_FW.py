@@ -2,14 +2,16 @@
 
 import time
 import numpy as np
+from ldamodel import LdaModel
+from ldalearning import LdaLearning
 
 
-class MLFW:
+class MLFW(LdaLearning):
     """
     Implements ML-FW for LDA as described in "Inference in topic models I: sparsity and trade-off". 
     """
 
-    def __init__(self, num_terms, num_topics=100, tau0=1.0, kappa=0.9, iter_infer=50, beta=None):
+    def __init__(self, num_terms, num_topics=100, tau0=1.0, kappa=0.9, iter_infer=50, lda_model=None):
         """
         Arguments:
             num_terms: Number of unique terms in the corpus (length of the vocabulary).
@@ -22,6 +24,7 @@ class MLFW:
         Note that if you pass the same set of all documents in the corpus every time and
         set kappa=0 this class can also be used to do batch FW.
         """
+        super(MLFW, self).__init__(num_terms, num_topics, lda_model)
         self.num_terms = num_terms
         self.num_topics = num_topics
         self.tau0 = tau0
@@ -30,13 +33,10 @@ class MLFW:
         self.INF_MAX_ITER = iter_infer
 
         # Initialize beta (topics)
-        if beta != None:
-            self.beta = beta
-        else:
-            self.beta = np.random.rand(self.num_topics, self.num_terms) + 1e-10
-            beta_norm = self.beta.sum(axis=1)
-            self.beta /= beta_norm[:, np.newaxis]
-        self.logbeta = np.log(self.beta)
+        if self.lda_model is None:
+            self.lda_model = LdaModel(num_terms, num_topics)
+        self.lda_model.normalize()
+        self.logbeta = np.log(self.lda_model.model)
 
         # Generate values used for initilization of topic mixture of each document 
         self.theta_init = [1e-10] * num_topics
@@ -100,7 +100,7 @@ class MLFW:
         Returns inferred theta and list of indexes of non-zero elements of the theta.
         """
         # Locate cache memory
-        beta = self.beta[:, ids]
+        beta = self.lda_model.model[:, ids]
         logbeta = self.logbeta[:, ids]
         nonzero = set()
         # Initialize theta to be a vertex of unit simplex 
@@ -156,9 +156,9 @@ class MLFW:
         # Update beta    
         rhot = pow(self.tau0 + self.updatect, -self.kappa)
         self.rhot = rhot
-        self.beta *= (1 - rhot)
-        self.beta[:, ids] += beta[:, ids] * rhot
-        self.logbeta = np.log(self.beta)
+        self.lda_model.model *= (1 - rhot)
+        self.lda_model.model[:, ids] += beta[:, ids] * rhot
+        self.logbeta = np.log(self.lda_model.model)
         self.updatect += 1
 
     def m_step(self, batch_size, wordids, wordcts, theta, index):
@@ -175,6 +175,6 @@ class MLFW:
         # Update _lambda base on ML 
         rhot = pow(self.tau0 + self.updatect, -self.kappa)
         self.rhot = rhot
-        self.beta *= (1 - rhot)
-        self.beta += beta * rhot
+        self.lda_model.model *= (1 - rhot)
+        self.lda_model.model += beta * rhot
         self.updatect += 1

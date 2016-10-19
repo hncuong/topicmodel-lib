@@ -2,15 +2,17 @@
 
 import time
 import numpy as np
+from ldamodel import LdaModel
+from ldalearning import LdaLearning
 
 
-class OnlineFW:
+class OnlineFW(LdaLearning):
     """
     Implements Online-FW for LDA as described in "Inference in topic models I: sparsity and trade-off". 
     """
 
     def __init__(self, num_docs, num_terms, num_topics=100, eta=0.01, tau0=1.0, kappa=0.9,
-                 iter_infer=50, beta=None):
+                 iter_infer=50, lda_model=None):
         """
         Arguments:
             num_docs: Number of documents in the corpus.
@@ -22,9 +24,8 @@ class OnlineFW:
                    (0.5, 1.0] to guarantee asymptotic convergence.
             iter_infer: Number of iterations of FW algorithm.
         """
+        super(OnlineFW, self).__init__(num_terms, num_topics, lda_model)
         self.num_docs = num_docs
-        self.num_topics = num_topics
-        self.num_terms = num_terms
         self.eta = eta
         self.tau0 = tau0
         self.kappa = kappa
@@ -34,11 +35,9 @@ class OnlineFW:
         # Initialize lambda (variational parameters of topics beta)
         # beta_norm stores values, each of which is sum of elements in each row
         # of _lambda.
-        if beta != None:
-            self._lambda = beta
-        else:
-            self._lambda = np.random.rand(self.num_topics, self.num_terms) + 1e-10
-        self.beta_norm = self._lambda.sum(axis=1)
+        if self.lda_model is None:
+            self.lda_model = LdaModel(num_terms, num_topics)
+        self.beta_norm = self.lda_model.model.sum(axis=1)
 
         # Generate values used for initilaization of topic mixture of each document
         self.theta_init = [1e-10] * num_topics
@@ -102,7 +101,7 @@ class OnlineFW:
         Returns inferred theta and list of indexes of non-zero elements of the theta.
         """
         # Locate cache memory
-        beta = self._lambda[:, ids]
+        beta = self.lda_model.model[:, ids]
         beta /= self.beta_norm[:, np.newaxis]
         logbeta = np.log(beta)
         nonzero = set()
@@ -138,7 +137,7 @@ class OnlineFW:
         # Compute sufficient sstatistics
         sstats = np.zeros((self.num_topics, self.num_terms))
         for d in range(batch_size):
-            phi_d = self._lambda[index[d], :]
+            phi_d = self.lda_model.model[index[d], :]
             phi_d = phi_d[:, wordids[d]]
             theta_d = theta[d, index[d]]
             phi_d *= theta_d[:, np.newaxis]
@@ -149,7 +148,7 @@ class OnlineFW:
         # Update
         rhot = pow(self.tau0 + self.updatect, -self.kappa)
         self.rhot = rhot
-        self._lambda = self._lambda * (1 - rhot) + \
+        self.lda_model.model = self.lda_model.model * (1 - rhot) + \
                        rhot * (self.eta + self.num_docs * sstats / batch_size)
-        self.beta_norm = self._lambda.sum(axis=1)
+        self.beta_norm = self.lda_model.model.sum(axis=1)
         self.updatect += 1

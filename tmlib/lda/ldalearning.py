@@ -111,3 +111,4 @@ class LdaLearning(object):
             self.statistics.save_time(time_file)
             self.statistics.save_sparsity(sparsity_file)
         logger.info('Finish training!!!')
+        return self.lda_model

@@ -1,7 +1,8 @@
 import time
 import numpy as n
 from scipy.special import gammaln, psi
-
+from ldamodel import LdaModel
+from ldalearning import LdaLearning
 n.random.seed(100000001)
 meanchangethresh = 1e-5
 changethreshold = 1e-5
@@ -16,26 +17,23 @@ def dirichlet_expectation(alpha):
     return (psi(alpha) - psi(n.sum(alpha, 1))[:, n.newaxis])
 
 
-class StreamingVB:
+class StreamingVB(LdaLearning):
     """
     Implements online VB for LDA as described in (Hoffman et al. 2010).
     """
 
     def __init__(self, num_terms, num_topics=100, alpha=0.01, eta=0.01, conv_infer=0.0001, iter_infer=50,
-                 beta=None):
-        self.num_topics = num_topics
-        self.num_terms = num_terms
+                 lda_model=None):
+        super(StreamingVB, self).__init__(num_terms, num_topics, lda_model)
         self._alpha = alpha
         self._eta = eta
         self._conv_infer = conv_infer
         self._iter_infer = iter_infer
 
         # Initialize the variational distribution q(beta|lambda)
-        if beta != None:
-            self._lambda = beta
-        else:
-            self._lambda = 1 * n.random.gamma(100., 1. / 100., (self.num_topics, self.num_terms))
-        self._Elogbeta = dirichlet_expectation(self._lambda)
+        if self.lda_model is None:
+            self.lda_model = LdaModel(num_terms, num_topics, 1)
+        self._Elogbeta = dirichlet_expectation(self.lda_model.model)
         self._expElogbeta = n.exp(self._Elogbeta)
 
     def static_online(self, wordids, wordcts):
@@ -55,7 +53,7 @@ class StreamingVB:
         gamma = 1 * n.random.gamma(100., 1. / 100., (batch_size, self.num_topics))
         Elogtheta = dirichlet_expectation(gamma)
         expElogtheta = n.exp(Elogtheta)
-        sstats = n.zeros(self._lambda.shape)
+        sstats = n.zeros(self.lda_model.model.shape)
         # Now, for each document d update that document's gamma and phi
         for d in range(0, batch_size):
             # These are mostly just shorthand (but might help cache locality)
@@ -112,14 +110,14 @@ class StreamingVB:
         score += gammaln(self._alpha * self.num_topics) - gammaln(sum(gamma))
         # E[log p(beta | eta) - log q (beta | lambda)]
         temp = 0
-        temp += n.sum((self._eta - self._lambda) * self._Elogbeta)
-        temp += n.sum(gammaln(self._lambda) - gammaln(self._eta))
+        temp += n.sum((self._eta - self.lda_model.model) * self._Elogbeta)
+        temp += n.sum(gammaln(self.lda_model.model) - gammaln(self._eta))
         temp += n.sum(gammaln(self._eta * self.num_terms) -
-                      gammaln(n.sum(self._lambda, 1)))
+                      gammaln(n.sum(self.lda_model.model, 1)))
         score += temp
         return (score)
 
     def update_lambda(self, batch_size, sstats):
-        self._lambda = self._lambda + sstats
-        self._Elogbeta = dirichlet_expectation(self._lambda)
+        self.lda_model.model = self.lda_model.model + sstats
+        self._Elogbeta = dirichlet_expectation(self.lda_model.model)
         self._expElogbeta = n.exp(self._Elogbeta)
