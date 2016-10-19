@@ -61,8 +61,14 @@ class LearningStatistics(object):
 class LdaLearning(object):
     """docstring for LdaLearning"""
 
-    def __init__(self):
+    def __init__(self, num_terms, num_topics, lda_model=None):
         self.statistics = LearningStatistics()
+        self.num_terms = num_terms
+        self.num_topics = num_topics
+        if lda_model is not None:
+            assert lda_model.model.shape != (num_topics, num_terms), "Shape error: model must be shape of " \
+                                                                     "(num_topics * num_terms)"
+        self.lda_model = lda_model
 
     def static_online(self, word_ids_tks, cts_lens):
         raise NotImplementedError("Should have implemented this")
@@ -71,8 +77,7 @@ class LdaLearning(object):
                     compute_sparsity_every=0, save_statistic=False, save_top_words_every=0, num_top_words=20,
                     vocab_file='', model_folder='model'):
         mini_batch_no = 0
-        logger.info("Start learning Lda model, %s topics, %i passes over",
-                    self.num_topics, passes)
+        logger.info("Start learning Lda model, %i passes over", passes)
         for pass_no in range(passes):
             logger.info('\tPass no: %s', pass_no)
             train_file = formatted_data.data_path
@@ -94,11 +99,11 @@ class LdaLearning(object):
                 # save model : lambda, beta, N_phi
                 if save_model_every > 0 and (mini_batch_no % save_model_every) == 0:
                     model_file = model_folder + '/model' + str(mini_batch_no)
-                    self.ldamodel.save(model_file)
+                    self.lda_model.save(model_file)
                 # save top words
                 if save_top_words_every > 0 and (mini_batch_no % save_top_words_every) == 0:
                     top_words_file = model_folder + '/top_words_' + str(mini_batch_no) + '.txt'
-                    self.ldamodel.print_top_words(num_top_words, vocab_file, top_words_file)
+                    self.lda_model.print_top_words(num_top_words, vocab_file, top_words_file)
             datafp.close()
         if save_statistic:
             time_file = model_folder + '/time' + str(mini_batch_no) + '.csv'
