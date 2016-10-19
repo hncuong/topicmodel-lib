@@ -10,14 +10,14 @@ import numpy as np
 
 
 class OnlineCVB0:
-    def __init__(self, C, W, K, alpha, eta, tau_phi, kappa_phi, s_phi, tau_theta,
+    def __init__(self, num_tokens, num_terms, num_topics, alpha, eta, tau_phi, kappa_phi, s_phi, tau_theta,
                  kappa_theta, s_theta, burn_in):
-        self.C = C
-        self.W = W
-        self.K = K
+        self.num_tokens = num_tokens
+        self.num_terms = num_terms
+        self.num_topics = num_topics
         self.alpha = alpha
         self.eta = eta
-        self.eta_sum = K * eta
+        self.eta_sum = num_topics * eta
         self.tau_phi = tau_phi
         self.kappa_phi = kappa_phi
         self.s_phi = s_phi
@@ -27,7 +27,7 @@ class OnlineCVB0:
         self.burn_in = burn_in
         self.updatect = 1
 
-        self.N_phi = np.random.rand(K, W)
+        self.N_phi = np.random.rand(num_topics, num_terms)
         self.N_Z = self.N_phi.sum(axis=1)
 
     def static_online(self, wordtks, lengths):
@@ -43,12 +43,12 @@ class OnlineCVB0:
 
     def e_step(self, wordtks, lengths):
         batch_size = len(lengths)
-        N_phi = np.zeros((self.K, self.W), dtype=float)
-        N_Z = np.zeros(self.K)
-        N_theta = np.random.rand(batch_size, self.K)
+        N_phi = np.zeros((self.num_topics, self.num_terms), dtype=float)
+        N_Z = np.zeros(self.num_topics)
+        N_theta = np.random.rand(batch_size, self.num_topics)
         # inference
         denominator = self.N_Z + self.eta_sum
-        multiplier = self.C / sum(lengths)
+        multiplier = self.num_tokens / sum(lengths)
         # for each document j im M
         for j in range(batch_size):
             # for zero or more "burn in" passes

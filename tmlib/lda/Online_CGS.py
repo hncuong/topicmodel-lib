@@ -3,7 +3,7 @@ from __future__ import division
 import numpy as np
 from scipy.special import psi
 import time
-import util_funcs
+from .utils import util_funcs
 
 
 def dirichlet_expectation(alpha):
@@ -16,25 +16,25 @@ def dirichlet_expectation(alpha):
 
 
 class OnlineCGS:
-    def __init__(self, D, W, K, alpha, eta, tau0, kappa, B, S, beta=None):
-        self._D = D
-        self._W = W
-        self._K = K
+    def __init__(self, num_docs, num_terms, num_topics, alpha, eta, tau0, kappa, burn_in, samples, beta=None):
+        self.num_docs = num_docs
+        self.num_terms = num_terms
+        self.num_topics = num_topics
         self._alpha = alpha
         self._eta = eta
         self._tau0 = tau0
         self._kappa = kappa
         self._update_t = 1
-        self._B = B  # burn-in
-        self._S = S  # samples
-        self._sweeps = B + S
-        self.update_unit = 1. / S
+        self.burn_in = burn_in  # burn-in
+        self.samples = samples  # samples
+        self._sweeps = burn_in + samples
+        self.update_unit = 1. / samples
 
         # initialize the variational distribution q(beta|lambda)
         if beta != None:
             self._lambda = beta
         else:
-            self._lambda = 1 * np.random.gamma(100., 1. / 100., (self._K, self._W))
+            self._lambda = 1 * np.random.gamma(100., 1. / 100., (self.num_topics, self.num_terms))
         self._Elogbeta = dirichlet_expectation(self._lambda)
         self._expElogbeta = np.exp(self._Elogbeta)
 
@@ -53,19 +53,19 @@ class OnlineCGS:
         batch_N = sum(lengths)
         uni_rvs = np.random.uniform(size=(batch_N) * (self._sweeps + 1))
         z = [{} for d in range(0, batch_size)]
-        Ndk = np.zeros((batch_size, self._K), dtype=np.uint32)
-        Nkw_mean = np.zeros((self._K, self._W), dtype=np.float64)
-        Ndk_mean = np.zeros((batch_size, self._K), dtype=np.float64)
+        Ndk = np.zeros((batch_size, self.num_topics), dtype=np.uint32)
+        Nkw_mean = np.zeros((self.num_topics, self.num_terms), dtype=np.float64)
+        Ndk_mean = np.zeros((batch_size, self.num_topics), dtype=np.float64)
         util_funcs.sampling(Ndk, Nkw_mean, Ndk_mean, self._expElogbeta, uni_rvs,
                             z, wordtks, lengths, self._alpha, self.update_unit,
-                            self._S, self._B)
+                            self.samples, self.burn_in)
         return (Nkw_mean, Ndk_mean, z)
 
     def update_lambda(self, batch_size, sstats):
         rhot = pow(self._tau0 + self._update_t, -self._kappa)
         self._rhot = rhot
         self._lambda = self._lambda * (1 - rhot) + \
-                       rhot * (self._eta + (self._D / batch_size) * sstats)
+                       rhot * (self._eta + (self.num_docs / batch_size) * sstats)
         self._Elogbeta = dirichlet_expectation(self._lambda)
         self._expElogbeta = np.exp(self._Elogbeta)
         self._update_t += 1
