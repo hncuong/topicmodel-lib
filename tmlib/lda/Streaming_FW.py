@@ -9,7 +9,7 @@ class StreamingFW:
     Implements Streaming-FW for LDA as described in "Inference in topic models I: sparsity and trade-off". 
     """
 
-    def __init__(self, num_terms, num_topics, eta, iter_infer, beta=None):
+    def __init__(self, num_terms, num_topics=100, eta=0.01, iter_infer=50, beta=None):
         """
         Arguments:
             num_docs: Number of documents in the corpus.

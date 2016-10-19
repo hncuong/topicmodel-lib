@@ -9,7 +9,7 @@ class MLFW:
     Implements ML-FW for LDA as described in "Inference in topic models I: sparsity and trade-off". 
     """
 
-    def __init__(self, num_terms, num_topics, tau0, kappa, iter_infer, beta=None):
+    def __init__(self, num_terms, num_topics=100, tau0=1.0, kappa=0.9, iter_infer=50, beta=None):
         """
         Arguments:
             num_terms: Number of unique terms in the corpus (length of the vocabulary).

@@ -9,7 +9,8 @@ class MLOPE:
     Implements ML-OPE for LDA as described in "Inference in topic models II: provably guaranteed algorithms". 
     """
 
-    def __init__(self, num_terms, num_topics, alpha, tau0, kappa, iter_infer, beta=None):
+    def __init__(self, num_terms, num_topics=100, alpha=0.01, tau0=1.0, kappa=0.9, iter_infer=50,
+                 beta=None):
         """
         Arguments:
             num_terms: Number of unique terms in the corpus (length of the vocabulary).

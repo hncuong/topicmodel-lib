@@ -21,7 +21,8 @@ class StreamingVB:
     Implements online VB for LDA as described in (Hoffman et al. 2010).
     """
 
-    def __init__(self, num_terms, num_topics, alpha, eta, conv_infer, iter_infer, beta=None):
+    def __init__(self, num_terms, num_topics=100, alpha=0.01, eta=0.01, conv_infer=0.0001, iter_infer=50,
+                 beta=None):
         self.num_topics = num_topics
         self.num_terms = num_terms
         self._alpha = alpha
