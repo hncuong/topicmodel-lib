@@ -9,6 +9,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 tokenizer = RegexpTokenizer(r'\w+')
 p_stemmer = PorterStemmer()
 
+
 class PreProcessing:
     def __init__(self, stemmed=False, remove_rare_word=3, remove_common_word=None):
         self.list_doc = list()
@@ -16,7 +17,7 @@ class PreProcessing:
         self.list_doc_freq = list()
         self.stemmed = stemmed
         self.remove_rare_word = remove_rare_word
-	self.remove_common_word = remove_common_word
+        self.remove_common_word = remove_common_word
         self.id_doc = 0
         self.df = list()
 
@@ -32,7 +33,7 @@ class PreProcessing:
                         index = self.vocab.index(word)
                         if self.id_doc not in self.df[index]:
                             self.df[index].append(self.id_doc)
-                        #list_word.append(word)
+                            # list_word.append(word)
                     else:
                         self.vocab.append(word)
                         self.df.append([self.id_doc])
@@ -46,11 +47,11 @@ class PreProcessing:
             remove_list = []
             i = 0
             while i < V:
-                #print(V)
+                # print(V)
                 freq = len(self.df[i])
-                #print(freq)
+                # print(freq)
                 if freq <= rare_word or freq > common_word:
-                    #remove_list.append(i)
+                    # remove_list.append(i)
                     docs = self.df[i]
                     word = self.vocab[i]
                     for j in docs:
@@ -69,8 +70,8 @@ class PreProcessing:
         name_file = name_file[-1].split("/")
         name = name_file[-1].split(".")
         self.filename = name[0]
-        #print(self.filename)
-        fin = open(dir_path+"/stop_word_list.txt")
+        # print(self.filename)
+        fin = open(dir_path + "/stop_word_list.txt")
         stop_list = list()
         line = fin.readline()
         while line:
@@ -78,7 +79,7 @@ class PreProcessing:
             stop_list.append(line)
             line = fin.readline()
         fin.close()
-        stop_list = stop_list + ['_',]
+        stop_list = stop_list + ['_', ]
         print("Waiting...")
         if isfile(path):
             fread = open(path)
@@ -88,20 +89,20 @@ class PreProcessing:
                 line = line.strip()
                 if line == "<TEXT>":
                     doc = fread.readline().strip()
-                    #print(num)
-                    list_word = self.pro_per_doc(doc,stop_list)
+                    # print(num)
+                    list_word = self.pro_per_doc(doc, stop_list)
                     self.list_doc.append(list_word)
                     num += 1
                 line = fread.readline()
-	if self.remove_common_word is None:
-	    self.remove_common_word = int(self.id_doc*0.5)
+        if self.remove_common_word is None:
+            self.remove_common_word = int(self.id_doc * 0.5)
         self.filter(self.remove_rare_word, self.remove_common_word)
 
         numDocs = len(self.list_doc)
-        for d in range(0,numDocs):
+        for d in range(0, numDocs):
             list_word = []
             numWords = len(self.list_doc[d])
-            for w in range(0,numWords):
+            for w in range(0, numWords):
                 word = self.list_doc[d][w]
                 self.list_doc[d][w] = self.vocab.index(word)
                 inlist = False
@@ -111,7 +112,7 @@ class PreProcessing:
                         inlist = True
                         break
                 if not inlist:
-                    list_word.append([self.list_doc[d][w],1])
+                    list_word.append([self.list_doc[d][w], 1])
             self.list_doc_freq.append(list_word)
 
     def extract_vocab(self):
@@ -119,35 +120,37 @@ class PreProcessing:
             self.dir_path_data = dir_path[:-13] + "datasets/data/" + self.filename
             if not os.path.exists(self.dir_path_data):
                 os.makedirs(self.dir_path_data)
-            fout = open(join(self.dir_path_data,"vocab.txt"),"w")
+            fout = open(join(self.dir_path_data, "vocab.txt"), "w")
             for word in self.vocab:
-                fout.write("%s\n" %word)
+                fout.write("%s\n" % word)
             fout.close()
 
     def format_seq(self):
         if self.list_doc:
-            fout = open(join(self.dir_path_data,"term_sequence.txt"), "w")
+            fout = open(join(self.dir_path_data, "term_sequence.txt"), "w")
             for doc in self.list_doc:
-                fout.write("%d " %len(doc))
+                fout.write("%d " % len(doc))
                 for word in doc:
-                    fout.write("%d " %word)
+                    fout.write("%d " % word)
                 fout.write("\n")
             fout.close()
 
     def format_freq(self):
         if self.list_doc:
-            fout = open(join(self.dir_path_data,"term_frequency.txt"), "w")
+            fout = open(join(self.dir_path_data, "term_frequency.txt"), "w")
             for doc in self.list_doc_freq:
-                fout.write("%d " %len(doc))
+                fout.write("%d " % len(doc))
                 for elem in doc:
-                    fout.write("%d:%d " %(elem[0],elem[1]))
+                    fout.write("%d:%d " % (elem[0], elem[1]))
                 fout.write("\n")
             fout.close()
 
+
 if __name__ == '__main__':
+    import sys
     if len(sys.argv) != 2:
-	print('Usage: python preprocessing.py [path file]')
-	exit()
+        print('Usage: python preprocessing.py [path file]')
+        exit()
     pathfile = sys.argv[1]
     if isfile(pathfile):
         p = PreProcessing()
@@ -156,5 +159,5 @@ if __name__ == '__main__':
         p.format_freq()
         p.format_seq()
     else:
-	print('File not found!')
-	exit()
+        print('File not found!')
+        exit()

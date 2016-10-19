@@ -3,11 +3,12 @@
 import time
 import numpy as np
 
+
 class StreamingOPE:
     """
     Implements Streaming-OPE for LDA as described in "Inference in topic models II: provably guaranteed algorithms". 
     """
-    
+
     def __init__(self, num_terms, num_topics, alpha, eta, iter_infer, beta=None):
         """
         Arguments:
@@ -16,7 +17,7 @@ class StreamingOPE:
             alpha: Hyperparameter for prior on topic mixture theta.
             eta: Hyperparameter for prior on topics beta.
             iter_infer: Number of iterations of FW algorithm.
-        """              
+        """
         self.num_topics = num_topics
         self.num_terms = num_terms
         self.alpha = alpha
@@ -30,8 +31,8 @@ class StreamingOPE:
             self._lambda = beta
         else:
             self._lambda = np.random.rand(self.num_topics, self.num_terms) + 1e-10
-        self.beta_norm = self._lambda.sum(axis = 1)
-        
+        self.beta_norm = self._lambda.sum(axis=1)
+
     def static_online(self, wordids, wordcts):
         """
         First does an E step on the mini-batch given in wordids and
@@ -57,8 +58,8 @@ class StreamingOPE:
         start2 = time.time()
         self.m_step(batch_size, wordids, wordcts, theta)
         end2 = time.time()
-        return(end1 - start1, end2 - start2, theta)
-    
+        return (end1 - start1, end2 - start2, theta)
+
     def e_step(self, batch_size, wordids, wordcts):
         """
         Does e step 
@@ -70,9 +71,9 @@ class StreamingOPE:
         # Inference
         for d in range(batch_size):
             thetad = self.infer_doc(wordids[d], wordcts[d])
-            theta[d,:] = thetad
-        return(theta)
-        
+            theta[d, :] = thetad
+        return (theta)
+
     def infer_doc(self, ids, cts):
         """
         Does inference for a document using Online MAP Estimation algorithm.
@@ -84,16 +85,16 @@ class StreamingOPE:
         Returns inferred theta.
         """
         # locate cache memory
-        beta = self._lambda[:,ids]
+        beta = self._lambda[:, ids]
         beta /= self.beta_norm[:, np.newaxis]
         # Initialize theta randomly
         theta = np.random.rand(self.num_topics) + 1.
         theta /= sum(theta)
         # x = sum_(k=2)^K theta_k * beta_{kj}
-        x = np.dot(theta, beta)       
+        x = np.dot(theta, beta)
         # loop
         T = [1, 0]
-        for l in range(1,self.INF_MAX_ITER):
+        for l in range(1, self.INF_MAX_ITER):
             # Pick fi uniformly
             T[np.random.randint(2)] += 1
             # Select a vertex with the largest value of  
@@ -105,20 +106,20 @@ class StreamingOPE:
             theta *= 1 - alpha
             theta[index] += alpha
             # Update x
-            x = x + alpha * (beta[index,:] - x)
-        return(theta)      
- 
+            x = x + alpha * (beta[index, :] - x)
+        return (theta)
+
     def m_step(self, batch_size, wordids, wordcts, theta):
         """
         Does m step
         """
         # Compute sufficient sstatistics
-        sstats = np.zeros((self.num_topics, self.num_terms), dtype = float)
+        sstats = np.zeros((self.num_topics, self.num_terms), dtype=float)
         for d in range(batch_size):
             theta_d = theta[d, :]
             phi_d = self._lambda[:, wordids[d]] * theta_d[:, np.newaxis]
-            phi_d_norm = phi_d.sum(axis = 0)
+            phi_d_norm = phi_d.sum(axis=0)
             sstats[:, wordids[d]] += (wordcts[d] / phi_d_norm) * phi_d
         # Update
         self._lambda += sstats + self.eta
-        self.beta_norm = self._lambda.sum(axis = 1)
+        self.beta_norm = self._lambda.sum(axis=1)

@@ -6,6 +6,7 @@ import os
 # Name of current path directory which contains this file
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
+
 def get_random_wikipedia_article():
     """
     Downloads a randomly selected Wikipedia article (via
@@ -21,7 +22,7 @@ def get_random_wikipedia_article():
         failed = False
         try:
             req = urllib2.Request('http://en.wikipedia.org/wiki/Special:Random',
-                                  None, { 'User-Agent' : 'x'})
+                                  None, {'User-Agent': 'x'})
             f = urllib2.urlopen(req)
             while not articletitle:
                 line = f.readline()
@@ -33,13 +34,13 @@ def get_random_wikipedia_article():
                     sys.exit(1)
 
             req = urllib2.Request('http://en.wikipedia.org/w/index.php?title=Special:Export/%s&action=submit' \
-                                      % (articletitle),
-                                  None, { 'User-Agent' : 'x'})
+                                  % (articletitle),
+                                  None, {'User-Agent': 'x'})
             f = urllib2.urlopen(req)
             all = f.read()
         except (urllib2.HTTPError, urllib2.URLError):
             print 'oops. there was a failure downloading %s. retrying...' \
-                % articletitle
+                  % articletitle
             failed = True
             continue
         print 'downloaded %s. parsing...' % articletitle
@@ -62,18 +63,20 @@ def get_random_wikipedia_article():
         except:
             # Something went wrong, try again. (This is bad coding practice.)
             print 'oops. there was a failure parsing %s. retrying...' \
-                % articletitle
+                  % articletitle
             failed = True
             continue
 
-    return(all, articletitle)
+    return (all, articletitle)
+
 
 class WikiThread(threading.Thread):
     articles = list()
     articlenames = list()
     lock = threading.Lock()
+
     def __init__(self):
-	threading.Thread.__init__(self)
+        threading.Thread.__init__(self)
 
     def run(self):
         (article, articlename) = get_random_wikipedia_article()
@@ -81,6 +84,7 @@ class WikiThread(threading.Thread):
         WikiThread.articles.append(article)
         WikiThread.articlenames.append(articlename)
         WikiThread.lock.release()
+
 
 def get_random_wikipedia_articles(n):
     """
@@ -94,13 +98,14 @@ def get_random_wikipedia_articles(n):
     wtlist = list()
     for i in range(0, n, maxthreads):
         print 'downloaded %d/%d articles...' % (i, n)
-        for j in range(i, min(i+maxthreads, n)):
+        for j in range(i, min(i + maxthreads, n)):
             wtlist.append(WikiThread())
-            wtlist[len(wtlist)-1].start()
-        for j in range(i, min(i+maxthreads, n)):
+            wtlist[len(wtlist) - 1].start()
+        for j in range(i, min(i + maxthreads, n)):
             wtlist[j].join()
 
     return (WikiThread.articles, WikiThread.articlenames)
+
 
 def parse_doc_list(fp, docs, vocab):
     """
@@ -149,23 +154,24 @@ def parse_doc_list(fp, docs, vocab):
                 ddict[wordtoken] += 1
         wordids = ddict.keys()
         wordcts = ddict.values()
-        fp.write('%d ' %len(wordids))
+        fp.write('%d ' % len(wordids))
         for i in xrange(len(wordids)):
-            fp.write('%d:%d ' %(wordids[i],wordcts[i]))
-	if d < D-1:
-	    fp.write('\n')
+            fp.write('%d:%d ' % (wordids[i], wordcts[i]))
+        if d < D - 1:
+            fp.write('\n')
 
     del wordids
     del wordcts
 
+
 def crawl(size_batch, num_crawling):
-    path_vocab = dir_path+"/data/wikipedia/vocab.txt"
-    if(os.path.isfile(path_vocab)):
-        f = open(path_vocab,'r')
+    path_vocab = dir_path + "/data/wikipedia/vocab.txt"
+    if (os.path.isfile(path_vocab)):
+        f = open(path_vocab, 'r')
         l_vocab = f.readlines()
         f.close()
     else:
-        print('Unknown file %s' %path_vocab)
+        print('Unknown file %s' % path_vocab)
         exit()
     d_vocab = dict()
     for word in l_vocab:
@@ -174,24 +180,25 @@ def crawl(size_batch, num_crawling):
         d_vocab[word] = len(d_vocab)
     del l_vocab
 
-    fdata = open(os.path.join(dir_path+"/data/wikipedia","articles.txt"),'w')
-    fformat = open(os.path.join(dir_path+"/data/wikipedia","input.txt"),'w')
+    fdata = open(os.path.join(dir_path + "/data/wikipedia", "articles.txt"), 'w')
+    fformat = open(os.path.join(dir_path + "/data/wikipedia", "input.txt"), 'w')
 
     for i in xrange(num_crawling):
-        (docset,articlenames) = get_random_wikipedia_articles(size_batch)
+        (docset, articlenames) = get_random_wikipedia_articles(size_batch)
         N = len(docset)
-    	for j in range(0,N):
+        for j in range(0, N):
             fdata.write("<DOC>\n")
-            fdata.write("<TITLE> %s <\\TITLE>\n" %articlenames[j])
+            fdata.write("<TITLE> %s <\\TITLE>\n" % articlenames[j])
             fdata.write("<TEXT>\n")
-            fdata.write("%s\n" %docset[j])
+            fdata.write("%s\n" % docset[j])
             fdata.write("<\DOC>\n")
             fdata.write("<\TEXT>\n")
-        parse_doc_list(fformat,docset,d_vocab)
-	if i < num_crawling-1:
-	    fformat.write('\n')
+        parse_doc_list(fformat, docset, d_vocab)
+        if i < num_crawling - 1:
+            fformat.write('\n')
     fdata.close()
     fformat.close()
+
 
 if __name__ == '__main__':
     t0 = time.time()
