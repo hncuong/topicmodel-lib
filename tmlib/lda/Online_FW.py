@@ -2,15 +2,17 @@
 
 import time
 import numpy as np
+from ldamodel import LdaModel
+from ldalearning import LdaLearning
 
 
-class OnlineFW:
+class OnlineFW(LdaLearning):
     """
     Implements Online-FW for LDA as described in "Inference in topic models I: sparsity and trade-off". 
     """
 
     def __init__(self, num_docs, num_terms, num_topics=100, eta=0.01, tau0=1.0, kappa=0.9,
-                 iter_infer=50, beta=None):
+                 iter_infer=50, lda_model=None):
         """
         Arguments:
             num_docs: Number of documents in the corpus.
@@ -22,9 +24,8 @@ class OnlineFW:
                    (0.5, 1.0] to guarantee asymptotic convergence.
             iter_infer: Number of iterations of FW algorithm.
         """
+        super(OnlineFW, self).__init__(num_terms, num_topics, lda_model)
         self.num_docs = num_docs
-        self.num_topics = num_topics
-        self.num_terms = num_terms
         self.eta = eta
         self.tau0 = tau0
         self.kappa = kappa
@@ -34,11 +35,9 @@ class OnlineFW:
         # Initialize lambda (variational parameters of topics beta)
         # beta_norm stores values, each of which is sum of elements in each row
         # of _lambda.
-        if beta != None:
-            self._lambda = beta
-        else:
-            self._lambda = np.random.rand(self.num_topics, self.num_terms) + 1e-10
-        self.beta_norm = self._lambda.sum(axis=1)
+        if self.lda_model is None:
+            self.lda_model = LdaModel(num_terms, num_topics)
+        self.beta_norm = self.lda_model.model.sum(axis=1)
 
         # Generate values used for initilaization of topic mixture of each document
         self.theta_init = [1e-10] * num_topics
@@ -60,18 +59,17 @@ class OnlineFW:
                  in the document.
         Returns time the E and M steps have taken and the list of topic mixtures of all documents in the mini-batch.        		
         """
-        batch_size = len(wordids)
         # E step
         start1 = time.time()
-        (theta, index) = self.e_step(batch_size, wordids, wordcts)
+        (theta, index) = self.e_step(wordids, wordcts)
         end1 = time.time()
         # M step
         start2 = time.time()
-        self.m_step(batch_size, wordids, wordcts, theta, index)
+        self.m_step(wordids, wordcts, theta, index)
         end2 = time.time()
         return (end1 - start1, end2 - start2, theta)
 
-    def e_step(self, batch_size, wordids, wordcts):
+    def e_step(self, wordids, wordcts):
         """
         Does e step 
 		
@@ -82,6 +80,7 @@ class OnlineFW:
         are stored in list of lists 'index'.		
         """
         # Declare theta (topic mixtures) of minibatch and list of non-zero indexes
+        batch_size = len(wordids)
         theta = np.zeros((batch_size, self.num_topics))
         index = [{} for d in range(batch_size)]
         # Inference
@@ -102,7 +101,7 @@ class OnlineFW:
         Returns inferred theta and list of indexes of non-zero elements of the theta.
         """
         # Locate cache memory
-        beta = self._lambda[:, ids]
+        beta = self.lda_model.model[:, ids]
         beta /= self.beta_norm[:, np.newaxis]
         logbeta = np.log(beta)
         nonzero = set()
@@ -131,14 +130,15 @@ class OnlineFW:
             x += alpha * (beta_x)
         return (theta, np.array(list(nonzero)))
 
-    def m_step(self, batch_size, wordids, wordcts, theta, index):
+    def m_step(self, wordids, wordcts, theta, index):
         """
         Does m step
         """
         # Compute sufficient sstatistics
+        batch_size = len(wordids)
         sstats = np.zeros((self.num_topics, self.num_terms))
         for d in range(batch_size):
-            phi_d = self._lambda[index[d], :]
+            phi_d = self.lda_model.model[index[d], :]
             phi_d = phi_d[:, wordids[d]]
             theta_d = theta[d, index[d]]
             phi_d *= theta_d[:, np.newaxis]
@@ -149,7 +149,7 @@ class OnlineFW:
         # Update
         rhot = pow(self.tau0 + self.updatect, -self.kappa)
         self.rhot = rhot
-        self._lambda = self._lambda * (1 - rhot) + \
+        self.lda_model.model = self.lda_model.model * (1 - rhot) + \
                        rhot * (self.eta + self.num_docs * sstats / batch_size)
-        self.beta_norm = self._lambda.sum(axis=1)
+        self.beta_norm = self.lda_model.model.sum(axis=1)
         self.updatect += 1

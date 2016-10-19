@@ -2,14 +2,16 @@
 
 import time
 import numpy as np
+from ldamodel import LdaModel
+from ldalearning import LdaLearning
 
 
-class StreamingOPE:
+class StreamingOPE(LdaLearning):
     """
     Implements Streaming-OPE for LDA as described in "Inference in topic models II: provably guaranteed algorithms". 
     """
 
-    def __init__(self, num_terms, num_topics=100, alpha=0.01, eta=0.01, iter_infer=50, beta=None):
+    def __init__(self, num_terms, num_topics=100, alpha=0.01, eta=0.01, iter_infer=50, lda_model=None):
         """
         Arguments:
             num_terms: Number of unique terms in the corpus (length of the vocabulary).
@@ -18,6 +20,7 @@ class StreamingOPE:
             eta: Hyperparameter for prior on topics beta.
             iter_infer: Number of iterations of FW algorithm.
         """
+        super(StreamingOPE, self).__init__(num_terms, num_topics, lda_model)
         self.num_topics = num_topics
         self.num_terms = num_terms
         self.alpha = alpha
@@ -27,11 +30,9 @@ class StreamingOPE:
         # Initialize lambda (variational parameters of topics beta)
         # beta_norm stores values, each of which is sum of elements in each row
         # of _lambda.
-        if beta != None:
-            self._lambda = beta
-        else:
-            self._lambda = np.random.rand(self.num_topics, self.num_terms) + 1e-10
-        self.beta_norm = self._lambda.sum(axis=1)
+        if self.lda_model is None:
+            self.lda_model = LdaModel(num_terms, num_topics)
+        self.beta_norm = self.lda_model.model.sum(axis=1)
 
     def static_online(self, wordids, wordcts):
         """
@@ -49,24 +50,24 @@ class StreamingOPE:
                  in the document.
         Returns time the E and M steps have taken and the list of topic mixtures of all documents in the mini-batch.        		
         """
-        batch_size = len(wordids)
         # E step
         start1 = time.time()
-        theta = self.e_step(batch_size, wordids, wordcts)
+        theta = self.e_step(wordids, wordcts)
         end1 = time.time()
         # M step
         start2 = time.time()
-        self.m_step(batch_size, wordids, wordcts, theta)
+        self.m_step(wordids, wordcts, theta)
         end2 = time.time()
         return (end1 - start1, end2 - start2, theta)
 
-    def e_step(self, batch_size, wordids, wordcts):
+    def e_step(self, wordids, wordcts):
         """
         Does e step 
 		
         Returns topic mixtures theta.
         """
         # Declare theta of minibatch
+        batch_size = len(wordids)
         theta = np.zeros((batch_size, self.num_topics))
         # Inference
         for d in range(batch_size):
@@ -85,7 +86,7 @@ class StreamingOPE:
         Returns inferred theta.
         """
         # locate cache memory
-        beta = self._lambda[:, ids]
+        beta = self.lda_model.model[:, ids]
         beta /= self.beta_norm[:, np.newaxis]
         # Initialize theta randomly
         theta = np.random.rand(self.num_topics) + 1.
@@ -109,17 +110,18 @@ class StreamingOPE:
             x = x + alpha * (beta[index, :] - x)
         return (theta)
 
-    def m_step(self, batch_size, wordids, wordcts, theta):
+    def m_step(self, wordids, wordcts, theta):
         """
         Does m step
         """
         # Compute sufficient sstatistics
+        batch_size = len(wordids)
         sstats = np.zeros((self.num_topics, self.num_terms), dtype=float)
         for d in range(batch_size):
             theta_d = theta[d, :]
-            phi_d = self._lambda[:, wordids[d]] * theta_d[:, np.newaxis]
+            phi_d = self.lda_model.model[:, wordids[d]] * theta_d[:, np.newaxis]
             phi_d_norm = phi_d.sum(axis=0)
             sstats[:, wordids[d]] += (wordcts[d] / phi_d_norm) * phi_d
         # Update
-        self._lambda += sstats + self.eta
-        self.beta_norm = self._lambda.sum(axis=1)
+        self.lda_model.model += sstats + self.eta
+        self.beta_norm = self.lda_model.model.sum(axis=1)

@@ -2,15 +2,17 @@
 
 import time
 import numpy as np
+from ldamodel import LdaModel
+from ldalearning import LdaLearning
 
 
-class MLOPE:
+class MLOPE(LdaLearning):
     """
     Implements ML-OPE for LDA as described in "Inference in topic models II: provably guaranteed algorithms". 
     """
 
     def __init__(self, num_terms, num_topics=100, alpha=0.01, tau0=1.0, kappa=0.9, iter_infer=50,
-                 beta=None):
+                 lda_model=None):
         """
         Arguments:
             num_terms: Number of unique terms in the corpus (length of the vocabulary).
@@ -24,6 +26,7 @@ class MLOPE:
         Note that if you pass the same set of all documents in the corpus every time and
         set kappa=0 this class can also be used to do batch OPE.
         """
+        super(MLOPE, self).__init__(num_terms, num_topics, lda_model)
         self.num_topics = num_topics
         self.num_terms = num_terms
         self.alpha = alpha
@@ -33,12 +36,9 @@ class MLOPE:
         self.INF_MAX_ITER = iter_infer
 
         # Initialize beta (topics)
-        if beta != None:
-            self.beta = beta
-        else:
-            self.beta = np.random.rand(self.num_topics, self.num_terms) + 1e-10
-            beta_norm = self.beta.sum(axis=1)
-            self.beta /= beta_norm[:, np.newaxis]
+        if self.lda_model is None:
+            self.lda_model = LdaModel(num_terms, num_topics)
+        self.lda_model.normalize()
 
     def static_online(self, wordids, wordcts):
         """
@@ -56,24 +56,24 @@ class MLOPE:
                  in the document.
         Returns time the E and M steps have taken and the list of topic mixtures of all documents in the mini-batch.        		
         """
-        batch_size = len(wordids)
         # E step
         start1 = time.time()
-        theta = self.e_step(batch_size, wordids, wordcts)
+        theta = self.e_step(wordids, wordcts)
         end1 = time.time()
         # M step
         start2 = time.time()
-        self.m_step(batch_size, wordids, wordcts, theta)
+        self.m_step(wordids, wordcts, theta)
         end2 = time.time()
         return (end1 - start1, end2 - start2, theta)
 
-    def e_step(self, batch_size, wordids, wordcts):
+    def e_step(self, wordids, wordcts):
         """
         Does e step 
 		
         Returns topic mixtures theta.
         """
         # Declare theta of minibatch
+        batch_size = len(wordids)
         theta = np.zeros((batch_size, self.num_topics))
         # Inference
         for d in range(batch_size):
@@ -92,7 +92,7 @@ class MLOPE:
         Returns inferred theta.
         """
         # locate cache memory
-        beta = self.beta[:, ids]
+        beta = self.lda_model.model[:, ids]
         # Initialize theta randomly
         theta = np.random.rand(self.num_topics) + 1.
         theta /= sum(theta)
@@ -115,11 +115,12 @@ class MLOPE:
             x = x + alpha * (beta[index, :] - x)
         return (theta)
 
-    def m_step(self, batch_size, wordids, wordcts, theta):
+    def m_step(self, wordids, wordcts, theta):
         """
         Does m step: update global variables beta.
         """
         # Compute intermediate beta which is denoted as "unit beta"
+        batch_size = len(wordids)
         beta = np.zeros((self.num_topics, self.num_terms), dtype=float)
         for d in range(batch_size):
             beta[:, wordids[d]] += np.outer(theta[d], wordcts[d])
@@ -133,6 +134,6 @@ class MLOPE:
         # Update beta    
         rhot = pow(self.tau0 + self.updatect, -self.kappa)
         self.rhot = rhot
-        self.beta *= (1 - rhot)
-        self.beta[:, ids] += unit_beta * rhot
+        self.lda_model.model *= (1 - rhot)
+        self.lda_model.model[:, ids] += unit_beta * rhot
         self.updatect += 1
