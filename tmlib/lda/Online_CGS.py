@@ -58,14 +58,15 @@ class OnlineCGS(LdaLearning):
         batch_size = len(lengths)
         # E step
         start = time.time()
-        (sstats, theta, z) = self.sample_z(batch_size, wordtks, lengths)
+        (sstats, theta, z) = self.sample_z(wordtks, lengths)
         end1 = time.time()
         # M step
         self.update_lambda(batch_size, sstats)
         end2 = time.time()
         return (end1 - start, end2 - end1, theta)
 
-    def sample_z(self, batch_size, wordtks, lengths):
+    def sample_z(self, wordtks, lengths):
+        batch_size = len(lengths)
         batch_N = sum(lengths)
         uni_rvs = np.random.uniform(size=(batch_N) * (self._sweeps + 1))
         z = [{} for d in range(0, batch_size)]

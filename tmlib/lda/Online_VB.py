@@ -45,16 +45,17 @@ class OnlineVB(LdaLearning):
         batch_size = len(wordids)
         # E step
         start = time.time()
-        (gamma, sstats) = self.e_step(batch_size, wordids, wordcts)
+        (gamma, sstats) = self.e_step(wordids, wordcts)
         end1 = time.time()
         # M step
         self.update_lambda(batch_size, sstats)
         end2 = time.time()
         return (end1 - start, end2 - end1, gamma)
 
-    def e_step(self, batch_size, wordids, wordcts):
+    def e_step(self, wordids, wordcts):
         # Initialize the variational distribution q(theta|gamma) for
         # the mini-batch
+        batch_size = len(wordids)
         gamma = 1 * n.random.gamma(100., 1. / 100., (batch_size, self.num_topics))
         Elogtheta = dirichlet_expectation(gamma)
         expElogtheta = n.exp(Elogtheta)

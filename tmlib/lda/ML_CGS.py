@@ -54,17 +54,17 @@ class MLCGS(LdaLearning):
         self.lda_model.normalize()
 
     def static_online(self, wordtks, lengths):
-        batch_size = len(lengths)
         # E step
         start = time.time()
-        (Ndk_mean, z) = self.sample_z(batch_size, wordtks, lengths)
+        (Ndk_mean, z) = self.sample_z(wordtks, lengths)
         end1 = time.time()
         # M step
-        self.update_lambda(batch_size, wordtks, lengths, Ndk_mean)
+        self.update_lambda(wordtks, lengths, Ndk_mean)
         end2 = time.time()
         return (end1 - start, end2 - end1, Ndk_mean)
 
-    def sample_z(self, batch_size, wordtks, lengths):
+    def sample_z(self, wordtks, lengths):
+        batch_size = len(lengths)
         batch_N = sum(lengths)
         uni_rvs = np.random.uniform(size=(batch_N) * (self._sweeps + 1))
         z = [{} for d in range(0, batch_size)]
@@ -79,7 +79,8 @@ class MLCGS(LdaLearning):
         Ndk_mean /= Ndk_mean_norm[:, np.newaxis]
         return (Ndk_mean, z)
 
-    def update_lambda(self, batch_size, wordtks, lengths, Ndk_mean):
+    def update_lambda(self, wordtks, lengths, Ndk_mean):
+        batch_size = len(lengths)
         _lambda = np.zeros((self.num_topics, self.num_terms))
         # compute unit lambda
         for d in range(batch_size):

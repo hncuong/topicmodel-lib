@@ -37,19 +37,19 @@ class StreamingVB(LdaLearning):
         self._expElogbeta = n.exp(self._Elogbeta)
 
     def static_online(self, wordids, wordcts):
-        batch_size = len(wordids)
         # E step
         start = time.time()
-        (gamma, sstats) = self.e_step(batch_size, wordids, wordcts)
+        (gamma, sstats) = self.e_step(wordids, wordcts)
         end1 = time.time()
         # M step
-        self.update_lambda(batch_size, sstats)
+        self.update_lambda(sstats)
         end2 = time.time()
         return (end1 - start, end2 - end1, gamma)
 
-    def e_step(self, batch_size, wordids, wordcts):
+    def e_step(self, wordids, wordcts):
         # Initialize the variational distribution q(theta|gamma) for
         # the mini-batch
+        batch_size = len(wordids)
         gamma = 1 * n.random.gamma(100., 1. / 100., (batch_size, self.num_topics))
         Elogtheta = dirichlet_expectation(gamma)
         expElogtheta = n.exp(Elogtheta)
@@ -117,7 +117,7 @@ class StreamingVB(LdaLearning):
         score += temp
         return (score)
 
-    def update_lambda(self, batch_size, sstats):
+    def update_lambda(self, sstats):
         self.lda_model.model = self.lda_model.model + sstats
         self._Elogbeta = dirichlet_expectation(self.lda_model.model)
         self._expElogbeta = n.exp(self._Elogbeta)

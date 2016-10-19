@@ -56,24 +56,24 @@ class MLOPE(LdaLearning):
                  in the document.
         Returns time the E and M steps have taken and the list of topic mixtures of all documents in the mini-batch.        		
         """
-        batch_size = len(wordids)
         # E step
         start1 = time.time()
-        theta = self.e_step(batch_size, wordids, wordcts)
+        theta = self.e_step(wordids, wordcts)
         end1 = time.time()
         # M step
         start2 = time.time()
-        self.m_step(batch_size, wordids, wordcts, theta)
+        self.m_step(wordids, wordcts, theta)
         end2 = time.time()
         return (end1 - start1, end2 - start2, theta)
 
-    def e_step(self, batch_size, wordids, wordcts):
+    def e_step(self, wordids, wordcts):
         """
         Does e step 
 		
         Returns topic mixtures theta.
         """
         # Declare theta of minibatch
+        batch_size = len(wordids)
         theta = np.zeros((batch_size, self.num_topics))
         # Inference
         for d in range(batch_size):
@@ -115,11 +115,12 @@ class MLOPE(LdaLearning):
             x = x + alpha * (beta[index, :] - x)
         return (theta)
 
-    def m_step(self, batch_size, wordids, wordcts, theta):
+    def m_step(self, wordids, wordcts, theta):
         """
         Does m step: update global variables beta.
         """
         # Compute intermediate beta which is denoted as "unit beta"
+        batch_size = len(wordids)
         beta = np.zeros((self.num_topics, self.num_terms), dtype=float)
         for d in range(batch_size):
             beta[:, wordids[d]] += np.outer(theta[d], wordcts[d])
