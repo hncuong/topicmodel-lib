@@ -9,7 +9,7 @@ class StreamingOPE:
     Implements Streaming-OPE for LDA as described in "Inference in topic models II: provably guaranteed algorithms". 
     """
 
-    def __init__(self, num_terms, num_topics, alpha, eta, iter_infer, beta=None):
+    def __init__(self, num_terms, num_topics=100, alpha=0.01, eta=0.01, iter_infer=50, beta=None):
         """
         Arguments:
             num_terms: Number of unique terms in the corpus (length of the vocabulary).

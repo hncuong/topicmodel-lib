@@ -20,7 +20,8 @@ def dirichlet_expectation(alpha):
 
 
 class MLCGS:
-    def __init__(self, num_terms, num_topics, alpha, tau0, kappa, burn_in, samples, beta=None):
+    def __init__(self, num_terms, num_topics=100, alpha=0.01, tau0=1.0, kappa=0.9, burn_in=25, samples=25,
+                 beta=None):
         self.num_terms = num_terms
         self.num_topics = num_topics
         self._alpha = alpha

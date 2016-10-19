@@ -21,8 +21,8 @@ class OnlineVB:
     Implements online VB for LDA as described in (Hoffman et al. 2010).
     """
 
-    def __init__(self, num_docs, num_terms, num_topics, alpha=None, eta=None, tau0=1., kappa=0.9,
-                 conv_infer=0.001, iter_infer=50):
+    def __init__(self, num_docs, num_terms, num_topics=100, alpha=0.01, eta=0.01, tau0=1.0, kappa=0.9,
+                 conv_infer=0.0001, iter_infer=50):
         self.num_docs = num_docs
         self.num_terms = num_terms
         self.num_topics = num_topics

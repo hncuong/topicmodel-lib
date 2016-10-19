@@ -10,8 +10,9 @@ import numpy as np
 
 
 class OnlineCVB0:
-    def __init__(self, num_tokens, num_terms, num_topics, alpha, eta, tau_phi, kappa_phi, s_phi, tau_theta,
-                 kappa_theta, s_theta, burn_in):
+    def __init__(self, num_tokens, num_terms, num_topics=100, alpha=0.01, eta=0.01, tau_phi=1.0,
+                 kappa_phi=0.9, s_phi=1.0, tau_theta=10.0,
+                 kappa_theta=0.9, s_theta=1.0, burn_in=25):
         self.num_tokens = num_tokens
         self.num_terms = num_terms
         self.num_topics = num_topics

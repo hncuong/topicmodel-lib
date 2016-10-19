@@ -9,7 +9,8 @@ class OnlineFW:
     Implements Online-FW for LDA as described in "Inference in topic models I: sparsity and trade-off". 
     """
 
-    def __init__(self, num_docs, num_terms, num_topics, eta, tau0, kappa, iter_infer, beta=None):
+    def __init__(self, num_docs, num_terms, num_topics=100, eta=0.01, tau0=1.0, kappa=0.9,
+                 iter_infer=50, beta=None):
         """
         Arguments:
             num_docs: Number of documents in the corpus.
