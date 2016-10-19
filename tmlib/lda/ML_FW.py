@@ -3,11 +3,12 @@
 import time
 import numpy as np
 
+
 class MLFW:
     """
     Implements ML-FW for LDA as described in "Inference in topic models I: sparsity and trade-off". 
     """
-    
+
     def __init__(self, num_terms, num_topics, tau0, kappa, iter_infer, beta=None):
         """
         Arguments:
@@ -20,27 +21,27 @@ class MLFW:
 
         Note that if you pass the same set of all documents in the corpus every time and
         set kappa=0 this class can also be used to do batch FW.
-        """	
-        self.num_terms = num_terms        
+        """
+        self.num_terms = num_terms
         self.num_topics = num_topics
         self.tau0 = tau0
         self.kappa = kappa
         self.updatect = 1
         self.INF_MAX_ITER = iter_infer
-        
+
         # Initialize beta (topics)
         if beta != None:
             self.beta = beta
         else:
             self.beta = np.random.rand(self.num_topics, self.num_terms) + 1e-10
-            beta_norm = self.beta.sum(axis = 1)
+            beta_norm = self.beta.sum(axis=1)
             self.beta /= beta_norm[:, np.newaxis]
         self.logbeta = np.log(self.beta)
-        
+
         # Generate values used for initilization of topic mixture of each document 
         self.theta_init = [1e-10] * num_topics
         self.theta_vert = 1. - 1e-10 * (num_topics - 1)
-        
+
     def static_online(self, wordids, wordcts):
         """
         First does an E step on the mini-batch given in wordids and
@@ -66,8 +67,8 @@ class MLFW:
         start2 = time.time()
         self.sparse_m_step(batch_size, wordids, wordcts, theta, index)
         end2 = time.time()
-        return(end1 - start1, end2 - start2, theta)
-        
+        return (end1 - start1, end2 - start2, theta)
+
     def e_step(self, batch_size, wordids, wordcts):
         """
         Does e step 
@@ -84,10 +85,10 @@ class MLFW:
         # Do inference for each document
         for d in range(batch_size):
             (thetad, indexd) = self.infer_doc(wordids[d], wordcts[d])
-            theta[d,:] = thetad
+            theta[d, :] = thetad
             index[d] = indexd
-        return(theta, index)
-        
+        return (theta, index)
+
     def infer_doc(self, ids, cts):
         """
         Does inference for a document using Frank Wolfe algorithm.
@@ -99,32 +100,34 @@ class MLFW:
         Returns inferred theta and list of indexes of non-zero elements of the theta.
         """
         # Locate cache memory
-        beta = self.beta[:,ids]
-        logbeta = self.logbeta[:,ids]
+        beta = self.beta[:, ids]
+        logbeta = self.logbeta[:, ids]
         nonzero = set()
         # Initialize theta to be a vertex of unit simplex 
         # with the largest value of the objective function
         theta = np.array(self.theta_init)
         f = np.dot(logbeta, cts)
-        index = np.argmax(f); nonzero.add(index)
+        index = np.argmax(f);
+        nonzero.add(index)
         theta[index] = self.theta_vert
         # x = sum_(k=2)^K theta_k * beta_{kj}
-        x = np.copy(beta[index,:])
+        x = np.copy(beta[index, :])
         # Loop
-        for l in range(0,self.INF_MAX_ITER):
+        for l in range(0, self.INF_MAX_ITER):
             # Select a vertex with the largest value of  
             # derivative of the objective function
             df = np.dot(beta, cts / x)
-            index = np.argmax(df); nonzero.add(index)
+            index = np.argmax(df);
+            nonzero.add(index)
             alpha = 2. / (l + 3)
             # Update theta
             theta *= 1 - alpha
             theta[index] += alpha
             # Update x
-            beta_x = beta[index,:] - x
+            beta_x = beta[index, :] - x
             x += alpha * (beta_x)
-        return(theta, list(nonzero))
-    
+        return (theta, list(nonzero))
+
     def sparse_m_step(self, batch_size, wordids, wordcts, theta, index):
         """
         Does m step: update global variables beta, exploiting sparseness of the 
@@ -138,24 +141,24 @@ class MLFW:
         beta = np.zeros((self.num_topics, self.num_terms))
         for d in range(batch_size):
             for i in index[d]:
-                beta[i, wordids[d]] += theta[d,i] * wordcts[d]
+                beta[i, wordids[d]] += theta[d, i] * wordcts[d]
         # Check nonzero columns in the intermediate beta matrix above. Documents 
         # in the minibatch possibly contains a relatively fewer number of terms 
         # in comparison with vocabulary size that make the intermediate beta 
         # matrix may have too many zero columns.
         ids = list()
         for j in range(self.num_terms):
-            if (sum(beta[:,j]) != 0):
+            if (sum(beta[:, j]) != 0):
                 ids.append(j)
         # Normalize the intermediate beta
         for k in range(self.num_topics):
-            beta[k,ids] /= sum(beta[k,ids])
+            beta[k, ids] /= sum(beta[k, ids])
         # Update beta    
         rhot = pow(self.tau0 + self.updatect, -self.kappa)
         self.rhot = rhot
         self.beta *= (1 - rhot)
-        self.beta[:,ids] += beta[:,ids] * rhot
-        self.logbeta = np.log(self.beta)        
+        self.beta[:, ids] += beta[:, ids] * rhot
+        self.logbeta = np.log(self.beta)
         self.updatect += 1
 
     def m_step(self, batch_size, wordids, wordcts, theta, index):
@@ -165,9 +168,9 @@ class MLFW:
         # Compute the intermediate topics
         beta = np.zeros((self.num_topics, self.num_terms))
         for d in range(batch_size):
-            beta[:, wordids[d]] += np.outer(theta[d,:], wordcts[d])
+            beta[:, wordids[d]] += np.outer(theta[d, :], wordcts[d])
         # normalize unit lambda
-        beta_norm = beta.sum(axis = 1)
+        beta_norm = beta.sum(axis=1)
         beta /= beta_norm[:, np.newaxis]
         # Update _lambda base on ML 
         rhot = pow(self.tau0 + self.updatect, -self.kappa)

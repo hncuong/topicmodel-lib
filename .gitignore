@@ -15,3 +15,4 @@ tmlib/preprocessing/*.pyc
 .DS_Store
 build
 .idea
+tmlib/.idea

@@ -3,11 +3,12 @@
 import time
 import numpy as np
 
+
 class OnlineFW:
     """
     Implements Online-FW for LDA as described in "Inference in topic models I: sparsity and trade-off". 
     """
-    
+
     def __init__(self, num_docs, num_terms, num_topics, eta, tau0, kappa, iter_infer, beta=None):
         """
         Arguments:
@@ -20,7 +21,7 @@ class OnlineFW:
                    (0.5, 1.0] to guarantee asymptotic convergence.
             iter_infer: Number of iterations of FW algorithm.
         """
-        self.num_docs = num_docs        
+        self.num_docs = num_docs
         self.num_topics = num_topics
         self.num_terms = num_terms
         self.eta = eta
@@ -28,7 +29,7 @@ class OnlineFW:
         self.kappa = kappa
         self.updatect = 1
         self.INF_MAX_ITER = iter_infer
-        
+
         # Initialize lambda (variational parameters of topics beta)
         # beta_norm stores values, each of which is sum of elements in each row
         # of _lambda.
@@ -36,12 +37,12 @@ class OnlineFW:
             self._lambda = beta
         else:
             self._lambda = np.random.rand(self.num_topics, self.num_terms) + 1e-10
-        self.beta_norm = self._lambda.sum(axis = 1)
-        
+        self.beta_norm = self._lambda.sum(axis=1)
+
         # Generate values used for initilaization of topic mixture of each document
         self.theta_init = [1e-10] * num_topics
         self.theta_vert = 1. - 1e-10 * (num_topics - 1)
-        
+
     def static_online(self, wordids, wordcts):
         """
         First does an E step on the mini-batch given in wordids and
@@ -67,8 +68,8 @@ class OnlineFW:
         start2 = time.time()
         self.m_step(batch_size, wordids, wordcts, theta, index)
         end2 = time.time()
-        return(end1 - start1, end2 - start2, theta)
-        
+        return (end1 - start1, end2 - start2, theta)
+
     def e_step(self, batch_size, wordids, wordcts):
         """
         Does e step 
@@ -85,10 +86,10 @@ class OnlineFW:
         # Inference
         for d in range(batch_size):
             (thetad, indexd) = self.infer_doc(wordids[d], wordcts[d])
-            theta[d,:] = thetad
+            theta[d, :] = thetad
             index[d] = indexd
-        return(theta, index)
-        
+        return (theta, index)
+
     def infer_doc(self, ids, cts):
         """
         Does inference for a document using Frank Wolfe algorithm.
@@ -100,7 +101,7 @@ class OnlineFW:
         Returns inferred theta and list of indexes of non-zero elements of the theta.
         """
         # Locate cache memory
-        beta = self._lambda[:,ids]
+        beta = self._lambda[:, ids]
         beta /= self.beta_norm[:, np.newaxis]
         logbeta = np.log(beta)
         nonzero = set()
@@ -108,24 +109,26 @@ class OnlineFW:
         # with the largest value of the objective function
         theta = np.array(self.theta_init)
         f = np.dot(logbeta, cts)
-        index = np.argmax(f); nonzero.add(index)
+        index = np.argmax(f);
+        nonzero.add(index)
         theta[index] = self.theta_vert
         # x = sum_(k=2)^K theta_k * beta_{kj}
-        x = np.copy(beta[index,:])
+        x = np.copy(beta[index, :])
         # Loop
-        for l in range(0,self.INF_MAX_ITER):
+        for l in range(0, self.INF_MAX_ITER):
             # Select a vertex with the largest value of  
             # derivative of the objective function
             df = np.dot(beta, cts / x)
-            index = np.argmax(df); nonzero.add(index)
-            beta_x = beta[index,:] - x
+            index = np.argmax(df);
+            nonzero.add(index)
+            beta_x = beta[index, :] - x
             alpha = 2. / (l + 3)
             # Update theta
             theta *= 1 - alpha
             theta[index] += alpha
             # Update x
             x += alpha * (beta_x)
-        return(theta, np.array(list(nonzero)))
+        return (theta, np.array(list(nonzero)))
 
     def m_step(self, batch_size, wordids, wordcts, theta, index):
         """
@@ -138,15 +141,14 @@ class OnlineFW:
             phi_d = phi_d[:, wordids[d]]
             theta_d = theta[d, index[d]]
             phi_d *= theta_d[:, np.newaxis]
-            phi_norm = phi_d.sum(axis = 0)
+            phi_norm = phi_d.sum(axis=0)
             phi_d *= (wordcts[d] / phi_norm)
             for i in range(len(index[d])):
                 sstats[index[d][i], wordids[d]] += phi_d[i, :]
         # Update
         rhot = pow(self.tau0 + self.updatect, -self.kappa)
         self.rhot = rhot
-        self._lambda = self._lambda * (1-rhot) + \
-            rhot * (self.eta + self.num_docs * sstats / batch_size)
-        self.beta_norm = self._lambda.sum(axis = 1)
+        self._lambda = self._lambda * (1 - rhot) + \
+                       rhot * (self.eta + self.num_docs * sstats / batch_size)
+        self.beta_norm = self._lambda.sum(axis=1)
         self.updatect += 1
-        

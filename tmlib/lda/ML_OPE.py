@@ -3,11 +3,12 @@
 import time
 import numpy as np
 
+
 class MLOPE:
     """
     Implements ML-OPE for LDA as described in "Inference in topic models II: provably guaranteed algorithms". 
     """
-    
+
     def __init__(self, num_terms, num_topics, alpha, tau0, kappa, iter_infer, beta=None):
         """
         Arguments:
@@ -29,15 +30,15 @@ class MLOPE:
         self.kappa = kappa
         self.updatect = 1
         self.INF_MAX_ITER = iter_infer
-        
+
         # Initialize beta (topics)
         if beta != None:
             self.beta = beta
         else:
             self.beta = np.random.rand(self.num_topics, self.num_terms) + 1e-10
-            beta_norm = self.beta.sum(axis = 1)
+            beta_norm = self.beta.sum(axis=1)
             self.beta /= beta_norm[:, np.newaxis]
-        
+
     def static_online(self, wordids, wordcts):
         """
         First does an E step on the mini-batch given in wordids and
@@ -63,8 +64,8 @@ class MLOPE:
         start2 = time.time()
         self.m_step(batch_size, wordids, wordcts, theta)
         end2 = time.time()
-        return(end1 - start1, end2 - start2, theta)
-    
+        return (end1 - start1, end2 - start2, theta)
+
     def e_step(self, batch_size, wordids, wordcts):
         """
         Does e step 
@@ -76,9 +77,9 @@ class MLOPE:
         # Inference
         for d in range(batch_size):
             thetad = self.infer_doc(wordids[d], wordcts[d])
-            theta[d,:] = thetad
-        return(theta)
-        
+            theta[d, :] = thetad
+        return (theta)
+
     def infer_doc(self, ids, cts):
         """
         Does inference for a document using Online MAP Estimation algorithm.
@@ -90,15 +91,15 @@ class MLOPE:
         Returns inferred theta.
         """
         # locate cache memory
-        beta = self.beta[:,ids]
+        beta = self.beta[:, ids]
         # Initialize theta randomly
         theta = np.random.rand(self.num_topics) + 1.
         theta /= sum(theta)
         # x = sum_(k=2)^K theta_k * beta_{kj}
-        x = np.dot(theta, beta)       
+        x = np.dot(theta, beta)
         # Loop
         T = [1, 0]
-        for l in range(1,self.INF_MAX_ITER):
+        for l in range(1, self.INF_MAX_ITER):
             # Pick fi uniformly
             T[np.random.randint(2)] += 1
             # Select a vertex with the largest value of  
@@ -110,23 +111,23 @@ class MLOPE:
             theta *= 1 - alpha
             theta[index] += alpha
             # Update x
-            x = x + alpha * (beta[index,:] - x)
-        return(theta)      
-    
+            x = x + alpha * (beta[index, :] - x)
+        return (theta)
+
     def m_step(self, batch_size, wordids, wordcts, theta):
         """
         Does m step: update global variables beta.
         """
         # Compute intermediate beta which is denoted as "unit beta"
-        beta = np.zeros((self.num_topics, self.num_terms), dtype = float)
+        beta = np.zeros((self.num_topics, self.num_terms), dtype=float)
         for d in range(batch_size):
             beta[:, wordids[d]] += np.outer(theta[d], wordcts[d])
         # Check zeros index
-        beta_sum = beta.sum(axis = 0)
+        beta_sum = beta.sum(axis=0)
         ids = np.where(beta_sum != 0)[0]
         unit_beta = beta[:, ids]
         # Normalize the intermediate beta
-        unit_beta_norm = unit_beta.sum(axis = 1)
+        unit_beta_norm = unit_beta.sum(axis=1)
         unit_beta /= unit_beta_norm[:, np.newaxis]
         # Update beta    
         rhot = pow(self.tau0 + self.updatect, -self.kappa)
