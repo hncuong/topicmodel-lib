@@ -223,39 +223,6 @@ class Dataset:
             return (doc_terms, doc_freqs)
 
 
-"""------------------------------------------------------------------------------------------------------------------"""
-
-"""def read_setting(file_name):
-    if isfile(file_name):
-        f = open(file_name, 'r')
-        settings = f.readlines()
-        f.close()
-        sets = list()
-        vals = list()
-        for i in range(len(settings)):
-            # print'%s\n'%(settings[i])
-            if settings[i].strip()[0] == '#':
-                continue
-            set_val = settings[i].strip().split(':')
-            sets.append(set_val[0])
-            vals.append(float(set_val[1]))
-        ddict = dict(zip(sets, vals))
-        #ddict['num_terms'] = int(ddict['num_terms'])
-        ddict['num_topics'] = int(ddict['num_topics'])
-        ddict['iter_train'] = int(ddict['iter_train'])
-        ddict['iter_infer'] = int(ddict['iter_infer'])
-        ddict['batch_size'] = int(ddict['batch_size'])
-        ddict['num_crawling'] = int(ddict['num_crawling'])
-        return (ddict)
-    else:
-        print("Can't find file!")
-        sys.exit()"""
-
-"""
-    Compute document sparsity.
-"""
-
-
 def compute_sparsity(doc_tp, batch_size, num_topics, _type):
     sparsity = np.zeros(batch_size, dtype=np.float)
     if _type == 'z':
@@ -272,49 +239,6 @@ def compute_sparsity(doc_tp, batch_size, num_topics, _type):
     return (np.mean(sparsity))
 
 
-"""
-    Create list of top words of topics.
-"""
-
-
-def list_top(beta, tops):
-    min_float = -sys.float_info.max
-    num_tops = beta.shape[0]
-    list_tops = list()
-    for k in range(num_tops):
-        top = list()
-        arr = np.array(beta[k, :], copy=True)
-        for t in range(tops):
-            index = arr.argmax()
-            top.append(index)
-            arr[index] = min_float
-        list_tops.append(top)
-    return (list_tops)
-
-
-"""------------------------------------------------------------------------------------------------------------------"""
-
-
-def write_setting(ddict, file_name):
-    keys = list(ddict.keys())
-    vals = list(ddict.values())
-    f = open(file_name, 'w')
-    for i in range(len(keys)):
-        f.write('%s: %f\n' % (keys[i], vals[i]))
-    f.close()
-
-
-def write_topics(beta, file_name):
-    num_terms = beta.shape[1]
-    num_topics = beta.shape[0]
-    f = open(file_name, 'w')
-    for k in range(num_topics):
-        for i in range(num_terms - 1):
-            f.write('%.10f ' % (beta[k][i]))
-        f.write('%.10f\n' % (beta[k][num_terms - 1]))
-    f.close()
-
-
 def write_topic_mixtures(theta, file_name):
     batch_size = theta.shape[0]
     num_topics = theta.shape[1]
@@ -324,45 +248,6 @@ def write_topic_mixtures(theta, file_name):
             f.write('%.5f ' % (theta[d][k]))
         f.write('%.5f\n' % (theta[d][num_topics - 1]))
     f.close()
-
-
-def write_time(i, j, time_e, time_m, file_name):
-    f = open(file_name, 'a')
-    f.write('tloop_%d_iloop_%d, %f, %f, %f,\n' % (i, j, time_e, time_m, time_e + time_m))
-    f.close()
-
-
-def write_loop(i, j, file_name):
-    f = open(file_name, 'w')
-    f.write('%d, %d' % (i, j))
-    f.close()
-
-
-def write_file(i, j, beta, time_e, time_m, theta, sparsity, list_tops, tops, model_folder):
-    beta_file_name = '%s/beta_%d_%d.dat' % (model_folder, i, j)
-    theta_file_name = '%s/theta_%d.dat' % (model_folder, i)
-    # per_file_name = '%s/perplexities_%d.csv'%(model_folder, i)
-    # top_file_name = '%s/top%d_%d_%d.dat'%(model_folder, tops, i, j)
-    # spar_file_name = '%s/sparsity_%d.csv'%(model_folder, i)
-    time_file_name = '%s/time_%d.csv' % (model_folder, i)
-    loop_file_name = '%s/loops.csv' % (model_folder)
-
-    # write beta
-    if j % 10 == 1:
-        write_topics(beta, beta_file_name)
-    # write theta
-    write_topic_mixtures(theta, theta_file_name)
-
-    # write perplexities
-    # write_perplexities(LD2, per_file_name)
-    # write list top
-    ##write_topic_top(list_tops, top_file_name)
-    # write sparsity
-    ##write_sparsity(sparsity, spar_file_name)
-    # write time
-    write_time(i, j, time_e, time_m, time_file_name)
-    # write loop
-    write_loop(i, j, loop_file_name)
 
 
 if __name__ == '__main__':
