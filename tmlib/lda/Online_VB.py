@@ -5,8 +5,6 @@ from ldamodel import LdaModel
 from ldalearning import LdaLearning
 
 n.random.seed(100000001)
-meanchangethresh = 1e-5
-changethreshold = 1e-5
 
 
 def dirichlet_expectation(alpha):
@@ -102,7 +100,7 @@ class OnlineVB(LdaLearning):
         # sstats[k, w] = \sum_d n_{dw} * phi_{dwk}
         # = \sum_d n_{dw} * exp{Elogtheta_{dk} + Elogbeta_{kw}} / phinorm_{dw}.
         sstats = sstats * self._expElogbeta
-        return ((gamma, sstats))
+        return gamma, sstats
 
     def approx_bound(self, ids, wordcts, gamma, phinorm):
         score = 0
@@ -153,3 +151,7 @@ class OnlineVB(LdaLearning):
         self._Elogbeta = dirichlet_expectation(self.lda_model.model)
         self._expElogbeta = n.exp(self._Elogbeta)
         self._updatect += 1
+
+    def __getitem__(self, docs):
+        gamma, sstats = self.e_step(docs.word_ids_tks, docs.cts_lens)
+        return gamma

@@ -95,3 +95,7 @@ class OnlineCGS(LdaLearning):
                         save_model_every=save_model_every, compute_sparsity_every=compute_sparsity_every,
                         save_statistic=save_statistic, save_top_words_every=save_top_words_every,
                         num_top_words=num_top_words, vocab_file=vocab_file, model_folder=model_folder)
+
+    def __getitem__(self, docs):
+        sstats, theta, z = self.sample_z(docs.word_ids_tks, docs.cts_lens)
+        return theta
