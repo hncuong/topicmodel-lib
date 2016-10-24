@@ -95,3 +95,12 @@ class MLCGS(LdaLearning):
         self.lda_model.model *= (1 - rhot)
         self.lda_model.model += _lambda * rhot
         self._update_t += 1
+
+    def learn_model(self, formatted_data, batch_size=5000, shuffle=False, passes=1, save_model_every=0,
+                    compute_sparsity_every=0, save_statistic=False, save_top_words_every=0, num_top_words=20,
+                    vocab_file='', model_folder='model'):
+        super(MLCGS, self).\
+            learn_model(formatted_data, format_type='sq', batch_size=batch_size, shuffle=shuffle, passes=passes,
+                        save_model_every=save_model_every, compute_sparsity_every=compute_sparsity_every,
+                        save_statistic=save_statistic, save_top_words_every=save_top_words_every,
+                        num_top_words=num_top_words, vocab_file=vocab_file, model_folder=model_folder)

@@ -74,7 +74,7 @@ class LdaLearning(object):
     def static_online(self, word_ids_tks, cts_lens):
         raise NotImplementedError("Should have implemented static_online!")
 
-    def __getitem__(self, item):
+    def __getitem__(self, docs):
         raise NotImplementedError("Should have implemented this!")
 
     def learn_model(self, formatted_data, format_type='tf', batch_size=5000, shuffle=False, passes=1, save_model_every=0,
