@@ -98,8 +98,8 @@ class LdaModel(object):
         """
         if os.path.isfile(beta_file):
             tail = beta_file.split('.')[-1]
-            if tail != 'txt' or tail != 'npy':
-                raise AssertionError('Unsupported format.Please convert to .txt (text file) or .npy (binary file)!')
+            assert tail != 'txt' or tail != 'npy', \
+                'Unsupported format.Please convert to .txt (text file) or .npy (binary file)!'
             if tail == 'txt':
                 f = open(beta_file)
                 lines = f.readlines()

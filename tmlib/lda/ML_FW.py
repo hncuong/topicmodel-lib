@@ -179,3 +179,7 @@ class MLFW(LdaLearning):
         self.lda_model.model *= (1 - rhot)
         self.lda_model.model += beta * rhot
         self.updatect += 1
+
+    def __getitem__(self, docs):
+        theta, index = self.e_step(docs.word_ids_tks, docs.cts_lens)
+        return theta

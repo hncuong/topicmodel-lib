@@ -63,7 +63,7 @@ class OnlineCVB0(LdaLearning):
         start2 = time.time()
         self.m_step(N_phi, N_Z)
         end2 = time.time()
-        return (end1 - start1, end2 - start2, N_theta)
+        return end1 - start1, end2 - start2, N_theta
 
     def e_step(self, wordtks, lengths):
         batch_size = len(lengths)
@@ -102,7 +102,7 @@ class OnlineCVB0(LdaLearning):
                 N_phi[:, wordtks[j][i]] += temp
                 # N_Z := N_Z + C / |M| * gamma_ij
                 N_Z += temp
-        return (N_phi, N_Z, N_theta)
+        return N_phi, N_Z, N_theta
 
     def m_step(self, N_phi, N_Z):
         rhot = self.s_phi * pow(self.tau_phi + self.updatect, -self.kappa_phi)
@@ -112,3 +112,16 @@ class OnlineCVB0(LdaLearning):
         self.N_Z *= (1 - rhot)
         self.N_Z += rhot * N_Z
         self.updatect += 1
+
+    def learn_model(self, formatted_data, batch_size=5000, shuffle=False, passes=1, save_model_every=0,
+                    compute_sparsity_every=0, save_statistic=False, save_top_words_every=0, num_top_words=20,
+                    vocab_file='', model_folder='model'):
+        super(OnlineCVB0, self).\
+            learn_model(formatted_data, format_type='sq', batch_size=batch_size, shuffle=shuffle, passes=passes,
+                        save_model_every=save_model_every, compute_sparsity_every=compute_sparsity_every,
+                        save_statistic=save_statistic, save_top_words_every=save_top_words_every,
+                        num_top_words=num_top_words, vocab_file=vocab_file, model_folder=model_folder)
+
+    def __getitem__(self, docs):
+        N_phi, N_Z, theta = self.e_step(docs.word_ids_tks, docs.cts_lens)
+        return theta

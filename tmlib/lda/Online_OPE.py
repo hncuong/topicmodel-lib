@@ -138,3 +138,7 @@ class OnlineOPE(LdaLearning):
                        rhot * (self.eta + self.num_docs * sstats / batch_size)
         self.beta_norm = self.lda_model.model.sum(axis=1)
         self.updatect += 1
+
+    def __getitem__(self, docs):
+        theta = self.e_step(docs.word_ids_tks, docs.cts_lens)
+        return theta

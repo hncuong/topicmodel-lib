@@ -125,3 +125,7 @@ class StreamingOPE(LdaLearning):
         # Update
         self.lda_model.model += sstats + self.eta
         self.beta_norm = self.lda_model.model.sum(axis=1)
+
+    def __getitem__(self, docs):
+        theta = self.e_step(docs.word_ids_tks, docs.cts_lens)
+        return theta
