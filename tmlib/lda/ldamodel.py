@@ -1,12 +1,13 @@
 import sys, os
 import math
 import numpy as np
+import logging
 
 
 class LdaModel(object):
     """docstring for ClassName"""
 
-    def __init__(self, num_topics, num_terms, random_type=0):
+    def __init__(self, num_terms, num_topics, random_type=0):
         """
 
         Args:
@@ -22,39 +23,36 @@ class LdaModel(object):
         else:
             self.model = 1 * np.random.gamma(100., 1. / 100., (self.num_topics, self.num_terms))
 
-    """ normarlize if nessesary (model parameter which is loaded or init is lambda"""
-
     def normalize(self):
+        """
+        normalize if necessary,used in regularize methods
+        Returns:
+
+        """
         beta_norm = self.model.sum(axis=1)
         self.model = self.model / beta_norm[:, np.newaxis]
 
-    """
-    display top words of topics:
-    *** num_words: number of words which is displayed in each topic
-    *** vocab_file: vocabulary file of copus
-    *** <optional> show_topics: number of topics which we want to show; otherwise, it'll show all topics
-    *** <optional> result_file: write topics with words and probability respectly into this file;
-                    otherwise, print into screen
-    """
-
-    def print_top_words(self, num_words, vocab_file, show_topics=None, result_file=None):
+    def print_top_words(self, num_words, vocab_file=None, show_topics=None, result_file=None):
         """
-
+        display top words of topics:
         Args:
-            num_words:
-            vocab_file:
-            show_topics:
-            result_file:
+            num_words: number of words which is displayed in each topic
+            vocab_file: vocabulary file of copus
+            show_topics: show_topics: number of topics which we want to show; otherwise, it'll show all topics
+            result_file: result_file: write topics with words and probability respectly into this file;
+                    otherwise, print into screen
 
         Returns:
 
         """
         # get the vocabulary
-        if not os.path.isfile(vocab_file):
-            print('Unknown file %s' % vocab_file)
-            exit()
-        vocab = open(vocab_file, 'r').readlines()
-        vocab = map(lambda x: x.strip(), vocab)
+        if vocab_file:
+            if not os.path.isfile(vocab_file):
+                logging.error('Unknown file %s', vocab_file)
+            vocab = open(vocab_file, 'r').readlines()
+            vocab = map(lambda x: x.strip(), vocab)
+        else:
+            vocab = range()
         if show_topics is not None:
             index_list = np.random.randint(self.num_topics, size=show_topics)
             topic_list = self.model[index_list, :]
@@ -65,7 +63,7 @@ class LdaModel(object):
             fp = open(result_file, 'w')
             topic_no = 0
             for topic in topic_list:
-                fp.write('topic %03d\n' % (topic_no))
+                fp.write('topic %03d\n' % topic_no)
                 index_sorted = np.argsort(topic)[::-1]  # sort in decending order
                 for i in range(num_words):
                     index = index_sorted[i]
@@ -85,11 +83,9 @@ class LdaModel(object):
                 topic_no += 1
                 print('\n')
 
-    """ load model (beta or lambda) from a file which is learnt to learn continue"""
-
     def load(self, beta_file):
         """
-
+        load model (beta or lambda) from a file which is learnt to learn continue
         Args:
             beta_file:
 

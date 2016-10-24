@@ -54,6 +54,7 @@ class Dataset(object):
         """
         self.vocab_path = None
         self.is_raw_text = False
+        self.data = None
         if isfile(path):
             logging.info("Path %s is a file", path)
             self.file_path = path
@@ -62,7 +63,7 @@ class Dataset(object):
             name_file = name_file[-1].split("/")
             main_name = name_file[-1]
             self.main_name_file = main_name[:-4]
-            self.load_dataset(self.file_path)
+            self.data = self.load_dataset(self.file_path)
         elif isdir(path):
             self.dir_path = path
             self.file_path = None
