@@ -48,7 +48,6 @@ class OnlineOPE(LdaLearning):
         First does an E step on the mini-batch given in wordids and
         wordcts, then uses the result of that E step to update the
         topics in M step.
-		
         Arguments:
         batch_size: Number of documents of the mini-batch.
         wordids: A list whose each element is an array (terms), corresponding to a document.
@@ -71,8 +70,7 @@ class OnlineOPE(LdaLearning):
 
     def e_step(self, wordids, wordcts):
         """
-        Does e step 
-		
+        Does e step
         Returns topic mixtures theta.
         """
         # Declare theta of minibatch

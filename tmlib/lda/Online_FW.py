@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import time
+
 import numpy as np
-from ldamodel import LdaModel
+
 from ldalearning import LdaLearning
+from ldamodel import LdaModel
 
 
 class OnlineFW(LdaLearning):
@@ -48,7 +50,6 @@ class OnlineFW(LdaLearning):
         First does an E step on the mini-batch given in wordids and
         wordcts, then uses the result of that E step to update the
         topics in M step.
-		
         Arguments:
         batch_size: Number of documents of the mini-batch.
         wordids: A list whose each element is an array (terms), corresponding to a document.
@@ -67,12 +68,11 @@ class OnlineFW(LdaLearning):
         start2 = time.time()
         self.m_step(wordids, wordcts, theta, index)
         end2 = time.time()
-        return (end1 - start1, end2 - start2, theta)
+        return end1 - start1, end2 - start2, theta
 
     def e_step(self, wordids, wordcts):
         """
-        Does e step 
-		
+        Does e step
         Returns topic mixtures and their nonzero elements' indexes of all documents in the mini-batch.
         
         Note that, FW can provides sparse solution (theta:topic mixture) when doing inference
@@ -88,7 +88,7 @@ class OnlineFW(LdaLearning):
             (thetad, indexd) = self.infer_doc(wordids[d], wordcts[d])
             theta[d, :] = thetad
             index[d] = indexd
-        return (theta, index)
+        return theta, index
 
     def infer_doc(self, ids, cts):
         """
@@ -109,7 +109,7 @@ class OnlineFW(LdaLearning):
         # with the largest value of the objective function
         theta = np.array(self.theta_init)
         f = np.dot(logbeta, cts)
-        index = np.argmax(f);
+        index = np.argmax(f)
         nonzero.add(index)
         theta[index] = self.theta_vert
         # x = sum_(k=2)^K theta_k * beta_{kj}
@@ -119,7 +119,7 @@ class OnlineFW(LdaLearning):
             # Select a vertex with the largest value of  
             # derivative of the objective function
             df = np.dot(beta, cts / x)
-            index = np.argmax(df);
+            index = np.argmax(df)
             nonzero.add(index)
             beta_x = beta[index, :] - x
             alpha = 2. / (l + 3)
@@ -128,13 +128,13 @@ class OnlineFW(LdaLearning):
             theta[index] += alpha
             # Update x
             x += alpha * (beta_x)
-        return (theta, np.array(list(nonzero)))
+        return theta, np.array(list(nonzero))
 
     def m_step(self, wordids, wordcts, theta, index):
         """
         Does m step
         """
-        # Compute sufficient sstatistics
+        # Compute sufficient statistics
         batch_size = len(wordids)
         sstats = np.zeros((self.num_topics, self.num_terms))
         for d in range(batch_size):

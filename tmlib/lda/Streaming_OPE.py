@@ -39,7 +39,6 @@ class StreamingOPE(LdaLearning):
         First does an E step on the mini-batch given in wordids and
         wordcts, then uses the result of that E step to update the
         topics in M step.
-		
         Arguments:
         batch_size: Number of documents of the mini-batch.
         wordids: A list whose each element is an array (terms), corresponding to a document.
@@ -63,7 +62,6 @@ class StreamingOPE(LdaLearning):
     def e_step(self, wordids, wordcts):
         """
         Does e step 
-		
         Returns topic mixtures theta.
         """
         # Declare theta of minibatch
@@ -114,7 +112,7 @@ class StreamingOPE(LdaLearning):
         """
         Does m step
         """
-        # Compute sufficient sstatistics
+        # Compute sufficient statistics
         batch_size = len(wordids)
         sstats = np.zeros((self.num_topics, self.num_terms), dtype=float)
         for d in range(batch_size):
