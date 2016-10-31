@@ -95,7 +95,7 @@ class Dataset(object):
             logging.error("Unknown path %s!", path)
             exit()
 
-    def load_dataset(self, file_path, term_seq=False, term_freq=True):
+    def load_dataset(self, file_path, format_type='tf'): #term_seq=False, term_freq=True):
         """
         read file input, check format is raw input or term frequency or term sequence
         Args:
@@ -119,12 +119,11 @@ class Dataset(object):
             p.format_freq()
             p.format_seq()
             self.vocab_path = p.dir_path_data + "/vocab.txt"
-            if term_freq:
+            if format_type == 'tf':
                 data_path = p.dir_path_data + "/term_frequency.txt"
-                term_seq = False
-            else:
+                #term_seq = False
+            elif format_type == 'sq':
                 data_path = p.dir_path_data + "/term_sequence.txt"
-                term_seq = True
         elif check_format(line, ' '):
             if 'wikipedia' in file_path:
                 data_path = file_path
@@ -137,8 +136,9 @@ class Dataset(object):
                 data_path = dir_folder + "/term_sequence.txt"
                 print("Copy file %s => %s" % (file_path, data_path))
                 shutil.copyfile(file_path, data_path)
-            term_freq = False
-            term_seq = True
+            #term_freq = False
+            #term_seq = True
+	    format_type = 'sq'
         elif check_format(line, ':'):
             if 'wikipedia' in file_path:
                 data_path = file_path
@@ -151,30 +151,31 @@ class Dataset(object):
                 data_path = dir_folder + "/term_frequency.txt"
                 print("Copy file %s => %s" % (file_path, data_path))
                 shutil.copyfile(file_path, data_path)
-            term_seq = False
-            term_freq = True
+            #term_seq = False
+            #term_freq = True
+	    format_type = 'tf'
         else:
             print("File %s is not true format!" % file_path)
             sys.exit()
         f.close()
-        bunch = self.Bunch(data_path, term_seq, term_freq)
+        bunch = self.Bunch(data_path, format_type)
         return bunch
 
     class Bunch:
         """
         inner class with methods load data from formatted file
         """
-        def __init__(self, data_path, term_seq, term_freq):
+        def __init__(self, data_path, format_type):
             """
 
             Args:
                 data_path:
-                term_seq:
-                term_freq:
+                format_type
             """
             self.data_path = data_path
-            self.term_seq = term_seq
-            self.term_freq = term_freq
+	    self.format_type = format_type
+            #self.term_seq = term_seq
+            #self.term_freq = term_freq
             # load number of documents
             cnt = 0
             with open(data_path, 'r') as f:
@@ -194,9 +195,9 @@ class Dataset(object):
             self.num_doc = len(lines)
             np.random.shuffle(lines)
             f.close()
-            if self.term_freq:
+            if self.format_type == 'tf':
                 d = self.data_path[:-19]
-            elif self.term_seq:
+            elif self.format_type == 'sq':
                 d = self.data_path[:-18]
             f_out = open(join(d, "file_shuffled.txt"), "w")
             for line in lines:
@@ -215,9 +216,9 @@ class Dataset(object):
             Returns:
 
             """
-            if self.term_freq:
+            if self.format_type == 'tf':
                 return self.load_mini_batch_term_freq(fp, batch_size)
-            elif self.term_seq:
+            elif self.format_type == 'sq':
                 return self.load_mini_batch_term_seq(fp, batch_size)
 
         def load_mini_batch_term_seq(self, fp, batch_size):
@@ -242,7 +243,7 @@ class Dataset(object):
                 if N + 1 != len(list_word):
                     print("Line %d in file %s is error!" % (i + 1, self.data_path))
                     sys.exit()
-                if self.term_freq:
+                if self.format_type == 'tf':
                     tokens = list()
                     for j in range(1, N + 1):
                         tf = list_word[j].split(":")
@@ -250,7 +251,7 @@ class Dataset(object):
                             tokens.append(int(tf[0]))
                     mini_batch.word_ids_tks.append(np.array(tokens))
                     mini_batch.cts_lens.append(len(tokens))
-                elif self.term_seq:
+                elif self.format_type == 'sq':
                     doc_t = np.zeros(N, dtype=np.int32)
                     for j in range(1, N + 1):
                         doc_t[j - 1] = int(list_word[j])
@@ -281,7 +282,7 @@ class Dataset(object):
                 if N + 1 != len(list_word):
                     print("Line %d in file %s is error!" % (i + 1, self.data_path))
                     sys.exit()
-                if self.term_freq:
+                if self.format_type == 'tf':
                     doc_t = np.zeros(N, dtype=np.int32)
                     doc_f = np.zeros(N, dtype=np.int32)
                     for j in range(1, N + 1):
@@ -290,7 +291,7 @@ class Dataset(object):
                         doc_f[j - 1] = int(tf[1])
                     mini_batch.word_ids_tks.append(doc_t)
                     mini_batch.cts_lens.append(doc_f)
-                elif self.term_seq:
+                elif self.format_type == 'sq':
                     terms = []
                     freqs = []
                     k = 0
