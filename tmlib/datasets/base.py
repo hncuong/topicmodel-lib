@@ -2,13 +2,34 @@ import os, os.path
 import sys
 import shutil
 from os.path import isdir, isfile, join
-from ..preprocessing import preprocessing
 import numpy as np
 from time import time
 import logging
+from ..preprocessing import preprocessing
+from tmlib import config
 
 # Name of current path directory which contains this file
 dir_path = os.path.dirname(os.path.realpath(__file__))
+
+
+def get_data_home(data_home=None):
+    """Return the path of the tmlib data dir.
+
+    This folder is used by some large dataset loaders to avoid
+    downloading the data several times.
+
+    By default the data dir is set to a folder named 'tmlib_data'
+    in the user home folder.
+    The '~' symbol is expanded to the user home folder.
+
+    If the folder does not already exist, it is automatically created.
+    """
+    if data_home is None:
+        data_home = config.get_config('datasets', 'TMLIB_DATA_HOME')
+    data_home = os.path.expanduser(data_home)
+    if not os.path.exists(data_home):
+        os.makedirs(data_home)
+    return data_home
 
 
 def check_format(line, delimiter):
@@ -54,6 +75,7 @@ class Dataset(object):
         """
         self.vocab_path = None
         self.is_raw_text = False
+        self.data = None
         if isfile(path):
             logging.info("Path %s is a file", path)
             self.file_path = path
@@ -62,7 +84,7 @@ class Dataset(object):
             name_file = name_file[-1].split("/")
             main_name = name_file[-1]
             self.main_name_file = main_name[:-4]
-            self.load_dataset(self.file_path)
+            self.data = self.load_dataset(self.file_path)
         elif isdir(path):
             self.dir_path = path
             self.file_path = None

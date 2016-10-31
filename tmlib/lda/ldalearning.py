@@ -124,6 +124,8 @@ class LdaLearning(object):
                     break
                 mini_batch_no += 1
                 logger.info("Mini batch no: %s", mini_batch_no)
+
+                # run expectation - maximization algorithms
                 time_e, time_m, theta = self.static_online(mini_batch.word_ids_tks, mini_batch.cts_lens)
                 self.statistics.record_time(time_e, time_m)
 
