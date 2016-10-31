@@ -31,28 +31,56 @@ def get_data_home(data_home=None):
         os.makedirs(data_home)
     return data_home
 
+#def clear_data_home():
 
-def check_format(line, delimiter):
+
+def check_format(file_path):
     """
     check format of input file(text formatted or raw text)
     Args:
-        line: 
-        delimiter: 
+        file_path: path of file input
 
     Returns:
 
     """
-    result = True
-    l = len(line)
-    for i in range(0, l):
-        if line[i].isalpha():
-            result = False
-            break
-        elif not line[i].isalnum() and line[i] != ' ' and line[i] != delimiter:
-            result = False
-            break
+    f = open(file_path)
+    line = f.readline().strip()
+    while len(line) == 0:
+        line = f.readline().strip()
+
+    if line == '<DOC>':
+        result = 'txt'
+    else:
+        result = 'sq'
+        l = len(line)
+        for i in range(0, l):
+            if line[i].isalnum() or line[i] == ' ' or line[i] == ':':
+                if line[i] == ':':
+                    result = 'tf'
+            else:
+                logging.error('File %s is not true format!' %file_path)
+                exit()
     return result
 
+def preprocess(file_path):
+    #self.is_raw_text = True
+    """
+    :param file_path: path of file input
+    :return: list which respectly include vocabulary file, tf, sq file after preprocessing
+    """
+
+    logging.info("Pre-processing:")
+    p = preprocessing.PreProcessing(file_path)
+    p.process()
+    folder_data = get_data_home() + '/' + p.main_name_file
+    if not os.path.exists(folder_data):
+        os.makedirs(folder_data)
+
+    p.extract_vocab(folder_data)
+    p.save_format_tf(folder_data)
+    p.save_format_sq(folder_data)
+
+    return (p.path_file_vocab, p.path_file_tf, p.path_file_sq)
 
 class Corpus(object):
     def __init__(self, format_type):
@@ -106,58 +134,37 @@ class Dataset(object):
         Returns:
 
         """
-        f = open(file_path)
-        line = f.readline().strip()
-        while len(line) == 0:
-            line = f.readline().strip()
-        if line == "<DOC>":
-            self.is_raw_text = True
-            logging.info("Pre-processing:")
-            p = preprocessing.PreProcessing()
-            p.process(file_path)
-            p.extract_vocab()
-            p.format_freq()
-            p.format_seq()
-            self.vocab_path = p.dir_path_data + "/vocab.txt"
+        format_file = check_format(file_path)
+        if format_file == 'txt':
+            (vocab, file_tf, file_sq) = preprocess(file_path)
             if format_type == 'tf':
-                data_path = p.dir_path_data + "/term_frequency.txt"
-                #term_seq = False
+                data_path = file_tf
             elif format_type == 'sq':
-                data_path = p.dir_path_data + "/term_sequence.txt"
-        elif check_format(line, ' '):
-            if 'wikipedia' in file_path:
-                data_path = file_path
-            else:
-                dir_folder = dir_path + "/data/" + self.main_name_file
-                # Create model folder if it doesn't exist
-                if os.path.exists(dir_folder):
-                    shutil.rmtree(dir_folder)
-                os.makedirs(dir_folder)
-                data_path = dir_folder + "/term_sequence.txt"
-                print("Copy file %s => %s" % (file_path, data_path))
-                shutil.copyfile(file_path, data_path)
-            #term_freq = False
-            #term_seq = True
-	    format_type = 'sq'
-        elif check_format(line, ':'):
-            if 'wikipedia' in file_path:
-                data_path = file_path
-            else:
-                dir_folder = dir_path + "/data/" + self.main_name_file
-                # Create model folder if it doesn't exist
-                if os.path.exists(dir_folder):
-                    shutil.rmtree(dir_folder)
-                os.makedirs(dir_folder)
-                data_path = dir_folder + "/term_frequency.txt"
-                print("Copy file %s => %s" % (file_path, data_path))
-                shutil.copyfile(file_path, data_path)
-            #term_seq = False
-            #term_freq = True
-	    format_type = 'tf'
+                data_path = file_sq
+        elif format_file == 'sq':
+            dir_folder = get_data_home() + self.main_name_file
+            # Create folder which include file sq if it doesn't exist
+            if os.path.exists(dir_folder):
+                shutil.rmtree(dir_folder)
+            os.makedirs(dir_folder)
+            data_path = dir_folder + '/' + self.main_name_file+'_sq.txt'
+            print("Copy file %s => %s" % (file_path, data_path))
+            shutil.copyfile(file_path, data_path)
+            format_type = 'sq'
+        elif format_file == 'tf':
+            dir_folder = get_data_home() + self.main_name_file
+            # Create folder which include file sq if it doesn't exist
+            if os.path.exists(dir_folder):
+                shutil.rmtree(dir_folder)
+            os.makedirs(dir_folder)
+            data_path = dir_folder + '/' + self.main_name_file+'_tf.txt'
+            print("Copy file %s => %s" % (file_path, data_path))
+            shutil.copyfile(file_path, data_path)
+            format_type = 'tf'
         else:
             print("File %s is not true format!" % file_path)
             sys.exit()
-        f.close()
+
         bunch = self.Bunch(data_path, format_type)
         return bunch
 
@@ -173,7 +180,10 @@ class Dataset(object):
                 format_type
             """
             self.data_path = data_path
-	    self.format_type = format_type
+            # get directory of this data: .../file_name => ...
+            file_name = data_path.split('\\')[-1].split('/')[-1]
+            self.folder_data = data_path[:-(len(file_name)+1)]
+            self.format_type = format_type
             #self.term_seq = term_seq
             #self.term_freq = term_freq
             # load number of documents
@@ -195,16 +205,12 @@ class Dataset(object):
             self.num_doc = len(lines)
             np.random.shuffle(lines)
             f.close()
-            if self.format_type == 'tf':
-                d = self.data_path[:-19]
-            elif self.format_type == 'sq':
-                d = self.data_path[:-18]
-            f_out = open(join(d, "file_shuffled.txt"), "w")
+            f_out = open(join(self.folder_data, "file_shuffled.txt"), "w")
             for line in lines:
                 f_out.write("%s" % line)
             f_out.close()
             del lines
-            return join(d, "file_shuffled.txt")
+            return join(self.folder_data, "file_shuffled.txt")
 
         def load_mini_batch(self, fp, batch_size):
             """
