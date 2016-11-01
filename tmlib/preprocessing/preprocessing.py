@@ -137,8 +137,8 @@ class PreProcessing:
     def save_format_sq(self, folder):
         if isdir(folder):
             if self.list_doc:
-                fout = open(join(folder, self.main_name_file+"_sq.txt"), "w")
-                self.path_file_sq = folder + self.main_name_file+"_sq.txt"
+                fout = open(join(folder, self.main_name_file+".sq"), "w")
+                self.path_file_sq = folder + self.main_name_file+".sq"
                 for doc in self.list_doc:
                     fout.write("%d " % len(doc))
                     for word in doc:
@@ -152,8 +152,8 @@ class PreProcessing:
     def save_format_tf(self, folder):
         if isdir(folder):
             if self.list_doc:
-                fout = open(join(folder, self.main_name_file+"_tf.txt"), "w")
-                self.path_file_tf = folder + self.main_name_file+"_tf.txt"
+                fout = open(join(folder, self.main_name_file+".tf"), "w")
+                self.path_file_tf = folder + self.main_name_file+".tf"
                 for doc in self.list_doc_freq:
                     fout.write("%d " % len(doc))
                     for elem in doc:
