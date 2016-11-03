@@ -173,6 +173,16 @@ class Corpus(object):
         self.format_type = format_type
 
 
+class DataIterator(object):
+    """docstring for DataIterator"""
+    def __init__(self, arg):
+        self.mini_batch_no = 0
+        self.end_of_pass = False
+
+    def load_mini_batch(self):
+        raise NotImplementedError("This functions need to be implemented")
+
+
 class Dataset(object):
     """
 
@@ -296,10 +306,10 @@ class Dataset(object):
 
         def load_mini_batch(self, fp, batch_size):
             """
-            
+
             Args:
-                fp: 
-                batch_size: 
+                fp:
+                batch_size:
 
             Returns:
 
