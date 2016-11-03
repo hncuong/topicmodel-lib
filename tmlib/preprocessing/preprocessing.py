@@ -4,6 +4,7 @@ import numpy as np
 from nltk.tokenize import TreebankWordTokenizer
 from nltk.tokenize import RegexpTokenizer
 from nltk.stem.porter import PorterStemmer
+import logging
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 tokenizer = RegexpTokenizer(r'\w+')
@@ -11,7 +12,10 @@ p_stemmer = PorterStemmer()
 
 
 class PreProcessing:
-    def __init__(self, stemmed=False, remove_rare_word=3, remove_common_word=None):
+    def __init__(self, file_path, stemmed=False, remove_rare_word=3, remove_common_word=None):
+        self.file_path = file_path
+        self.file_name = file_path.split('\\')[-1].split('/')[-1]
+        self.main_name_file = self.file_name.split('.')[0]
         self.list_doc = list()
         self.vocab = list()
         self.list_doc_freq = list()
@@ -65,11 +69,7 @@ class PreProcessing:
         else:
             print("Vocabulary is empty! Please run process first!")
 
-    def process(self, path):
-        name_file = path.split("\\")
-        name_file = name_file[-1].split("/")
-        name = name_file[-1].split(".")
-        self.filename = name[0]
+    def process(self):
         # print(self.filename)
         fin = open(dir_path + "/stop_word_list.txt")
         stop_list = list()
@@ -81,8 +81,8 @@ class PreProcessing:
         fin.close()
         stop_list = stop_list + ['_', ]
         print("Waiting...")
-        if isfile(path):
-            fread = open(path)
+        if isfile(self.file_path):
+            fread = open(self.file_path)
             line = fread.readline()
             num = 1
             while line:
@@ -94,6 +94,10 @@ class PreProcessing:
                     self.list_doc.append(list_word)
                     num += 1
                 line = fread.readline()
+        else:
+            logging.error('Unknown file data %s' %self.file_path)
+            exit()
+
         if self.remove_common_word is None:
             self.remove_common_word = int(self.id_doc * 0.5)
         self.filter(self.remove_rare_word, self.remove_common_word)
@@ -115,35 +119,50 @@ class PreProcessing:
                     list_word.append([self.list_doc[d][w], 1])
             self.list_doc_freq.append(list_word)
 
-    def extract_vocab(self):
-        if self.vocab:
-            self.dir_path_data = dir_path[:-13] + "datasets/data/" + self.filename
-            if not os.path.exists(self.dir_path_data):
-                os.makedirs(self.dir_path_data)
-            fout = open(join(self.dir_path_data, "vocab.txt"), "w")
-            for word in self.vocab:
-                fout.write("%s\n" % word)
-            fout.close()
+    def extract_vocab(self, folder):
+        if isdir(folder):
+            if self.vocab:
+                fout = open(join(folder, "vocab.txt"), "w")
+                self.path_file_vocab = folder + 'vocab.txt'
+                for word in self.vocab:
+                    fout.write("%s\n" % word)
+                fout.close()
+            else:
+                logging.error("Can't create vocabulary. Please check again!")
+                exit()
+        else:
+            logging.error('Unknown folder data %s' %folder)
+            exit()
 
-    def format_seq(self):
-        if self.list_doc:
-            fout = open(join(self.dir_path_data, "term_sequence.txt"), "w")
-            for doc in self.list_doc:
-                fout.write("%d " % len(doc))
-                for word in doc:
-                    fout.write("%d " % word)
-                fout.write("\n")
-            fout.close()
+    def save_format_sq(self, folder):
+        if isdir(folder):
+            if self.list_doc:
+                fout = open(join(folder, self.main_name_file+".sq"), "w")
+                self.path_file_sq = folder + self.main_name_file+".sq"
+                for doc in self.list_doc:
+                    fout.write("%d " % len(doc))
+                    for word in doc:
+                        fout.write("%d " % word)
+                    fout.write("\n")
+                fout.close()
+        else:
+            logging.error('Unknown folder data %s' %folder)
+            exit()
 
-    def format_freq(self):
-        if self.list_doc:
-            fout = open(join(self.dir_path_data, "term_frequency.txt"), "w")
-            for doc in self.list_doc_freq:
-                fout.write("%d " % len(doc))
-                for elem in doc:
-                    fout.write("%d:%d " % (elem[0], elem[1]))
-                fout.write("\n")
-            fout.close()
+    def save_format_tf(self, folder):
+        if isdir(folder):
+            if self.list_doc:
+                fout = open(join(folder, self.main_name_file+".tf"), "w")
+                self.path_file_tf = folder + self.main_name_file+".tf"
+                for doc in self.list_doc_freq:
+                    fout.write("%d " % len(doc))
+                    for elem in doc:
+                        fout.write("%d:%d " % (elem[0], elem[1]))
+                    fout.write("\n")
+                fout.close()
+        else:
+            logging.error('Unknown folder data %s' %folder)
+            exit()
 
 
 if __name__ == '__main__':
@@ -153,11 +172,11 @@ if __name__ == '__main__':
         exit()
     pathfile = sys.argv[1]
     if isfile(pathfile):
-        p = PreProcessing()
-        p.process(pathfile)
-        p.extract_vocab()
-        p.format_freq()
-        p.format_seq()
+        p = PreProcessing(pathfile)
+        p.process()
+        p.extract_vocab('~/Desktop/ap')
+        p.save_format_tf('/home/ubuntu/Desktop/ap')
+        p.save_format_sq('/home/ubuntu/Desktop/ap')
     else:
         print('File not found!')
         exit()
