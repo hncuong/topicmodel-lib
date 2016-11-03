@@ -31,10 +31,20 @@ def get_data_home(data_home=None):
         os.makedirs(data_home)
     return data_home
 
-#def clear_data_home():
+
+def clear_data_home(data_home=None):
+    """Delete all the content of the data home cache."""
+    data_home = get_data_home(data_home)
+    shutil.rmtree(data_home)
 
 
-def check_format(file_path):
+class InputFormat(object):
+    TERM_FREQUENCY = 'tf'
+    TERM_SEQUENCE = 'sq'
+    RAW_TEXT = 'txt'
+
+
+def check_input_format(file_path):
     """
     check format of input file(text formatted or raw text)
     Args:
@@ -52,28 +62,27 @@ def check_format(file_path):
         if line == '<DOC>':
             result = 'txt'
         else:
-            result = 'sq'
+            result = InputFormat.TERM_SEQUENCE
             l = len(line)
             for i in range(0, l):
                 if line[i].isalnum() or line[i] == ' ' or line[i] == ':':
                     if line[i] == ':':
-                        result = 'tf'
+                        result = InputFormat.TERM_FREQUENCY
                 else:
-                    logging.error('File %s is not true format!' %file_path)
-                    exit()
+                    logging.error('File %s is not true format!', file_path)
         return result
     else:
-        logging.error('Unknown file %s' %file_path)
-        exit()
+        logging.error('Unknown file %s', file_path)
 
-def preprocess(file_path):
+
+def pre_process(file_path):
     #self.is_raw_text = True
     """
     :param file_path: path of file input
     :return: list which respectly include vocabulary file, tf, sq file after preprocessing
     """
 
-    logging.info("Pre-processing:")
+    logging.info("Pre-processing raw text format file %s", file_path)
     p = preprocessing.PreProcessing(file_path)
     p.process()
     folder_data = get_data_home() + '/' + p.main_name_file
@@ -84,11 +93,12 @@ def preprocess(file_path):
     p.save_format_tf(folder_data)
     p.save_format_sq(folder_data)
 
-    return (p.path_file_vocab, p.path_file_tf, p.path_file_sq)
+    return p.path_file_vocab, p.path_file_tf, p.path_file_sq
 
-def convert_sq(file_path):
-    format_type = check_format(file_path)
-    if format_type == 'tf':
+
+def reformat_file_to_term_sequence(file_path):
+    format_type = check_input_format(file_path)
+    if format_type == InputFormat.TERM_FREQUENCY:
         file = open(file_path)
         lines = file.readlines()
         doc_tks = list()
@@ -117,14 +127,15 @@ def convert_sq(file_path):
                     fout.write('\n')
         fout.close()
         return folder + '/' + main_name + '.sq'
-    elif format_type == 'sq':
+    elif format_type == InputFormat.TERM_SEQUENCE:
         return file_path
     else:
         logging.error('File %s need to preprocessing' %file_path)
 
-def convert_tf(file_path):
-    format_type = check_format(file_path)
-    if format_type == 'sq':
+
+def reformat_file_to_term_frequency(file_path):
+    format_type = check_input_format(file_path)
+    if format_type == InputFormat.TERM_SEQUENCE:
         file = open(file_path)
         lines = file.readlines()
         doc_ids = list()
@@ -159,14 +170,15 @@ def convert_tf(file_path):
                     fout.write('\n')
         fout.close()
         return folder + '/' + main_name + '.tf'
-    elif format_type == 'tf':
+    elif format_type == InputFormat.TERM_FREQUENCY:
         return file_path
     else:
         logging.error('File %s need to preprocessing' %file_path)
 
+
 class Corpus(object):
     def __init__(self, format_type):
-        assert format_type == 'tf' or format_type == 'sq', \
+        assert format_type == InputFormat.TERM_FREQUENCY or format_type == InputFormat.TERM_SEQUENCE, \
             "Corpus format type must be term-frequency (tf) or sequences (sq)!"
         self.word_ids_tks = []
         self.cts_lens = []
@@ -175,11 +187,14 @@ class Corpus(object):
 
 class DataIterator(object):
     """docstring for DataIterator"""
-    def __init__(self, arg):
+    def __init__(self):
         self.mini_batch_no = 0
         self.end_of_pass = False
 
     def load_mini_batch(self):
+        raise NotImplementedError("This functions need to be implemented")
+
+    def end_of_data(self):
         raise NotImplementedError("This functions need to be implemented")
 
 
@@ -213,9 +228,8 @@ class Dataset(object):
             self.dir_path = None
             self.file_path = None
             logging.error("Unknown path %s!", path)
-            exit()
 
-    def load_dataset(self, file_path, format_type='tf'): #term_seq=False, term_freq=True):
+    def load_dataset(self, file_path, format_type=InputFormat.TERM_FREQUENCY): #term_seq=False, term_freq=True):
         """
         read file input, check format is raw input or term frequency or term sequence
         Args:
@@ -226,14 +240,14 @@ class Dataset(object):
         Returns:
 
         """
-        format_file = check_format(file_path)
+        format_file = check_input_format(file_path)
         if format_file == 'txt':
-            (vocab, file_tf, file_sq) = preprocess(file_path)
-            if format_type == 'tf':
+            (vocab, file_tf, file_sq) = pre_process(file_path)
+            if format_type == InputFormat.TERM_FREQUENCY:
                 data_path = file_tf
-            elif format_type == 'sq':
+            elif format_type == InputFormat.TERM_SEQUENCE:
                 data_path = file_sq
-        elif format_file == 'sq':
+        elif format_file == InputFormat.TERM_SEQUENCE:
             dir_folder = get_data_home() + self.main_name_file
             # Create folder which include file sq if it doesn't exist
             if os.path.exists(dir_folder):
@@ -242,8 +256,8 @@ class Dataset(object):
             data_path = dir_folder + '/' + self.main_name_file+'.sq'
             print("Copy file %s => %s" % (file_path, data_path))
             shutil.copyfile(file_path, data_path)
-            format_type = 'sq'
-        elif format_file == 'tf':
+            format_type = InputFormat.TERM_SEQUENCE
+        elif format_file == InputFormat.TERM_FREQUENCY:
             dir_folder = get_data_home() + self.main_name_file
             # Create folder which include file sq if it doesn't exist
             if os.path.exists(dir_folder):
@@ -252,10 +266,9 @@ class Dataset(object):
             data_path = dir_folder + '/' + self.main_name_file+'.tf'
             print("Copy file %s => %s" % (file_path, data_path))
             shutil.copyfile(file_path, data_path)
-            format_type = 'tf'
+            format_type = InputFormat.TERM_FREQUENCY
         else:
             print("File %s is not true format!" % file_path)
-            sys.exit()
 
         bunch = self.Bunch(data_path, format_type)
         return bunch
@@ -314,9 +327,9 @@ class Dataset(object):
             Returns:
 
             """
-            if self.format_type == 'tf':
+            if self.format_type == InputFormat.TERM_FREQUENCY:
                 return self.load_mini_batch_term_freq(fp, batch_size)
-            elif self.format_type == 'sq':
+            elif self.format_type == InputFormat.TERM_SEQUENCE:
                 return self.load_mini_batch_term_seq(fp, batch_size)
 
         def load_mini_batch_term_seq(self, fp, batch_size):
@@ -330,7 +343,7 @@ class Dataset(object):
             Returns:
 
             """
-            mini_batch = Corpus('sq')
+            mini_batch = Corpus(InputFormat.TERM_SEQUENCE)
             for i in range(0, batch_size):
                 doc = fp.readline()
                 # check end file
@@ -339,9 +352,8 @@ class Dataset(object):
                 list_word = doc.strip().split()
                 N = int(list_word[0])
                 if N + 1 != len(list_word):
-                    print("Line %d in file %s is error!" % (i + 1, self.data_path))
-                    sys.exit()
-                if self.format_type == 'tf':
+                    logging.error("Line %d in file %s is error!", i + 1, self.data_path)
+                if self.format_type == InputFormat.TERM_FREQUENCY:
                     tokens = list()
                     for j in range(1, N + 1):
                         tf = list_word[j].split(":")
@@ -349,7 +361,7 @@ class Dataset(object):
                             tokens.append(int(tf[0]))
                     mini_batch.word_ids_tks.append(np.array(tokens))
                     mini_batch.cts_lens.append(len(tokens))
-                elif self.format_type == 'sq':
+                elif self.format_type == InputFormat.TERM_SEQUENCE:
                     doc_t = np.zeros(N, dtype=np.int32)
                     for j in range(1, N + 1):
                         doc_t[j - 1] = int(list_word[j])
@@ -370,7 +382,7 @@ class Dataset(object):
             Returns:
 
             """
-            mini_batch = Corpus('tf')
+            mini_batch = Corpus(InputFormat.TERM_FREQUENCY)
             for i in range(0, batch_size):
                 doc = fp.readline()
                 if len(doc) < 1:
@@ -380,7 +392,7 @@ class Dataset(object):
                 if N + 1 != len(list_word):
                     print("Line %d in file %s is error!" % (i + 1, self.data_path))
                     sys.exit()
-                if self.format_type == 'tf':
+                if self.format_type == InputFormat.TERM_FREQUENCY:
                     doc_t = np.zeros(N, dtype=np.int32)
                     doc_f = np.zeros(N, dtype=np.int32)
                     for j in range(1, N + 1):
@@ -389,7 +401,7 @@ class Dataset(object):
                         doc_f[j - 1] = int(tf[1])
                     mini_batch.word_ids_tks.append(doc_t)
                     mini_batch.cts_lens.append(doc_f)
-                elif self.format_type == 'sq':
+                elif self.format_type == InputFormat.TERM_SEQUENCE:
                     terms = []
                     freqs = []
                     k = 0
@@ -434,4 +446,4 @@ def write_topic_mixtures(theta, file_name):
 
 
 if __name__ == '__main__':
-    print(convert_tf('/home/ubuntu/tmlib_data/ap/ap.sq'))
+    print(reformat_file_to_term_frequency('/home/ubuntu/tmlib_data/ap/ap.sq'))
