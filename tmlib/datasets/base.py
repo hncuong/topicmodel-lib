@@ -5,7 +5,7 @@ from os.path import isdir, isfile, join
 import numpy as np
 from time import time
 import logging
-from ..preprocessing import preprocessing
+from tmlib.preprocessing import preprocessing
 from tmlib import config
 
 # Name of current path directory which contains this file
@@ -31,28 +31,138 @@ def get_data_home(data_home=None):
         os.makedirs(data_home)
     return data_home
 
+#def clear_data_home():
 
-def check_format(line, delimiter):
+
+def check_format(file_path):
     """
     check format of input file(text formatted or raw text)
     Args:
-        line: 
-        delimiter: 
+        file_path: path of file input
 
     Returns:
 
     """
-    result = True
-    l = len(line)
-    for i in range(0, l):
-        if line[i].isalpha():
-            result = False
-            break
-        elif not line[i].isalnum() and line[i] != ' ' and line[i] != delimiter:
-            result = False
-            break
-    return result
+    if isfile(file_path):
+        f = open(file_path)
+        line = f.readline().strip()
+        while len(line) == 0:
+            line = f.readline().strip()
 
+        if line == '<DOC>':
+            result = 'txt'
+        else:
+            result = 'sq'
+            l = len(line)
+            for i in range(0, l):
+                if line[i].isalnum() or line[i] == ' ' or line[i] == ':':
+                    if line[i] == ':':
+                        result = 'tf'
+                else:
+                    logging.error('File %s is not true format!' %file_path)
+                    exit()
+        return result
+    else:
+        logging.error('Unknown file %s' %file_path)
+        exit()
+
+def preprocess(file_path):
+    #self.is_raw_text = True
+    """
+    :param file_path: path of file input
+    :return: list which respectly include vocabulary file, tf, sq file after preprocessing
+    """
+
+    logging.info("Pre-processing:")
+    p = preprocessing.PreProcessing(file_path)
+    p.process()
+    folder_data = get_data_home() + '/' + p.main_name_file
+    if not os.path.exists(folder_data):
+        os.makedirs(folder_data)
+
+    p.extract_vocab(folder_data)
+    p.save_format_tf(folder_data)
+    p.save_format_sq(folder_data)
+
+    return (p.path_file_vocab, p.path_file_tf, p.path_file_sq)
+
+def convert_sq(file_path):
+    format_type = check_format(file_path)
+    if format_type == 'tf':
+        file = open(file_path)
+        lines = file.readlines()
+        doc_tks = list()
+        for line in lines:
+            list_words = line.strip().split()
+            N = int(list_words[0])
+            tokens = list()
+            lens = list()
+            for i in range(1,N+1):
+                id_f = list_words[i].split(':')
+                for k in range(0, int(id_f[1])):
+                    tokens.append(int(id_f[0]))
+            doc_tks.append(tokens)
+        file_name = file_path.split('\\')[-1].split('/')[-1]
+        main_name = file_name.split('.')[0]
+        folder = get_data_home() + '/' + main_name
+        if not os.path.exists(folder):
+            os.mkdir(folder)
+        fout = open(join(folder, main_name+'.sq'), 'w')
+        for i in range(len(doc_tks)):
+            N = len(doc_tks[i])
+            fout.write('%d' %N)
+            for j in range(N):
+                fout.write(' %d' %doc_tks[i][j])
+                if j == N-1 and i < (len(doc_tks)-1):
+                    fout.write('\n')
+        fout.close()
+        return folder + '/' + main_name + '.sq'
+    elif format_type == 'sq':
+        return file_path
+    else:
+        logging.error('File %s need to preprocessing' %file_path)
+
+def convert_tf(file_path):
+    format_type = check_format(file_path)
+    if format_type == 'sq':
+        file = open(file_path)
+        lines = file.readlines()
+        doc_ids = list()
+        doc_cts = list()
+        for line in lines:
+            list_tks = line.strip().split()
+            N = int(list_tks[0])
+            ids = list()
+            cts = list()
+            for i in range(1,N+1):
+                id = int(list_tks[i])
+                if id not in ids:
+                    ids.append(id)
+                    cts.append(1)
+                else:
+                    index = ids.index(id)
+                    cts[index] += 1
+            doc_ids.append(np.array(ids))
+            doc_cts.append(np.array(cts))
+        file_name = file_path.split('\\')[-1].split('/')[-1]
+        main_name = file_name.split('.')[0]
+        folder = get_data_home() + '/' + main_name
+        if not os.path.exists(folder):
+            os.mkdir(folder)
+        fout = open(join(folder, main_name+'.tf'), 'w')
+        for i in range(len(doc_cts)):
+            N = len(doc_ids[i])
+            fout.write('%d' %N)
+            for j in range(N):
+                fout.write(' %d:%d' %(doc_ids[i][j], doc_cts[i][j]))
+                if j == (N-1) and i < (len(doc_cts)-1):
+                    fout.write('\n')
+        fout.close()
+        return folder + '/' + main_name + '.tf'
+    elif format_type == 'tf':
+        return file_path
+    else:
+        logging.error('File %s need to preprocessing' %file_path)
 
 class Corpus(object):
     def __init__(self, format_type):
@@ -106,58 +216,37 @@ class Dataset(object):
         Returns:
 
         """
-        f = open(file_path)
-        line = f.readline().strip()
-        while len(line) == 0:
-            line = f.readline().strip()
-        if line == "<DOC>":
-            self.is_raw_text = True
-            logging.info("Pre-processing:")
-            p = preprocessing.PreProcessing()
-            p.process(file_path)
-            p.extract_vocab()
-            p.format_freq()
-            p.format_seq()
-            self.vocab_path = p.dir_path_data + "/vocab.txt"
+        format_file = check_format(file_path)
+        if format_file == 'txt':
+            (vocab, file_tf, file_sq) = preprocess(file_path)
             if format_type == 'tf':
-                data_path = p.dir_path_data + "/term_frequency.txt"
-                #term_seq = False
+                data_path = file_tf
             elif format_type == 'sq':
-                data_path = p.dir_path_data + "/term_sequence.txt"
-        elif check_format(line, ' '):
-            if 'wikipedia' in file_path:
-                data_path = file_path
-            else:
-                dir_folder = dir_path + "/data/" + self.main_name_file
-                # Create model folder if it doesn't exist
-                if os.path.exists(dir_folder):
-                    shutil.rmtree(dir_folder)
-                os.makedirs(dir_folder)
-                data_path = dir_folder + "/term_sequence.txt"
-                print("Copy file %s => %s" % (file_path, data_path))
-                shutil.copyfile(file_path, data_path)
-            #term_freq = False
-            #term_seq = True
-	    format_type = 'sq'
-        elif check_format(line, ':'):
-            if 'wikipedia' in file_path:
-                data_path = file_path
-            else:
-                dir_folder = dir_path + "/data/" + self.main_name_file
-                # Create model folder if it doesn't exist
-                if os.path.exists(dir_folder):
-                    shutil.rmtree(dir_folder)
-                os.makedirs(dir_folder)
-                data_path = dir_folder + "/term_frequency.txt"
-                print("Copy file %s => %s" % (file_path, data_path))
-                shutil.copyfile(file_path, data_path)
-            #term_seq = False
-            #term_freq = True
-	    format_type = 'tf'
+                data_path = file_sq
+        elif format_file == 'sq':
+            dir_folder = get_data_home() + self.main_name_file
+            # Create folder which include file sq if it doesn't exist
+            if os.path.exists(dir_folder):
+                shutil.rmtree(dir_folder)
+            os.makedirs(dir_folder)
+            data_path = dir_folder + '/' + self.main_name_file+'.sq'
+            print("Copy file %s => %s" % (file_path, data_path))
+            shutil.copyfile(file_path, data_path)
+            format_type = 'sq'
+        elif format_file == 'tf':
+            dir_folder = get_data_home() + self.main_name_file
+            # Create folder which include file sq if it doesn't exist
+            if os.path.exists(dir_folder):
+                shutil.rmtree(dir_folder)
+            os.makedirs(dir_folder)
+            data_path = dir_folder + '/' + self.main_name_file+'.tf'
+            print("Copy file %s => %s" % (file_path, data_path))
+            shutil.copyfile(file_path, data_path)
+            format_type = 'tf'
         else:
             print("File %s is not true format!" % file_path)
             sys.exit()
-        f.close()
+
         bunch = self.Bunch(data_path, format_type)
         return bunch
 
@@ -173,7 +262,10 @@ class Dataset(object):
                 format_type
             """
             self.data_path = data_path
-	    self.format_type = format_type
+            # get directory of this data: .../file_name => ...
+            file_name = data_path.split('\\')[-1].split('/')[-1]
+            self.folder_data = data_path[:-(len(file_name)+1)]
+            self.format_type = format_type
             #self.term_seq = term_seq
             #self.term_freq = term_freq
             # load number of documents
@@ -195,16 +287,12 @@ class Dataset(object):
             self.num_doc = len(lines)
             np.random.shuffle(lines)
             f.close()
-            if self.format_type == 'tf':
-                d = self.data_path[:-19]
-            elif self.format_type == 'sq':
-                d = self.data_path[:-18]
-            f_out = open(join(d, "file_shuffled.txt"), "w")
+            f_out = open(join(self.folder_data, "file_shuffled.txt"), "w")
             for line in lines:
                 f_out.write("%s" % line)
             f_out.close()
             del lines
-            return join(d, "file_shuffled.txt")
+            return join(self.folder_data, "file_shuffled.txt")
 
         def load_mini_batch(self, fp, batch_size):
             """
@@ -336,12 +424,4 @@ def write_topic_mixtures(theta, file_name):
 
 
 if __name__ == '__main__':
-    t0 = time()
-    data = Dataset("D:\\UCR_TS_Archive_2015\\ap/ap.txt").load_dataset()
-    (docs, freqs) = data.load_batch()
-    print(len(docs))
-    print(docs[0])
-    (docs, lengs) = data.load_minibatch(2)
-    print(docs)
-    print(lengs)
-    print("Done in %.3f" % (time() - t0))
+    print(convert_tf('/home/ubuntu/tmlib_data/ap/ap.sq'))
