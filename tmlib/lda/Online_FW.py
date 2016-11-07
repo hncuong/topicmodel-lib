@@ -6,6 +6,7 @@ import numpy as np
 
 from ldalearning import LdaLearning
 from ldamodel import LdaModel
+from tmlib.datasets.base import DataFormat, convert_corpus_format
 
 
 class OnlineFW(LdaLearning):
@@ -155,5 +156,6 @@ class OnlineFW(LdaLearning):
         self.updatect += 1
 
     def __getitem__(self, docs):
+        docs = convert_corpus_format(docs, DataFormat.TERM_FREQUENCY)
         theta, index = self.e_step(docs.word_ids_tks, docs.cts_lens)
         return theta

@@ -3,6 +3,8 @@ import numpy as n
 from scipy.special import gammaln, psi
 from ldamodel import LdaModel
 from ldalearning import LdaLearning
+from tmlib.datasets.base import DataFormat, convert_corpus_format
+
 n.random.seed(100000001)
 
 
@@ -121,5 +123,6 @@ class StreamingVB(LdaLearning):
         self._expElogbeta = n.exp(self._Elogbeta)
 
     def __getitem__(self, docs):
+        docs = convert_corpus_format(docs, DataFormat.TERM_FREQUENCY)
         gamma, sstats = self.e_step(docs.word_ids_tks, docs.cts_lens)
         return gamma
