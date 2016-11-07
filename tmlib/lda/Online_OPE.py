@@ -4,6 +4,7 @@ import time
 import numpy as np
 from ldamodel import LdaModel
 from ldalearning import LdaLearning
+from tmlib.datasets.base import DataFormat, convert_corpus_format
 
 
 class OnlineOPE(LdaLearning):
@@ -138,5 +139,6 @@ class OnlineOPE(LdaLearning):
         self.updatect += 1
 
     def __getitem__(self, docs):
+        docs = convert_corpus_format(docs, DataFormat.TERM_FREQUENCY)
         theta = self.e_step(docs.word_ids_tks, docs.cts_lens)
         return theta

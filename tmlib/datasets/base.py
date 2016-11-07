@@ -38,7 +38,7 @@ def clear_data_home(data_home=None):
     shutil.rmtree(data_home)
 
 
-class InputFormat(object):
+class DataFormat(object):
     TERM_FREQUENCY = 'tf'
     TERM_SEQUENCE = 'sq'
     RAW_TEXT = 'txt'
@@ -60,16 +60,17 @@ def check_input_format(file_path):
             line = f.readline().strip()
 
         if line == '<DOC>':
-            result = 'txt'
+            result = DataFormat.RAW_TEXT
         else:
-            result = InputFormat.TERM_SEQUENCE
+            result = DataFormat.TERM_SEQUENCE
             l = len(line)
             for i in range(0, l):
                 if line[i].isalnum() or line[i] == ' ' or line[i] == ':':
                     if line[i] == ':':
-                        result = InputFormat.TERM_FREQUENCY
+                        result = DataFormat.TERM_FREQUENCY
                 else:
                     logging.error('File %s is not true format!', file_path)
+            f.close()
         return result
     else:
         logging.error('Unknown file %s', file_path)
@@ -98,7 +99,7 @@ def pre_process(file_path):
 
 def reformat_file_to_term_sequence(file_path):
     format_type = check_input_format(file_path)
-    if format_type == InputFormat.TERM_FREQUENCY:
+    if format_type == DataFormat.TERM_FREQUENCY:
         file = open(file_path)
         lines = file.readlines()
         doc_tks = list()
@@ -127,7 +128,7 @@ def reformat_file_to_term_sequence(file_path):
                     fout.write('\n')
         fout.close()
         return folder + '/' + main_name + '.sq'
-    elif format_type == InputFormat.TERM_SEQUENCE:
+    elif format_type == DataFormat.TERM_SEQUENCE:
         return file_path
     else:
         logging.error('File %s need to preprocessing' %file_path)
@@ -135,7 +136,7 @@ def reformat_file_to_term_sequence(file_path):
 
 def reformat_file_to_term_frequency(file_path):
     format_type = check_input_format(file_path)
-    if format_type == InputFormat.TERM_SEQUENCE:
+    if format_type == DataFormat.TERM_SEQUENCE:
         file = open(file_path)
         lines = file.readlines()
         doc_ids = list()
@@ -170,7 +171,7 @@ def reformat_file_to_term_frequency(file_path):
                     fout.write('\n')
         fout.close()
         return folder + '/' + main_name + '.tf'
-    elif format_type == InputFormat.TERM_FREQUENCY:
+    elif format_type == DataFormat.TERM_FREQUENCY:
         return file_path
     else:
         logging.error('File %s need to preprocessing' %file_path)
@@ -178,18 +179,69 @@ def reformat_file_to_term_frequency(file_path):
 
 class Corpus(object):
     def __init__(self, format_type):
-        assert format_type == InputFormat.TERM_FREQUENCY or format_type == InputFormat.TERM_SEQUENCE, \
+        assert format_type == DataFormat.TERM_FREQUENCY or format_type == DataFormat.TERM_SEQUENCE, \
             "Corpus format type must be term-frequency (tf) or sequences (sq)!"
         self.word_ids_tks = []
         self.cts_lens = []
         self.format_type = format_type
+
+    def append_doc(self, ids_tks, cts_len):
+        self.word_ids_tks.append(ids_tks)
+        self.cts_lens.append(cts_len)
+
+
+def convert_corpus_format(corpus, data_format):
+    assert data_format == DataFormat.TERM_FREQUENCY or data_format == DataFormat.TERM_SEQUENCE, \
+        "Corpus format type must be term-frequency (tf) or sequences (sq)!"
+    if data_format == DataFormat.TERM_SEQUENCE:
+        return convert_corpus_to_term_sequence(corpus)
+    else:
+        return convert_corpus_to_term_frequency(corpus)
+
+
+def convert_corpus_to_term_sequence(corpus):
+    try:
+        if corpus.format_type == DataFormat.TERM_FREQUENCY:
+            formatted_corpus = Corpus(DataFormat.TERM_SEQUENCE)
+            for idx , doc_terms in enumerate(corpus.word_ids_tks):
+                doc_frequencies = corpus.cts_lens[idx]
+                doc_sequence = []
+                for _idx, term in enumerate(doc_terms):
+                    frequency = doc_frequencies[_idx]
+                    for count in range(frequency):
+                        doc_sequence.append(term)
+                doc_length = len(doc_sequence)
+                formatted_corpus.append_doc(doc_sequence, doc_length)
+            return formatted_corpus
+        return corpus
+    except Exception as inst:
+        logging.error(inst)
+
+
+def convert_corpus_to_term_frequency(corpus):
+    try:
+        if corpus.format_type == DataFormat.TERM_SEQUENCE:
+            formatted_corpus = Corpus(DataFormat.TERM_FREQUENCY)
+            for doc_terms in corpus.word_ids_tks:
+                term_frequency_dict = dict()
+                for term in doc_terms:
+                    if term not in term_frequency_dict:
+                        term_frequency_dict[term] = 1
+                    else:
+                        term_frequency_dict[term] += 1
+                formatted_corpus.append_doc(np.array(term_frequency_dict.keys()),
+                                            np.array(term_frequency_dict.values()))
+            return formatted_corpus
+        return corpus
+    except Exception as inst:
+        logging.error(inst)
 
 
 class DataIterator(object):
     """docstring for DataIterator"""
     def __init__(self):
         self.mini_batch_no = 0
-        self.end_of_pass = False
+        self.end_of_data = False
 
     def load_mini_batch(self):
         raise NotImplementedError("This functions need to be implemented")
@@ -198,224 +250,158 @@ class DataIterator(object):
         raise NotImplementedError("This functions need to be implemented")
 
 
-class Dataset(object):
+def load_mini_batch_term_sequence_from_sequence_file(fp, batch_size):
     """
 
+    Args:
+        fp:
+        batch_size:
+
+    Returns:
+
     """
-    def __init__(self, path):
-        """
+    mini_batch = Corpus(DataFormat.TERM_SEQUENCE)
+    end_file = False
+    try:
+        for i in range(0, batch_size):
+            doc = fp.readline()
+            # check end file
+            if len(doc) < 1:
+                end_file = True
+                break
+            list_word = doc.strip().split()
+            N = len(list_word)
+            doc_terms = np.zeros(N, dtype=np.int32)
+            for j in range(N):
+                doc_terms[j] = int(list_word[j])
+            doc_length = N
+            mini_batch.append_doc(doc_terms, doc_length)
+        return mini_batch, end_file
+    except Exception as inst:
+        logging.error(inst)
 
-        Args:
-            path:
-        """
-        self.vocab_path = None
-        self.is_raw_text = False
-        self.data = None
-        if isfile(path):
-            logging.info("Path %s is a file", path)
-            self.file_path = path
-            self.dir_path = None
-            name_file = self.file_path.split("\\")
-            name_file = name_file[-1].split("/")
-            main_name = name_file[-1]
-            self.main_name_file = main_name[:-4]
-            self.data = self.load_dataset(self.file_path)
-        elif isdir(path):
-            self.dir_path = path
-            self.file_path = None
-            logging.info("Path %s is a directory", path)
-        else:
-            self.dir_path = None
-            self.file_path = None
-            logging.error("Unknown path %s!", path)
 
-    def load_dataset(self, file_path, format_type=InputFormat.TERM_FREQUENCY): #term_seq=False, term_freq=True):
-        """
-        read file input, check format is raw input or term frequency or term sequence
-        Args:
-            file_path:
-            term_seq:
-            term_freq:
+def load_mini_batch_term_sequence_from_term_frequency_file(fp, batch_size):
+    """
 
-        Returns:
+    Args:
+        fp:
+        batch_size:
 
-        """
-        format_file = check_input_format(file_path)
-        if format_file == 'txt':
-            (vocab, file_tf, file_sq) = pre_process(file_path)
-            if format_type == InputFormat.TERM_FREQUENCY:
-                data_path = file_tf
-            elif format_type == InputFormat.TERM_SEQUENCE:
-                data_path = file_sq
-        elif format_file == InputFormat.TERM_SEQUENCE:
-            dir_folder = get_data_home() + self.main_name_file
-            # Create folder which include file sq if it doesn't exist
-            if os.path.exists(dir_folder):
-                shutil.rmtree(dir_folder)
-            os.makedirs(dir_folder)
-            data_path = dir_folder + '/' + self.main_name_file+'.sq'
-            print("Copy file %s => %s" % (file_path, data_path))
-            shutil.copyfile(file_path, data_path)
-            format_type = InputFormat.TERM_SEQUENCE
-        elif format_file == InputFormat.TERM_FREQUENCY:
-            dir_folder = get_data_home() + self.main_name_file
-            # Create folder which include file sq if it doesn't exist
-            if os.path.exists(dir_folder):
-                shutil.rmtree(dir_folder)
-            os.makedirs(dir_folder)
-            data_path = dir_folder + '/' + self.main_name_file+'.tf'
-            print("Copy file %s => %s" % (file_path, data_path))
-            shutil.copyfile(file_path, data_path)
-            format_type = InputFormat.TERM_FREQUENCY
-        else:
-            print("File %s is not true format!" % file_path)
+    Returns:
 
-        bunch = self.Bunch(data_path, format_type)
-        return bunch
+    """
+    mini_batch = Corpus(DataFormat.TERM_SEQUENCE)
+    end_file = False
+    try:
+        for i in range(0, batch_size):
+            doc = fp.readline()
+            # check end file
+            if len(doc) < 1:
+                end_file = True
+                break
+            list_word = doc.strip().split()
+            N = int(list_word[0])
+            if N + 1 != len(list_word):
+                logging.error("Line in file Term frequency is error!")
+            tokens = list()
+            for j in range(1, N + 1):
+                tf = list_word[j].split(":")
+                for k in range(0, int(tf[1])):
+                    tokens.append(int(tf[0]))
+            mini_batch.append_doc(np.array(tokens), len(tokens))
+        return mini_batch, end_file
+    except Exception as inst:
+        logging.error(inst)
 
-    class Bunch:
-        """
-        inner class with methods load data from formatted file
-        """
-        def __init__(self, data_path, format_type):
-            """
 
-            Args:
-                data_path:
-                format_type
-            """
-            self.data_path = data_path
-            # get directory of this data: .../file_name => ...
-            file_name = data_path.split('\\')[-1].split('/')[-1]
-            self.folder_data = data_path[:-(len(file_name)+1)]
-            self.format_type = format_type
-            #self.term_seq = term_seq
-            #self.term_freq = term_freq
-            # load number of documents
-            cnt = 0
-            with open(data_path, 'r') as f:
-                for cnt, line in enumerate(f):
-                    pass
-                self.num_doc = cnt + 1
-            f.close()
+def load_mini_batch_term_frequency_from_term_frequency_file(fp, batch_size):
+    """
 
-        def shuffle(self):
-            """
-            shuffle input and write into file file_shuffled.txt, return path of this file
-            Returns:
+    Args:
+        fp:
+        batch_size:
 
-            """
-            f = open(self.data_path)
-            lines = f.readlines()
-            self.num_doc = len(lines)
-            np.random.shuffle(lines)
-            f.close()
-            f_out = open(join(self.folder_data, "file_shuffled.txt"), "w")
-            for line in lines:
-                f_out.write("%s" % line)
-            f_out.close()
-            del lines
-            return join(self.folder_data, "file_shuffled.txt")
+    Returns:
 
-        def load_mini_batch(self, fp, batch_size):
-            """
+    """
+    mini_batch = Corpus(DataFormat.TERM_SEQUENCE)
+    end_file = False
+    try:
+        for i in range(0, batch_size):
+            doc = fp.readline()
+            # check end file
+            if len(doc) < 1:
+                end_file = True
+                break
+            list_word = doc.strip().split()
+            N = int(list_word[0])
+            if N + 1 != len(list_word):
+                logging.error("Line in file Term frequency is error!")
+            doc_terms = np.zeros(N, dtype=np.int32)
+            doc_frequency = np.zeros(N, dtype=np.int32)
+            for j in range(1, N + 1):
+                tf = list_word[j].split(":")
+                doc_terms[j - 1] = int(tf[0])
+                doc_frequency[j - 1] = int(tf[1])
+            mini_batch.append_doc(doc, doc_frequency)
+        return mini_batch, end_file
+    except Exception as inst:
+        logging.error(inst)
 
-            Args:
-                fp:
-                batch_size:
 
-            Returns:
+def load_mini_batch_term_frequency_from_sequence_file(fp, batch_size):
+    """
 
-            """
-            if self.format_type == InputFormat.TERM_FREQUENCY:
-                return self.load_mini_batch_term_freq(fp, batch_size)
-            elif self.format_type == InputFormat.TERM_SEQUENCE:
-                return self.load_mini_batch_term_seq(fp, batch_size)
+    Args:
+        fp:
+        batch_size:
 
-        def load_mini_batch_term_seq(self, fp, batch_size):
-            """
-            read mini-batch data and store with format term sequence
-            fp is file pointer after shuffled
-            Args:
-                fp:
-                batch_size:
+    Returns:
 
-            Returns:
+    """
+    mini_batch = Corpus(DataFormat.TERM_SEQUENCE)
+    end_file = False
+    try:
+        for i in range(0, batch_size):
+            doc = fp.readline()
+            # check end file
+            if len(doc) < 1:
+                end_file = True
+                break
+            list_word = doc.strip().split()
+            term_frequency_dict = dict()
+            for term in list_word:
+                term = int(term)
+                if term not in term_frequency_dict:
+                    term_frequency_dict[term] = 1
+                else:
+                    term_frequency_dict[term] += 1
+            mini_batch.append_doc(np.array(term_frequency_dict.keys()),
+                                  np.array(term_frequency_dict.values()))
+        return mini_batch, end_file
+    except Exception as inst:
+        logging.error(inst)
 
-            """
-            mini_batch = Corpus(InputFormat.TERM_SEQUENCE)
-            for i in range(0, batch_size):
-                doc = fp.readline()
-                # check end file
-                if len(doc) < 1:
-                    break
-                list_word = doc.strip().split()
-                N = int(list_word[0])
-                if N + 1 != len(list_word):
-                    logging.error("Line %d in file %s is error!", i + 1, self.data_path)
-                if self.format_type == InputFormat.TERM_FREQUENCY:
-                    tokens = list()
-                    for j in range(1, N + 1):
-                        tf = list_word[j].split(":")
-                        for k in range(0, int(tf[1])):
-                            tokens.append(int(tf[0]))
-                    mini_batch.word_ids_tks.append(np.array(tokens))
-                    mini_batch.cts_lens.append(len(tokens))
-                elif self.format_type == InputFormat.TERM_SEQUENCE:
-                    doc_t = np.zeros(N, dtype=np.int32)
-                    for j in range(1, N + 1):
-                        doc_t[j - 1] = int(list_word[j])
-                    doc_l = N
-                    mini_batch.word_ids_tks.append(doc_t)
-                    mini_batch.cts_lens.append(doc_l)
-                del list_word
-            return mini_batch
 
-        def load_mini_batch_term_freq(self, fp, batch_size):
-            """
-            read mini-batch data and store with format term frequency
-            fp is file pointer after shuffled
-            Args:
-                fp:
-                batch_size:
+def shuffle_formatted_data_file(data_path):
+    """
+    shuffle input and write into file file_shuffled.txt, return path of this file
+    Returns:
 
-            Returns:
-
-            """
-            mini_batch = Corpus(InputFormat.TERM_FREQUENCY)
-            for i in range(0, batch_size):
-                doc = fp.readline()
-                if len(doc) < 1:
-                    break
-                list_word = doc.strip().split()
-                N = int(list_word[0])
-                if N + 1 != len(list_word):
-                    print("Line %d in file %s is error!" % (i + 1, self.data_path))
-                    sys.exit()
-                if self.format_type == InputFormat.TERM_FREQUENCY:
-                    doc_t = np.zeros(N, dtype=np.int32)
-                    doc_f = np.zeros(N, dtype=np.int32)
-                    for j in range(1, N + 1):
-                        tf = list_word[j].split(":")
-                        doc_t[j - 1] = int(tf[0])
-                        doc_f[j - 1] = int(tf[1])
-                    mini_batch.word_ids_tks.append(doc_t)
-                    mini_batch.cts_lens.append(doc_f)
-                elif self.format_type == InputFormat.TERM_SEQUENCE:
-                    terms = []
-                    freqs = []
-                    k = 0
-                    for j in range(1, N + 1):
-                        if int(list_word[j]) not in terms:
-                            terms.append(int(list_word[j]))
-                            freqs.append(1)
-                        else:
-                            index = terms.index(int(list_word[j]))
-                            freqs[index] += 1
-                    mini_batch.word_ids_tks.append(np.array(terms))
-                    mini_batch.cts_lens.append(np.array(freqs))
-                del list_word
-            return mini_batch
+    """
+    f = open(data_path)
+    lines = f.readlines()
+    num_doc = len(lines)
+    np.random.shuffle(lines)
+    f.close()
+    shuffled_file = '.'.join([data_path, 'shuffled'])
+    f_out = open(shuffled_file, "w")
+    for line in lines:
+        f_out.write(line + '\n')
+    f_out.close()
+    del lines
+    return shuffled_file
 
 
 def compute_sparsity(doc_tp, batch_size, num_topics, _type):

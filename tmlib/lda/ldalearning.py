@@ -2,6 +2,7 @@ import sys
 import os
 from ..datasets import base
 from ldamodel import LdaModel
+from ..datasets.dataset import DataSet
 
 import logging
 
@@ -77,78 +78,52 @@ class LdaLearning(object):
     def __getitem__(self, docs):
         raise NotImplementedError("Should have implemented this!")
 
-    def learn_model(self, formatted_data, format_type='tf', batch_size=5000, shuffle=False, passes=1, save_model_every=0,
-                    compute_sparsity_every=0, save_statistic=False, save_top_words_every=0, num_top_words=20,
-                    vocab_file='', model_folder='model'):
+    def learn_model(self, data, save_model_every=0, compute_sparsity_every=0, save_statistic=False,
+                    save_top_words_every=0, num_top_words=20, model_folder='model'):
         """
 
         Args:
-            formatted_data:
-            format_type:
-            batch_size:
-            shuffle:
-            passes:
+            data:
             save_model_every:
             compute_sparsity_every:
             save_statistic:
             save_top_words_every:
             num_top_words:
-            vocab_file:
             model_folder:
 
         Returns:
 
         """
         mini_batch_no = 0
-        logger.info("Start learning Lda model, %i passes over", passes)
+        logger.info("Start learning Lda model, passes over")
 
-        # Check format
-        if format_type == 'tf':
-            assert formatted_data.term_freq, \
-                'For this learning method, formatted data must by type term- frequency'
-        elif format_type == 'sq':
-            assert formatted_data.term_seq, \
-                'For this learning method, formatted data must by type term sequences'
-        else:
-            raise AssertionError("Corpus format type must be term-frequency (tf) or sequences (sq)!")
         # Iterating
-        for pass_no in range(passes):
-            logger.info('Pass no: %s', pass_no)
-            train_file = formatted_data.data_path
-            if shuffle:
-                train_file = formatted_data.shuffle()
-            datafp = open(train_file, 'r')
-            while True:
-                mini_batch = formatted_data.load_mini_batch(datafp, batch_size)
-                if len(mini_batch.word_ids_tks) == 0:
-                    break
-                mini_batch_no += 1
-                logger.info("Mini batch no: %s", mini_batch_no)
+        while not data.end_of_data():
+            mini_batch = data.load_mini_batch()
 
-                # run expectation - maximization algorithms
-                time_e, time_m, theta = self.static_online(mini_batch.word_ids_tks, mini_batch.cts_lens)
-                self.statistics.record_time(time_e, time_m)
+            # run expectation - maximization algorithms
+            time_e, time_m, theta = self.static_online(mini_batch.word_ids_tks, mini_batch.cts_lens)
+            self.statistics.record_time(time_e, time_m)
 
-                # compute documents sparsity
-                if compute_sparsity_every > 0 and (mini_batch_no % compute_sparsity_every) == 0:
-                    sparsity = base.compute_sparsity(theta, theta.shape[0], theta.shape[1], 't')
-                    self.statistics.record_sparsity(sparsity)
+            # compute documents sparsity
+            if compute_sparsity_every > 0 and (data.mini_batch_no % compute_sparsity_every) == 0:
+                sparsity = base.compute_sparsity(theta, theta.shape[0], theta.shape[1], 't')
+                self.statistics.record_sparsity(sparsity)
 
-                # save model : lambda, beta, N_phi
-                if save_model_every > 0 and (mini_batch_no % save_model_every) == 0:
-                    model_file = model_folder + '/model' + str(mini_batch_no)
-                    self.lda_model.save(model_file)
+            # save model : lambda, beta, N_phi
+            if save_model_every > 0 and (data.mini_batch_no % save_model_every) == 0:
+                model_file = model_folder + '/model_batch' + str(mini_batch_no)
+                self.lda_model.save(model_file)
 
-                # save top words
-                if save_top_words_every > 0 and (mini_batch_no % save_top_words_every) == 0:
-                    top_words_file = model_folder + '/top_words_' + str(mini_batch_no) + '.txt'
-                    self.lda_model.print_top_words(num_top_words, vocab_file, top_words_file)
-            datafp.close()
+            # save top words
+            if save_top_words_every > 0 and (data.mini_batch_no % save_top_words_every) == 0:
+                top_words_file = model_folder + '/top_words_batch_' + str(mini_batch_no) + '.txt'
+                self.lda_model.print_top_words(num_top_words, data.vocab_file, top_words_file)
 
         # save learning statistic
         if save_statistic:
-            time_file = model_folder + '/time' + str(mini_batch_no) + '.csv'
-            sparsity_file = model_folder + '/sparsity' + str(mini_batch_no) + '.csv'
+            time_file = model_folder + '/time' + str(data.mini_batch_no) + '.csv'
+            sparsity_file = model_folder + '/sparsity' + str(data.mini_batch_no) + '.csv'
             self.statistics.save_time(time_file)
             self.statistics.save_sparsity(sparsity_file)
         # Finish
