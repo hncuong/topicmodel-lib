@@ -1,7 +1,9 @@
 """Reference: M.Hoffman - onlineldavb"""
 
-import sys, urllib2, re, string, time, threading
-import os
+import sys, os, urllib2, re, string, time, threading
+import logging
+import base
+from base import Corpus, DataIterator, DataFormat
 
 # Name of current path directory which contains this file
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -107,7 +109,7 @@ def get_random_wikipedia_articles(n):
     return (WikiThread.articles, WikiThread.articlenames)
 
 
-def parse_doc_list(fp, docs, vocab):
+def parse_doc_list(docs, vocab):
     """
     Parse a document into a list of word ids and a list of counts,
     or parse a set of documents into two lists of lists of word ids
@@ -137,8 +139,9 @@ def parse_doc_list(fp, docs, vocab):
 
     D = len(docs)
 
-    wordids = list()
-    wordcts = list()
+    #wordids = list()
+    #wordcts = list()
+    copus = Corpus(DataFormat.TERM_FREQUENCY)
     for d in range(0, D):
         docs[d] = docs[d].lower()
         docs[d] = re.sub(r'-', ' ', docs[d])
@@ -152,20 +155,20 @@ def parse_doc_list(fp, docs, vocab):
                 if (not wordtoken in ddict):
                     ddict[wordtoken] = 0
                 ddict[wordtoken] += 1
-        wordids = ddict.keys()
-        wordcts = ddict.values()
-        fp.write('%d ' % len(wordids))
-        for i in xrange(len(wordids)):
-            fp.write('%d:%d ' % (wordids[i], wordcts[i]))
+        copus.append_doc(ddict.keys(), ddict.values())
+
+    return copus
+
+def save(fp, wordids, wordcts):
+    D = len(wordids)
+    for d in xrange(D):
+        fp.write('%d ' % len(wordids[d]))
+        for i in xrange(len(wordids[d])):
+            fp.write('%d:%d ' % (wordids[d][i], wordcts[d][i]))
         if d < D - 1:
             fp.write('\n')
 
-    del wordids
-    del wordcts
-
-
-def crawl(size_batch, num_crawling):
-    path_vocab = dir_path + "/data/wikipedia/vocab.txt"
+def read_vocab(path_vocab):
     if (os.path.isfile(path_vocab)):
         f = open(path_vocab, 'r')
         l_vocab = f.readlines()
@@ -179,33 +182,61 @@ def crawl(size_batch, num_crawling):
         word = re.sub(r'[^a-z]', '', word)
         d_vocab[word] = len(d_vocab)
     del l_vocab
+    return d_vocab
 
-    fdata = open(os.path.join(dir_path + "/data/wikipedia", "articles.txt"), 'w')
-    fformat = open(os.path.join(dir_path + "/data/wikipedia", "input.txt"), 'w')
+class WikiStream(DataIterator):
+    def __init__(self, batch_size, num_batch, save_into_file=False, path_vocab=None):
+        """
+        a class for crawl stream data from website wikipedia
+        Args:
+            batch_size:
+            num_batch:
+            save_into_file:
+            path_vocab:
+        """
+        super(WikiStream, self).__init__()
+        self.batch_size = batch_size
+        self.num_batch = num_batch
+        if save_into_file:
+            folder_data = base.get_data_home() + '/WikiStream'
+            if not os.path.exists(folder_data):
+                os.mkdir(folder_data)
+            self.fp = open(os.path.join(folder_data, 'articles.tf'), "w")
+        self.save_into_file = save_into_file
+        self.output_format = DataFormat.TERM_FREQUENCY
+        if path_vocab is None:
+            self.path_vocab = dir_path + "/data/wikipedia/vocab.txt"
+        else:
+            self.path_vocab = path_vocab
+        self.vocab = read_vocab(self.path_vocab)
 
-    for i in xrange(num_crawling):
-        (docset, articlenames) = get_random_wikipedia_articles(size_batch)
-        N = len(docset)
-        for j in range(0, N):
-            fdata.write("<DOC>\n")
-            fdata.write("<TITLE> %s <\\TITLE>\n" % articlenames[j])
-            fdata.write("<TEXT>\n")
-            fdata.write("%s\n" % docset[j])
-            fdata.write("<\DOC>\n")
-            fdata.write("<\TEXT>\n")
-        parse_doc_list(fformat, docset, d_vocab)
-        if i < num_crawling - 1:
-            fformat.write('\n')
-    fdata.close()
-    fformat.close()
+    def load_mini_batch(self):
+        (docset, articlenames) = get_random_wikipedia_articles(self.batch_size)
+        logging.info("Mini batch no: %s", self.mini_batch_no)
+        mini_batch = parse_doc_list(docset, self.vocab)
+        if self.output_format == DataFormat.TERM_FREQUENCY:
+            mini_batch = base.convert_corpus_format(mini_batch, DataFormat.TERM_FREQUENCY)
+            if self.save_into_file:
+                save(self.fp, mini_batch.word_ids_tks, mini_batch.cts_lens)
+        else:
+            mini_batch = base.convert_corpus_format(mini_batch, DataFormat.TERM_SEQUENCE)
+        self.mini_batch_no += 1
+        return mini_batch
+
+    def end_of_num_batch(self):
+        if self.mini_batch_no == self.num_batch:
+            self.end_of_data = True
+        return self.end_of_data
+
+    def set_output_format(self, output_format):
+        assert (output_format == DataFormat.TERM_SEQUENCE or output_format == DataFormat.TERM_FREQUENCY), \
+            'Corpus format type must be term-frequency (tf) or sequences (sq)!'
+        self.output_format = output_format
 
 
 if __name__ == '__main__':
-    t0 = time.time()
-
-    (articles, articlenames) = get_random_wikipedia_articles(4)
-    for i in range(0, len(articles)):
-        print articlenames[i]
-
-    t1 = time.time()
-    print 'took %f' % (t1 - t0)
+    wiki = WikiStream(8,3, save_into_file=True)
+    end = wiki.end_of_num_batch()
+    while not end:
+        wiki.load_mini_batch()
+        end = wiki.end_of_num_batch()

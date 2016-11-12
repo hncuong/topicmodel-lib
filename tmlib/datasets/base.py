@@ -384,24 +384,40 @@ def load_mini_batch_term_frequency_from_sequence_file(fp, batch_size):
         logging.error(inst)
 
 
-def shuffle_formatted_data_file(data_path):
+def shuffle_formatted_data_file(data_path, batch_size):
     """
     shuffle input and write into file file_shuffled.txt, return path of this file
     Returns:
 
     """
-    f = open(data_path)
-    lines = f.readlines()
-    num_doc = len(lines)
-    np.random.shuffle(lines)
-    f.close()
-    shuffled_file = '.'.join([data_path, 'shuffled'])
-    f_out = open(shuffled_file, "w")
-    for line in lines:
-        f_out.write(line + '\n')
-    f_out.close()
-    del lines
-    return shuffled_file
+    fin = open(data_path)
+    for i, l in enumerate(fin):
+        pass
+    size = i + 1
+    fin.seek(0, 0)
+    if size % batch_size == 0:
+        num_batch = int(size / batch_size)
+    else:
+        num_batch = int(size / batch_size) + 1
+    list_pointers = list()
+    for ip in xrange(num_batch):
+        fp = open('.'.join([data_path,"shuffle%d"%ip]), "w+")
+        list_pointers.append(fp)
+    for i in xrange(size):
+        rand = np.random.randint(0, num_batch)
+        line = fin.readline()
+        list_pointers[rand].write(line)
+    file_shuffled = '.'.join([data_path, 'shuffled'])
+    fout = open(file_shuffled, "w")
+    for ip in xrange(0, num_batch):
+        list_pointers[ip].seek(0, 0)
+        line = list_pointers[ip].readline()
+        while line:
+            fout.write(line)
+            line = list_pointers[ip].readline()
+        list_pointers[ip].close()
+        os.remove('.'.join([data_path,"shuffle%d"%ip]))
+    fout.close()
 
 
 def compute_sparsity(doc_tp, batch_size, num_topics, _type):
@@ -432,4 +448,5 @@ def write_topic_mixtures(theta, file_name):
 
 
 if __name__ == '__main__':
-    print(reformat_file_to_term_frequency('/home/ubuntu/tmlib_data/ap/ap.sq'))
+    shuffle_formatted_data_file('D:\\python\\grolier\\grolier_train.txt', 200)
+    # print(reformat_file_to_term_frequency('/home/ubuntu/tmlib_data/ap/ap.sq'))
