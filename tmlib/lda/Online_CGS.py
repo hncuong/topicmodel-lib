@@ -20,7 +20,7 @@ def dirichlet_expectation(alpha):
 
 
 class OnlineCGS(LdaLearning):
-    def __init__(self, num_docs, num_terms, num_topics=100, alpha=0.01, eta=0.01, tau0=1.0, kappa=0.9,
+    def __init__(self, num_terms, num_topics=100, alpha=0.01, eta=0.01, tau0=1.0, kappa=0.9,
                  burn_in=25, samples=25, lda_model=None):
         """
 
@@ -37,7 +37,7 @@ class OnlineCGS(LdaLearning):
             lda_model:
         """
         super(OnlineCGS, self).__init__(num_terms, num_topics, lda_model)
-        self.num_docs = num_docs
+        self.num_docs = 0
         self.num_terms = num_terms
         self.num_topics = num_topics
         self._alpha = alpha
@@ -92,7 +92,8 @@ class OnlineCGS(LdaLearning):
     def learn_model(self, data, save_model_every=0, compute_sparsity_every=0, save_statistic=False,
                     save_top_words_every=0, num_top_words=20, model_folder='model'):
         data.set_output_format(DataFormat.TERM_SEQUENCE)
-        super(OnlineCGS, self). \
+        self.num_docs += data.get_total_docs()
+        return super(OnlineCGS, self). \
             learn_model(data, save_model_every=save_model_every, compute_sparsity_every=compute_sparsity_every,
                         save_statistic=save_statistic, save_top_words_every=save_top_words_every,
                         num_top_words=num_top_words, model_folder=model_folder)

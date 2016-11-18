@@ -98,7 +98,7 @@ class LdaLearning(object):
         logger.info("Start learning Lda model, passes over")
 
         # Iterating
-        while not data.end_of_data():
+        while not data.check_end_of_data():
             mini_batch = data.load_mini_batch()
 
             # run expectation - maximization algorithms
