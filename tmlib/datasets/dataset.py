@@ -18,6 +18,7 @@ class DataSet(DataIterator):
         # pre process data if needed
         self.batch_size = batch_size
         self.vocab_file = vocab_file
+
         input_format = base.check_input_format(data_path)
         if input_format == DataFormat.RAW_TEXT:
             vocab_file, tf_file, sq_file = base.pre_process(data_path)
@@ -85,7 +86,7 @@ class DataSet(DataIterator):
             else:
                 return base.load_mini_batch_term_sequence_from_sequence_file(self.fp, self.batch_size)
 
-    def end_of_data(self):
+    def check_end_of_data(self):
         if self.end_of_file and self.pass_no == self.passes:
             self.end_of_data = True
         return self.end_of_data
@@ -94,3 +95,12 @@ class DataSet(DataIterator):
         assert (output_format == DataFormat.TERM_SEQUENCE or output_format == DataFormat.TERM_FREQUENCY), \
             'Corpus format type must be term-frequency (tf) or sequences (sq)!'
         self.output_format = output_format
+
+    def get_num_docs_per_pass(self):
+        num_docs = 0
+        for line in open(self.data_path, 'r'):
+            num_docs += 1
+        return num_docs
+
+    def get_total_docs(self):
+        return self.get_num_docs_per_pass() * self.passes

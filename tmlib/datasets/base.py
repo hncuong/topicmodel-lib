@@ -344,7 +344,7 @@ def load_mini_batch_term_frequency_from_term_frequency_file(fp, batch_size):
                 tf = list_word[j].split(":")
                 doc_terms[j - 1] = int(tf[0])
                 doc_frequency[j - 1] = int(tf[1])
-            mini_batch.append_doc(doc, doc_frequency)
+            mini_batch.append_doc(doc_terms, doc_frequency)
         return mini_batch, end_file
     except Exception as inst:
         logging.error(inst)

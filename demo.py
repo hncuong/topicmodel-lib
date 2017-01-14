@@ -1,12 +1,30 @@
 from tmlib.lda.Online_VB import OnlineVB
-from tmlib.datasets.base import Dataset
+from tmlib.datasets.dataset import DataSet
 import sys
+from tmlib.config import get_config
 
 
 def main():
-    file_path = 'dataset/tweet_1k.txt'
-    data = Dataset(file_path)
+    file_path = '/home/cuonghn/workspace/python/topicmodel-lib/tmlib/datasets/data/ap/ap.txt'
+    vocab_file = '/home/cuonghn/workspace/python/topicmodel-lib/tmlib/datasets/data/ap/vocab.txt'
+    data = DataSet(file_path, 100, 2)
+    num_terms = 13261
+
+    # print data.output_format
+    # print data.data_format
+    # cp = data.load_mini_batch()
+    # print cp.word_ids_tks[0]
+    # print cp.cts_lens[0]
+    # print cp.format_type
+
+    # learning
+    ovb = OnlineVB(num_terms)
+    model = ovb.learn_model(data)
+
+    # print top words
+    model.print_top_words(10, vocab_file)
 
 
 if __name__ == '__main__':
-    print 'OK'
+    # main()
+    print get_config('datasets', 'tmlib_data_home')

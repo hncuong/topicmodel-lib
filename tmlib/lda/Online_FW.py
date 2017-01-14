@@ -14,7 +14,7 @@ class OnlineFW(LdaLearning):
     Implements Online-FW for LDA as described in "Inference in topic models I: sparsity and trade-off". 
     """
 
-    def __init__(self, num_docs, num_terms, num_topics=100, eta=0.01, tau0=1.0, kappa=0.9,
+    def __init__(self, num_terms, num_topics=100, eta=0.01, tau0=1.0, kappa=0.9,
                  iter_infer=50, lda_model=None):
         """
         Arguments:
@@ -28,7 +28,7 @@ class OnlineFW(LdaLearning):
             iter_infer: Number of iterations of FW algorithm.
         """
         super(OnlineFW, self).__init__(num_terms, num_topics, lda_model)
-        self.num_docs = num_docs
+        self.num_docs = 0
         self.eta = eta
         self.tau0 = tau0
         self.kappa = kappa
@@ -154,6 +154,14 @@ class OnlineFW(LdaLearning):
                        rhot * (self.eta + self.num_docs * sstats / batch_size)
         self.beta_norm = self.lda_model.model.sum(axis=1)
         self.updatect += 1
+
+    def learn_model(self, data, save_model_every=0, compute_sparsity_every=0, save_statistic=False,
+                    save_top_words_every=0, num_top_words=20, model_folder='model'):
+        self.num_docs += data.get_total_docs()
+        return super(OnlineFW, self). \
+            learn_model(data, save_model_every=save_model_every, compute_sparsity_every=compute_sparsity_every,
+                        save_statistic=save_statistic, save_top_words_every=save_top_words_every,
+                        num_top_words=num_top_words, model_folder=model_folder)
 
     def __getitem__(self, docs):
         docs = convert_corpus_format(docs, DataFormat.TERM_FREQUENCY)
