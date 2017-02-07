@@ -1,0 +1,1200 @@
+topic 000
+   new 		 3.796646
+   und 		 3.457931
+   color 		 2.594197
+   time 		 2.463562
+   von 		 2.414465
+   first 		 2.395346
+   german 		 2.165949
+   team 		 2.131332
+   english 		 2.026793
+   der 		 1.978234
+
+topic 001
+   und 		 4.392600
+   bar 		 3.979671
+   english 		 3.638367
+   der 		 2.889169
+   german 		 2.878167
+   text 		 2.604680
+   von 		 2.504984
+   temple 		 2.414824
+   new 		 2.343531
+   die 		 2.158391
+
+topic 002
+   und 		 3.425090
+   english 		 3.125380
+   der 		 2.616603
+   german 		 2.574404
+   color 		 2.314063
+   season 		 2.249680
+   time 		 2.139628
+   first 		 1.872521
+   new 		 1.845074
+   saturday 		 1.832237
+
+topic 003
+   und 		 4.511262
+   new 		 2.775900
+   color 		 2.754509
+   german 		 2.729549
+   der 		 2.640144
+   first 		 2.241277
+   english 		 2.218088
+   temperature 		 2.147112
+   light 		 2.146859
+   text 		 2.142038
+
+topic 004
+   und 		 3.432514
+   english 		 2.808066
+   new 		 2.783638
+   der 		 2.698088
+   first 		 2.677895
+   bar 		 2.390797
+   german 		 2.297458
+   season 		 2.171651
+   von 		 2.069335
+   temperature 		 2.046748
+
+topic 005
+   english 		 4.284404
+   der 		 3.822090
+   new 		 3.784086
+   german 		 3.757485
+   first 		 3.493514
+   north 		 3.125994
+   und 		 3.033124
+   von 		 2.506890
+   time 		 2.439172
+   light 		 2.271544
+
+topic 006
+   und 		 3.703417
+   der 		 3.525325
+   german 		 3.416648
+   english 		 3.279293
+   von 		 2.407176
+   new 		 2.297248
+   light 		 2.129175
+   bar 		 2.122959
+   die 		 2.108835
+   color 		 2.085149
+
+topic 007
+   und 		 3.115671
+   color 		 2.696359
+   english 		 2.628331
+   german 		 2.500822
+   temperature 		 2.123875
+   first 		 2.118182
+   der 		 2.100916
+   north 		 2.027969
+   new 		 1.972108
+   season 		 1.963612
+
+topic 008
+   und 		 4.515534
+   german 		 3.969972
+   der 		 3.136770
+   von 		 2.874650
+   new 		 2.766236
+   english 		 2.207119
+   first 		 2.003019
+   published 		 1.894321
+   time 		 1.884177
+   color 		 1.844192
+
+topic 009
+   und 		 4.887850
+   german 		 3.641362
+   der 		 3.464260
+   von 		 3.325252
+   english 		 2.828910
+   color 		 2.424326
+   first 		 2.382014
+   temple 		 2.374006
+   two 		 2.243936
+   new 		 2.230395
+
+topic 010
+   english 		 2.760522
+   und 		 2.501868
+   german 		 2.354331
+   von 		 2.332854
+   new 		 2.292819
+   final 		 2.248227
+   der 		 2.222904
+   saturday 		 2.097600
+   temperature 		 2.000396
+   north 		 1.979900
+
+topic 011
+   und 		 2.923856
+   new 		 2.899301
+   english 		 2.758695
+   german 		 2.482959
+   north 		 2.460008
+   von 		 2.335026
+   der 		 2.330195
+   first 		 2.309416
+   color 		 2.183820
+   king 		 2.128793
+
+topic 012
+   und 		 3.829021
+   english 		 3.552070
+   der 		 3.550151
+   north 		 3.301110
+   german 		 2.614027
+   new 		 2.427025
+   von 		 2.219784
+   temperature 		 2.069025
+   saturday 		 2.021046
+   south 		 1.933095
+
+topic 013
+   und 		 2.944972
+   german 		 2.721751
+   english 		 2.530776
+   der 		 2.517069
+   new 		 2.260433
+   bar 		 2.216436
+   time 		 2.161087
+   temperature 		 2.130331
+   color 		 1.903914
+   von 		 1.902120
+
+topic 014
+   new 		 3.177789
+   und 		 3.086714
+   english 		 2.967823
+   der 		 2.714481
+   german 		 2.541435
+   north 		 2.414229
+   bar 		 2.238802
+   att 		 2.164617
+   color 		 2.081175
+   saturday 		 2.067103
+
+topic 015
+   und 		 4.046256
+   german 		 3.233841
+   english 		 2.967604
+   new 		 2.966836
+   der 		 2.491815
+   von 		 2.455666
+   bar 		 2.388897
+   color 		 2.287593
+   temperature 		 2.254976
+   final 		 2.146419
+
+topic 016
+   und 		 3.143440
+   german 		 3.120481
+   der 		 2.607747
+   english 		 2.568007
+   new 		 2.397206
+   att 		 2.386457
+   temperature 		 2.304619
+   color 		 2.196390
+   first 		 2.177722
+   white 		 2.139548
+
+topic 017
+   population 		 6.811432
+   district 		 6.718588
+   und 		 5.850390
+   time 		 3.815762
+   german 		 3.670315
+   der 		 3.188631
+   english 		 2.976579
+   new 		 2.957676
+   central 		 2.677239
+   rural 		 2.581282
+
+topic 018
+   new 		 4.708244
+   bar 		 4.404871
+   text 		 3.078390
+   english 		 3.028189
+   und 		 2.845654
+   der 		 2.449696
+   south 		 2.443627
+   color 		 2.373013
+   family 		 2.262307
+   german 		 2.234734
+
+topic 019
+   und 		 3.534768
+   der 		 3.317535
+   german 		 2.903078
+   english 		 2.736361
+   color 		 2.489382
+   temperature 		 2.326259
+   new 		 2.214923
+   world 		 2.052837
+   saturday 		 2.030445
+   von 		 2.015528
+
+topic 020
+   und 		 4.400484
+   english 		 3.962655
+   der 		 3.955537
+   german 		 3.000032
+   temperature 		 2.507192
+   von 		 2.319490
+   first 		 2.298109
+   second 		 2.202173
+   saturday 		 2.139850
+   des 		 2.020378
+
+topic 021
+   und 		 2.824900
+   der 		 2.724678
+   german 		 2.683210
+   color 		 2.610136
+   temperature 		 2.580621
+   english 		 2.546590
+   family 		 2.271752
+   new 		 2.180934
+   light 		 2.166368
+   von 		 2.163340
+
+topic 022
+   color 		 2.899616
+   first 		 2.718875
+   der 		 2.453888
+   und 		 2.446829
+   new 		 2.037112
+   time 		 2.012971
+   english 		 1.975313
+   light 		 1.972832
+   league 		 1.949555
+   temperature 		 1.905001
+
+topic 023
+   und 		 3.574709
+   der 		 3.392015
+   english 		 2.891463
+   new 		 2.827655
+   first 		 2.803229
+   german 		 2.435948
+   color 		 2.410598
+   time 		 2.213638
+   light 		 2.178551
+   temperature 		 2.076113
+
+topic 024
+   und 		 3.443295
+   english 		 2.930871
+   german 		 2.743220
+   der 		 2.341557
+   color 		 1.947059
+   des 		 1.863457
+   von 		 1.796641
+   temple 		 1.783075
+   islands 		 1.738843
+   die 		 1.734233
+
+topic 025
+   und 		 2.908812
+   english 		 2.627993
+   der 		 2.604154
+   time 		 2.262419
+   german 		 2.235623
+   north 		 2.187572
+   new 		 2.162388
+   des 		 2.074828
+   temperature 		 2.056880
+   temple 		 2.027395
+
+topic 026
+   new 		 3.768781
+   english 		 3.350526
+   und 		 3.162028
+   der 		 2.694352
+   german 		 2.616460
+   bar 		 2.508885
+   time 		 2.422307
+   color 		 2.365277
+   first 		 2.081457
+   race 		 2.071539
+
+topic 027
+   population 		 2.754142
+   und 		 2.724865
+   new 		 2.647268
+   english 		 2.540065
+   der 		 2.345032
+   color 		 2.270663
+   first 		 2.205430
+   temperature 		 1.986695
+   bar 		 1.951778
+   years 		 1.885334
+
+topic 028
+   english 		 3.608425
+   und 		 3.364505
+   first 		 3.093980
+   der 		 2.888435
+   time 		 2.558896
+   color 		 2.523342
+   german 		 2.338950
+   new 		 2.301980
+   temperature 		 2.181967
+   von 		 2.054127
+
+topic 029
+   county 		 7.425095
+   district 		 5.009984
+   german 		 3.608427
+   english 		 3.601957
+   village 		 3.203718
+   der 		 2.998753
+   und 		 2.871905
+   population 		 2.719165
+   school 		 2.642748
+   province 		 2.550757
+
+topic 030
+   der 		 3.692783
+   und 		 3.629672
+   first 		 2.790191
+   english 		 2.480427
+   new 		 2.177774
+   color 		 2.139845
+   german 		 2.118456
+   temperature 		 2.043482
+   time 		 2.012477
+   north 		 1.832998
+
+topic 031
+   english 		 3.653443
+   color 		 2.924768
+   der 		 2.729783
+   new 		 2.519210
+   und 		 2.478033
+   temperature 		 2.476507
+   german 		 2.343361
+   time 		 2.212218
+   first 		 2.127472
+   att 		 1.985113
+
+topic 032
+   und 		 4.244552
+   color 		 3.537526
+   der 		 3.294150
+   english 		 2.788573
+   new 		 2.715764
+   temperature 		 2.681371
+   saturday 		 2.348267
+   two 		 2.271394
+   von 		 2.265320
+   temple 		 2.170393
+
+topic 033
+   und 		 3.543391
+   english 		 3.023748
+   att 		 2.718289
+   german 		 2.629272
+   color 		 2.592073
+   new 		 2.592054
+   von 		 2.413629
+   first 		 2.158189
+   der 		 2.154746
+   temperature 		 2.137309
+
+topic 034
+   und 		 3.882617
+   new 		 3.035419
+   english 		 2.655378
+   first 		 2.500005
+   der 		 2.407887
+   german 		 2.357240
+   temperature 		 2.309221
+   von 		 2.289356
+   color 		 2.227593
+   temple 		 2.150098
+
+topic 035
+   und 		 3.935038
+   english 		 3.382415
+   german 		 2.982253
+   color 		 2.975664
+   new 		 2.844793
+   first 		 2.576476
+   time 		 2.338292
+   years 		 2.325955
+   von 		 2.210984
+   temperature 		 2.157270
+
+topic 036
+   und 		 2.898097
+   new 		 2.721432
+   english 		 2.445899
+   first 		 2.350293
+   der 		 2.340262
+   german 		 2.284405
+   color 		 2.094292
+   east 		 1.987973
+   north 		 1.963642
+   text 		 1.787351
+
+topic 037
+   und 		 2.816107
+   english 		 2.792059
+   color 		 2.592976
+   bar 		 2.573835
+   temperature 		 2.476703
+   first 		 2.351082
+   von 		 2.212930
+   der 		 1.964400
+   text 		 1.838986
+   german 		 1.835066
+
+topic 038
+   und 		 3.555926
+   new 		 3.020820
+   color 		 2.660400
+   der 		 2.645061
+   english 		 2.641383
+   temperature 		 2.509587
+   german 		 2.471948
+   north 		 2.106286
+   von 		 2.070136
+   first 		 2.043792
+
+topic 039
+   und 		 3.658755
+   english 		 2.771599
+   new 		 2.702802
+   season 		 2.173843
+   german 		 2.138280
+   von 		 2.097796
+   der 		 2.058486
+   first 		 1.971062
+   temperature 		 1.906108
+   temple 		 1.796893
+
+topic 040
+   und 		 3.612172
+   english 		 2.829780
+   new 		 2.684966
+   der 		 2.359882
+   color 		 2.186268
+   german 		 2.177824
+   first 		 2.159585
+   saturday 		 2.155062
+   time 		 2.090782
+   von 		 2.083200
+
+topic 041
+   und 		 2.905924
+   english 		 2.813862
+   der 		 2.632720
+   color 		 2.607804
+   first 		 2.509395
+   german 		 2.481875
+   new 		 2.398399
+   born 		 2.275269
+   two 		 2.042005
+   bar 		 1.982815
+
+topic 042
+   und 		 3.922382
+   german 		 2.976155
+   color 		 2.753553
+   new 		 2.433537
+   der 		 2.369687
+   temple 		 2.158395
+   english 		 2.043555
+   bar 		 2.042557
+   von 		 1.991222
+   temperature 		 1.926225
+
+topic 043
+   und 		 4.077602
+   english 		 3.007536
+   der 		 2.906316
+   german 		 2.829178
+   von 		 2.639668
+   color 		 2.562756
+   new 		 2.526983
+   die 		 2.313494
+   first 		 2.123460
+   saturday 		 2.110480
+
+topic 044
+   und 		 2.840128
+   new 		 2.414397
+   der 		 2.358501
+   first 		 2.332217
+   von 		 2.268793
+   german 		 2.021333
+   english 		 1.981035
+   color 		 1.975709
+   second 		 1.905316
+   temperature 		 1.869104
+
+topic 045
+   und 		 3.278112
+   der 		 2.748768
+   first 		 2.558337
+   new 		 2.542519
+   german 		 2.516253
+   bar 		 2.285226
+   color 		 2.231152
+   english 		 2.216674
+   von 		 2.204740
+   king 		 1.960654
+
+topic 046
+   english 		 3.906743
+   und 		 3.120408
+   der 		 2.739723
+   german 		 2.709862
+   new 		 2.423235
+   season 		 2.344951
+   color 		 2.282830
+   north 		 2.243077
+   first 		 2.199570
+   league 		 2.092987
+
+topic 047
+   english 		 3.517755
+   und 		 3.388590
+   new 		 3.254733
+   german 		 3.046162
+   der 		 2.996677
+   von 		 2.614187
+   first 		 2.423847
+   color 		 2.264445
+   att 		 2.102421
+   time 		 2.099265
+
+topic 048
+   und 		 3.328818
+   der 		 2.833241
+   north 		 2.396929
+   german 		 2.297353
+   first 		 2.210160
+   new 		 2.180317
+   born 		 2.108596
+   march 		 2.064979
+   english 		 2.035296
+   color 		 1.833769
+
+topic 049
+   english 		 4.562338
+   und 		 3.536228
+   german 		 3.195963
+   color 		 2.798085
+   first 		 2.620501
+   der 		 2.395053
+   new 		 2.110541
+   von 		 2.062561
+   world 		 1.977929
+   bar 		 1.966069
+
+topic 050
+   und 		 3.945868
+   color 		 2.665111
+   german 		 2.477539
+   bar 		 2.403513
+   temperature 		 2.310127
+   der 		 2.302612
+   english 		 2.263629
+   light 		 2.238311
+   first 		 2.187886
+   time 		 2.134005
+
+topic 051
+   english 		 3.595496
+   und 		 3.502889
+   german 		 3.273909
+   der 		 3.166934
+   bar 		 2.938315
+   von 		 2.418511
+   color 		 2.307626
+   att 		 2.250278
+   text 		 2.162242
+   new 		 2.143071
+
+topic 052
+   und 		 3.447246
+   english 		 3.008083
+   german 		 2.997998
+   new 		 2.769286
+   der 		 2.766983
+   color 		 2.553092
+   second 		 2.219442
+   north 		 2.109537
+   von 		 2.020578
+   temple 		 1.984305
+
+topic 053
+   und 		 3.401138
+   english 		 3.142436
+   der 		 2.853197
+   color 		 2.765699
+   born 		 2.714798
+   new 		 2.528185
+   temple 		 2.404342
+   german 		 2.344198
+   first 		 2.313661
+   time 		 2.283552
+
+topic 054
+   und 		 3.119705
+   english 		 2.431729
+   first 		 2.203875
+   bar 		 2.143827
+   text 		 2.036269
+   der 		 2.009577
+   color 		 1.969379
+   time 		 1.962262
+   german 		 1.868615
+   saturday 		 1.833945
+
+topic 055
+   und 		 4.458099
+   english 		 3.558881
+   der 		 3.273887
+   bar 		 3.039699
+   first 		 2.966688
+   german 		 2.866013
+   text 		 2.686651
+   new 		 2.586608
+   von 		 2.580422
+   temperature 		 2.563184
+
+topic 056
+   english 		 3.569457
+   und 		 3.469879
+   german 		 3.377465
+   new 		 3.204489
+   der 		 2.990530
+   color 		 2.751184
+   bar 		 2.473295
+   light 		 2.087607
+   text 		 2.074090
+   von 		 2.010615
+
+topic 057
+   english 		 3.746045
+   und 		 3.678460
+   der 		 2.552278
+   german 		 2.380819
+   color 		 2.370235
+   new 		 2.332327
+   light 		 2.215369
+   von 		 1.980192
+   time 		 1.976117
+   first 		 1.966515
+
+topic 058
+   der 		 2.982622
+   und 		 2.643856
+   color 		 2.111949
+   english 		 2.087427
+   new 		 2.041694
+   first 		 1.997495
+   german 		 1.997128
+   von 		 1.937976
+   temple 		 1.880853
+   school 		 1.859417
+
+topic 059
+   english 		 3.633227
+   color 		 3.046946
+   und 		 2.759638
+   der 		 2.726721
+   von 		 2.666492
+   german 		 2.652855
+   new 		 2.594420
+   season 		 2.185033
+   des 		 2.029231
+   temple 		 1.948785
+
+topic 060
+   und 		 4.353250
+   english 		 3.879650
+   german 		 3.244259
+   der 		 3.187785
+   von 		 2.739031
+   new 		 2.692923
+   temperature 		 2.164172
+   time 		 2.038758
+   city 		 1.798237
+   first 		 1.770794
+
+topic 061
+   english 		 5.494034
+   und 		 4.634091
+   der 		 3.619839
+   german 		 3.358078
+   von 		 2.971935
+   new 		 2.601355
+   saturday 		 2.443959
+   bar 		 2.402343
+   color 		 2.383139
+   goals 		 2.271102
+
+topic 062
+   new 		 3.149217
+   und 		 2.923895
+   german 		 2.568798
+   english 		 2.468113
+   der 		 2.419684
+   color 		 2.197357
+   temperature 		 1.999066
+   temple 		 1.967107
+   first 		 1.881959
+   von 		 1.818895
+
+topic 063
+   english 		 3.763595
+   und 		 3.559970
+   der 		 3.028166
+   german 		 2.907606
+   von 		 2.609341
+   new 		 2.491265
+   color 		 2.320153
+   first 		 2.158695
+   north 		 1.924340
+   world 		 1.921987
+
+topic 064
+   und 		 3.513360
+   english 		 3.270111
+   der 		 3.058672
+   german 		 2.680469
+   new 		 2.629632
+   color 		 2.502954
+   first 		 2.312724
+   time 		 1.972125
+   von 		 1.954546
+   temperature 		 1.952570
+
+topic 065
+   english 		 3.363201
+   new 		 2.997596
+   und 		 2.952130
+   der 		 2.789249
+   first 		 2.788098
+   german 		 2.646828
+   color 		 2.162830
+   second 		 2.031792
+   year 		 1.959582
+   temple 		 1.944290
+
+topic 066
+   english 		 4.070349
+   und 		 3.880032
+   der 		 3.501662
+   german 		 3.406192
+   first 		 2.887510
+   new 		 2.823933
+   color 		 2.357732
+   north 		 2.342449
+   time 		 2.240019
+   von 		 2.223177
+
+topic 067
+   new 		 3.148359
+   german 		 2.663401
+   english 		 2.607225
+   und 		 2.585228
+   der 		 2.540618
+   north 		 2.416534
+   temperature 		 2.316399
+   bar 		 2.292852
+   saturday 		 2.172945
+   club 		 2.160779
+
+topic 068
+   der 		 4.051696
+   german 		 3.721614
+   english 		 3.671248
+   und 		 3.188085
+   color 		 2.575715
+   born 		 2.247635
+   two 		 2.228081
+   march 		 2.219637
+   temperature 		 2.055617
+   saturday 		 1.960425
+
+topic 069
+   german 		 4.168020
+   der 		 3.118984
+   english 		 3.114380
+   und 		 2.920783
+   new 		 2.693868
+   first 		 2.417992
+   bar 		 2.062841
+   men 		 2.038686
+   des 		 2.015429
+   king 		 2.005834
+
+topic 070
+   und 		 4.041892
+   der 		 3.158835
+   german 		 2.951041
+   first 		 2.823197
+   color 		 2.812973
+   new 		 2.618114
+   von 		 2.385948
+   saturday 		 2.182270
+   english 		 2.156048
+   final 		 1.984497
+
+topic 071
+   und 		 4.169943
+   german 		 3.241914
+   text 		 2.851994
+   english 		 2.839607
+   bar 		 2.806612
+   time 		 2.354384
+   first 		 2.108377
+   world 		 2.077422
+   von 		 2.014759
+   two 		 1.965978
+
+topic 072
+   und 		 3.795634
+   new 		 3.254917
+   temperature 		 2.627553
+   color 		 2.573344
+   german 		 2.500828
+   english 		 2.333494
+   time 		 2.253123
+   bar 		 2.164827
+   der 		 2.034876
+   saturday 		 1.972158
+
+topic 073
+   english 		 3.942224
+   und 		 3.923743
+   german 		 3.877470
+   new 		 3.110060
+   der 		 2.918589
+   von 		 2.381241
+   first 		 2.373638
+   des 		 2.350284
+   two 		 2.181731
+   die 		 2.173010
+
+topic 074
+   und 		 5.003090
+   new 		 4.008133
+   der 		 3.329440
+   english 		 3.229442
+   german 		 2.853450
+   first 		 2.466979
+   von 		 2.244597
+   january 		 2.188062
+   temperature 		 2.164065
+   color 		 2.119186
+
+topic 075
+   new 		 3.384818
+   first 		 3.225133
+   und 		 3.101595
+   der 		 2.539142
+   english 		 2.272884
+   bar 		 2.163066
+   german 		 2.113384
+   von 		 1.887047
+   north 		 1.886810
+   two 		 1.857438
+
+topic 076
+   und 		 3.970080
+   der 		 3.385001
+   bar 		 3.002103
+   color 		 2.935990
+   english 		 2.877423
+   temperature 		 2.840406
+   german 		 2.709911
+   text 		 2.581993
+   light 		 2.036735
+   first 		 1.984985
+
+topic 077
+   und 		 3.516242
+   english 		 3.129144
+   german 		 2.873853
+   color 		 2.141872
+   der 		 2.127553
+   city 		 1.944354
+   temperature 		 1.863512
+   light 		 1.845199
+   des 		 1.837412
+   area 		 1.813527
+
+topic 078
+   und 		 3.941430
+   year 		 3.337055
+   english 		 3.094575
+   bar 		 3.000083
+   color 		 2.676323
+   time 		 2.458437
+   new 		 2.435686
+   text 		 2.398658
+   german 		 2.338753
+   held 		 2.256904
+
+topic 079
+   und 		 3.561073
+   english 		 2.959352
+   german 		 2.611629
+   color 		 2.375100
+   der 		 2.357209
+   temperature 		 2.259132
+   north 		 2.146588
+   von 		 2.080807
+   new 		 2.049328
+   light 		 2.017589
+
+topic 080
+   und 		 3.932879
+   der 		 3.276691
+   german 		 2.765954
+   english 		 2.746918
+   color 		 2.467962
+   first 		 2.420369
+   county 		 2.269278
+   population 		 2.207558
+   district 		 2.119481
+   temperature 		 2.077242
+
+topic 081
+   und 		 3.518340
+   english 		 2.942879
+   der 		 2.930365
+   temperature 		 2.596531
+   color 		 2.590648
+   new 		 2.527209
+   german 		 2.334537
+   bar 		 2.266843
+   att 		 2.249682
+   saturday 		 2.081715
+
+topic 082
+   und 		 4.783737
+   english 		 3.448819
+   der 		 2.785698
+   first 		 2.621284
+   years 		 2.564994
+   new 		 2.452304
+   german 		 2.385512
+   von 		 2.334393
+   color 		 2.128727
+   august 		 2.037681
+
+topic 083
+   und 		 3.998005
+   color 		 3.597926
+   new 		 2.950022
+   der 		 2.883676
+   german 		 2.697327
+   years 		 2.692093
+   clubs 		 2.523421
+   english 		 2.441599
+   temperature 		 2.426220
+   time 		 2.162234
+
+topic 084
+   new 		 4.265549
+   und 		 3.320572
+   german 		 3.070409
+   english 		 2.528451
+   der 		 2.409099
+   north 		 2.182478
+   bar 		 2.075675
+   first 		 2.068018
+   series 		 1.877150
+   moon 		 1.818962
+
+topic 085
+   und 		 3.148378
+   english 		 2.203765
+   color 		 2.166494
+   german 		 2.126152
+   march 		 2.080139
+   released 		 2.055184
+   men 		 2.020323
+   der 		 2.019183
+   first 		 1.951294
+   league 		 1.907243
+
+topic 086
+   und 		 3.328661
+   english 		 3.024965
+   der 		 2.853111
+   color 		 2.580225
+   german 		 2.549445
+   new 		 2.362489
+   temperature 		 2.088524
+   north 		 2.052995
+   saturday 		 1.999875
+   temple 		 1.875151
+
+topic 087
+   und 		 3.408802
+   new 		 3.377160
+   english 		 3.201971
+   north 		 2.787229
+   german 		 2.536198
+   color 		 2.408395
+   der 		 2.344827
+   league 		 2.221554
+   temperature 		 2.112478
+   first 		 2.044508
+
+topic 088
+   und 		 3.791176
+   english 		 3.223703
+   der 		 3.152080
+   new 		 2.687270
+   color 		 2.547397
+   temperature 		 2.268568
+   main 		 2.143894
+   att 		 2.073827
+   time 		 2.025470
+   german 		 1.912401
+
+topic 089
+   und 		 3.200250
+   english 		 2.890035
+   german 		 2.659256
+   der 		 2.629134
+   new 		 2.369604
+   color 		 2.322311
+   time 		 2.141690
+   first 		 2.029262
+   von 		 1.945192
+   die 		 1.929992
+
+topic 090
+   und 		 4.350187
+   english 		 3.500412
+   german 		 3.156950
+   new 		 2.703723
+   der 		 2.634781
+   first 		 2.620375
+   color 		 2.486384
+   von 		 2.363681
+   north 		 2.290111
+   bar 		 2.045478
+
+topic 091
+   und 		 3.581133
+   der 		 3.509814
+   german 		 3.082739
+   english 		 2.620708
+   new 		 2.471359
+   first 		 2.182970
+   season 		 2.110663
+   club 		 2.066029
+   color 		 1.987419
+   temperature 		 1.981367
+
+topic 092
+   und 		 3.785476
+   der 		 3.189182
+   new 		 2.970617
+   german 		 2.966417
+   english 		 2.730695
+   color 		 2.727435
+   first 		 2.428227
+   second 		 2.423368
+   time 		 2.066123
+   att 		 2.051022
+
+topic 093
+   district 		 3.899593
+   und 		 3.626858
+   german 		 3.297152
+   english 		 2.529319
+   von 		 2.489178
+   new 		 2.444429
+   history 		 2.274802
+   school 		 2.231237
+   population 		 2.205350
+   des 		 2.167209
+
+topic 094
+   und 		 3.831823
+   color 		 2.815704
+   first 		 2.728913
+   der 		 2.690999
+   german 		 2.541894
+   new 		 2.495386
+   english 		 2.372817
+   von 		 2.240291
+   two 		 2.067636
+   second 		 1.948755
+
+topic 095
+   color 		 2.851900
+   der 		 2.814491
+   english 		 2.705190
+   first 		 2.564628
+   und 		 2.304819
+   german 		 2.234846
+   temperature 		 2.184218
+   years 		 2.091709
+   year 		 1.914546
+   time 		 1.913987
+
+topic 096
+   und 		 4.818955
+   english 		 2.987196
+   der 		 2.978762
+   first 		 2.683136
+   german 		 2.563813
+   time 		 2.087962
+   temple 		 1.958114
+   world 		 1.854163
+   temperature 		 1.846409
+   new 		 1.815824
+
+topic 097
+   english 		 2.854699
+   und 		 2.566841
+   der 		 2.495151
+   german 		 2.240887
+   bar 		 2.215803
+   new 		 2.197029
+   first 		 2.119510
+   temple 		 2.099883
+   von 		 2.066569
+   temperature 		 1.971858
+
+topic 098
+   new 		 3.071919
+   und 		 2.997314
+   color 		 2.930834
+   english 		 2.267130
+   time 		 2.210468
+   first 		 2.186557
+   temperature 		 2.128606
+   final 		 2.010225
+   der 		 1.948557
+   temple 		 1.941912
+
+topic 099
+   german 		 3.047212
+   und 		 2.980419
+   first 		 2.843168
+   english 		 2.777091
+   der 		 2.664823
+   new 		 2.296503
+   von 		 2.099446
+   time 		 2.097272
+   august 		 1.965039
+   color 		 1.838626
+

@@ -7,10 +7,10 @@ from __future__ import division
 import numpy as np
 from scipy.special import psi
 import time
-from .utils import util_funcs
+from tmlib.lda.utils import util_funcs
 from ldamodel import LdaModel
 from ldalearning import LdaLearning
-from ..datasets.base import DataFormat, convert_corpus_format
+from tmlib.datasets.base import DataFormat, convert_corpus_format
 
 def dirichlet_expectation(alpha):
     """
@@ -76,7 +76,12 @@ class MLCGS(LdaLearning):
                             self.samples, self.burn_in)
         # normalize Ndk_mean
         Ndk_mean_norm = Ndk_mean.sum(axis=1)
-        Ndk_mean /= Ndk_mean_norm[:, np.newaxis]
+        for d in range(len(Ndk_mean_norm)):
+	    if Ndk_mean_norm[d] == 0:
+		Ndk_mean[d, :] = 0
+            else:
+		Ndk_mean[d, :] /= Ndk_mean_norm[d]
+        #Ndk_mean /= Ndk_mean_norm[:, np.newaxis]
         return Ndk_mean, z
 
     def update_lambda(self, wordtks, lengths, Ndk_mean):
@@ -103,6 +108,7 @@ class MLCGS(LdaLearning):
             learn_model(data, save_model_every=save_model_every, compute_sparsity_every=compute_sparsity_every,
                         save_statistic=save_statistic, save_top_words_every=save_top_words_every,
                         num_top_words=num_top_words, model_folder=model_folder)
+        return self.lda_model
 
     def __getitem__(self, docs):
         docs = convert_corpus_format(docs, DataFormat.TERM_SEQUENCE)

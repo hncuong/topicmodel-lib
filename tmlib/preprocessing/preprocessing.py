@@ -1,14 +1,35 @@
-import os, os.path
+import os, os.path, sys
 from os.path import isfile, join, isdir
-import numpy as np
-from nltk.tokenize import TreebankWordTokenizer
 from nltk.tokenize import RegexpTokenizer
 from nltk.stem.porter import PorterStemmer
+
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../..'))
+
 import logging
+from tmlib import config
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 tokenizer = RegexpTokenizer(r'\w+')
 p_stemmer = PorterStemmer()
+
+def get_data_home(data_home=None):
+    """Return the path of the tmlib data dir.
+
+    This folder is used by some large dataset loaders to avoid
+    downloading the data several times.
+
+    By default the data dir is set to a folder named 'tmlib_data'
+    in the user home folder.
+    The '~' symbol is expanded to the user home folder.
+
+    If the folder does not already exist, it is automatically created.
+    """
+    if data_home is None:
+        data_home = config.get_config('datasets', 'TMLIB_DATA_HOME')
+    data_home = os.path.expanduser(data_home)
+    if not os.path.exists(data_home):
+        os.makedirs(data_home)
+    return data_home
 
 
 class PreProcessing:
@@ -18,7 +39,6 @@ class PreProcessing:
         self.main_name_file = self.file_name.split('.')[0]
         self.list_doc = list()
         self.vocab = list()
-        self.list_doc_freq = list()
         self.stemmed = stemmed
         self.remove_rare_word = remove_rare_word
         self.remove_common_word = remove_common_word
@@ -82,51 +102,56 @@ class PreProcessing:
         stop_list = stop_list + ['_', ]
         print("Waiting...")
         if isfile(self.file_path):
+            #print 'hello'
             fread = open(self.file_path)
             line = fread.readline()
             num = 1
             while line:
                 line = line.strip()
                 if line == "<TEXT>":
-                    doc = fread.readline().strip()
-                    # print(num)
+                    #print(num)
+                    next_line = fread.readline().strip()
+                    if len(next_line) > 10:
+                        l = next_line
+                    else:
+                        l = fread.readline().strip()
+                    doc = ''
+                    while l != '</TEXT>' and len(l) > 10:
+                        doc = doc + ' ' + l
+                        l = fread.readline().strip()
+                    #num += 1
                     list_word = self.pro_per_doc(doc, stop_list)
                     self.list_doc.append(list_word)
-                    num += 1
                 line = fread.readline()
         else:
-            logging.error('Unknown file data %s' %self.file_path)
+            logging.error('Unknown file data %s' % self.file_path)
             exit()
 
         if self.remove_common_word is None:
             self.remove_common_word = int(self.id_doc * 0.5)
         self.filter(self.remove_rare_word, self.remove_common_word)
 
-        numDocs = len(self.list_doc)
-        for d in range(0, numDocs):
-            list_word = []
+        self.num_docs = len(self.list_doc)
+        for d in range(0, self.num_docs):
             numWords = len(self.list_doc[d])
             for w in range(0, numWords):
                 word = self.list_doc[d][w]
                 self.list_doc[d][w] = self.vocab.index(word)
-                inlist = False
-                for elem in list_word:
-                    if self.list_doc[d][w] == elem[0]:
-                        elem[1] += 1
-                        inlist = True
-                        break
-                if not inlist:
-                    list_word.append([self.list_doc[d][w], 1])
-            self.list_doc_freq.append(list_word)
 
-    def extract_vocab(self, folder):
+    def extract_vocab(self, folder=None):
+        self.num_terms = len(self.vocab)
+        if folder is None:
+            folder = get_data_home() + '/' + self.main_name_file
+        if not os.path.exists(folder):
+            os.makedirs(folder)
         if isdir(folder):
             if self.vocab:
                 fout = open(join(folder, "vocab.txt"), "w")
-                self.path_file_vocab = folder + 'vocab.txt'
+                self.path_file_vocab = folder + '/vocab.txt'
                 for word in self.vocab:
                     fout.write("%s\n" % word)
                 fout.close()
+                del self.vocab
             else:
                 logging.error("Can't create vocabulary. Please check again!")
                 exit()
@@ -134,13 +159,17 @@ class PreProcessing:
             logging.error('Unknown folder data %s' %folder)
             exit()
 
-    def save_format_sq(self, folder):
+    def save_format_sq(self, folder=None):
+        if folder is None:
+            folder = get_data_home() + '/' + self.main_name_file
+        if not os.path.exists(folder):
+            os.makedirs(folder)
         if isdir(folder):
             if self.list_doc:
                 fout = open(join(folder, self.main_name_file+".sq"), "w")
-                self.path_file_sq = folder + self.main_name_file+".sq"
+                self.path_file_sq = folder + '/' + self.main_name_file+".sq"
                 for doc in self.list_doc:
-                    fout.write("%d " % len(doc))
+                    #fout.write("%d " % len(doc))
                     for word in doc:
                         fout.write("%d " % word)
                     fout.write("\n")
@@ -149,17 +178,32 @@ class PreProcessing:
             logging.error('Unknown folder data %s' %folder)
             exit()
 
-    def save_format_tf(self, folder):
+    def save_format_tf(self, folder=None):
+        if folder is None:
+            folder = get_data_home() + '/' + self.main_name_file
+        if not os.path.exists(folder):
+            os.makedirs(folder)
         if isdir(folder):
-            if self.list_doc:
-                fout = open(join(folder, self.main_name_file+".tf"), "w")
-                self.path_file_tf = folder + self.main_name_file+".tf"
-                for doc in self.list_doc_freq:
-                    fout.write("%d " % len(doc))
-                    for elem in doc:
-                        fout.write("%d:%d " % (elem[0], elem[1]))
-                    fout.write("\n")
-                fout.close()
+            fout = open(join(folder, self.main_name_file + ".tf"), "w")
+            self.path_file_tf = folder + '/' + self.main_name_file + ".tf"
+            for d in range(0, self.num_docs):
+                list_word = []
+                numWords = len(self.list_doc[d])
+                for w in range(0, numWords):
+                    inlist = False
+                    for elem in list_word:
+                        if self.list_doc[d][w] == elem[0]:
+                            elem[1] += 1
+                            inlist = True
+                            break
+                    if not inlist:
+                        list_word.append([self.list_doc[d][w], 1])
+                fout.write("%d " %len(list_word))
+                for elem in list_word:
+                    fout.write("%d:%d " %(elem[0], elem[1]))
+                fout.write("\n")
+            fout.close()
+            #del self.list_doc
         else:
             logging.error('Unknown folder data %s' %folder)
             exit()

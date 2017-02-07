@@ -1,0 +1,1200 @@
+topic 000
+   new 		 11.860400
+   services 		 11.315537
+   first 		 7.528728
+   team 		 7.179452
+   world 		 6.982672
+   election 		 6.193061
+   two 		 5.666609
+   time 		 5.418154
+   school 		 4.801361
+   years 		 4.650510
+
+topic 001
+   bar 		 8.927852
+   services 		 8.611954
+   new 		 5.871820
+   first 		 5.674144
+   two 		 5.200958
+   years 		 4.800199
+   english 		 4.646036
+   john 		 4.644558
+   text 		 4.595088
+   und 		 4.431767
+
+topic 002
+   services 		 15.943749
+   election 		 5.390936
+   first 		 5.343000
+   john 		 5.149168
+   two 		 5.054851
+   new 		 4.644877
+   british 		 4.572741
+   time 		 4.547149
+   community 		 4.543296
+   school 		 4.419295
+
+topic 003
+   services 		 23.191682
+   new 		 8.146634
+   first 		 6.655261
+   two 		 5.835527
+   john 		 5.425528
+   community 		 5.072575
+   service 		 4.749337
+   score 		 4.746567
+   london 		 4.726806
+   und 		 4.557623
+
+topic 004
+   services 		 15.309357
+   first 		 7.850010
+   new 		 7.732557
+   election 		 5.411579
+   two 		 5.071270
+   community 		 4.679204
+   world 		 4.647367
+   place 		 4.595784
+   john 		 4.594847
+   time 		 4.413015
+
+topic 005
+   species 		 54.067049
+   family 		 42.330001
+   services 		 35.932450
+   first 		 24.948768
+   new 		 24.040282
+   genus 		 19.377907
+   found 		 16.149257
+   international 		 15.433292
+   described 		 14.998379
+   known 		 13.920934
+
+topic 006
+   services 		 19.041038
+   director 		 6.182596
+   new 		 5.718840
+   actor 		 5.632439
+   first 		 5.556971
+   university 		 4.703271
+   two 		 4.631738
+   german 		 4.272537
+   english 		 4.192267
+   world 		 4.129643
+
+topic 007
+   services 		 14.408123
+   first 		 5.694491
+   new 		 4.335882
+   north 		 3.835369
+   high 		 3.747900
+   south 		 3.675960
+   two 		 3.587395
+   london 		 3.502593
+   election 		 3.473709
+   school 		 3.322938
+
+topic 008
+   services 		 13.439877
+   new 		 7.047766
+   election 		 6.090765
+   first 		 5.195230
+   london 		 4.836500
+   german 		 4.600335
+   und 		 4.569900
+   time 		 3.871845
+   world 		 3.856746
+   chief 		 3.848330
+
+topic 009
+   services 		 9.954642
+   first 		 7.455818
+   two 		 7.374437
+   years 		 6.068691
+   new 		 5.890777
+   school 		 5.293572
+   und 		 4.938959
+   time 		 4.536390
+   german 		 4.339603
+   election 		 4.188286
+
+topic 010
+   services 		 14.968394
+   new 		 5.707141
+   years 		 5.237491
+   north 		 4.046561
+   john 		 4.015861
+   two 		 4.004746
+   election 		 3.954370
+   high 		 3.862551
+   final 		 3.659992
+   history 		 3.659249
+
+topic 011
+   services 		 18.799313
+   new 		 8.684220
+   election 		 8.037198
+   first 		 7.807939
+   north 		 6.924273
+   years 		 6.489093
+   world 		 5.768320
+   two 		 5.076116
+   united 		 4.924731
+   international 		 4.899027
+
+topic 012
+   services 		 15.045749
+   north 		 8.110947
+   new 		 6.253913
+   high 		 5.151073
+   south 		 5.122057
+   election 		 5.031408
+   international 		 5.015582
+   london 		 4.653049
+   university 		 4.567911
+   station 		 4.489221
+
+topic 013
+   services 		 11.420538
+   new 		 5.172783
+   election 		 4.933893
+   first 		 4.652417
+   john 		 4.308414
+   time 		 4.229295
+   service 		 4.223461
+   team 		 4.071172
+   north 		 3.641652
+   community 		 3.635823
+
+topic 014
+   services 		 9.207926
+   new 		 7.797090
+   election 		 5.469318
+   north 		 5.462871
+   world 		 4.069956
+   john 		 3.997818
+   community 		 3.933467
+   two 		 3.715167
+   english 		 3.629025
+   first 		 3.577239
+
+topic 015
+   services 		 12.280807
+   election 		 8.182268
+   new 		 7.203141
+   two 		 5.355682
+   john 		 4.842868
+   first 		 4.212605
+   time 		 4.185074
+   und 		 4.058100
+   north 		 4.011935
+   london 		 3.922964
+
+topic 016
+   services 		 16.179555
+   first 		 6.258293
+   new 		 6.007965
+   two 		 5.465405
+   john 		 5.041469
+   park 		 4.838328
+   community 		 4.812737
+   service 		 4.594041
+   university 		 4.290729
+   national 		 3.988511
+
+topic 017
+   district 		 81.961259
+   population 		 81.350951
+   south 		 68.778263
+   area 		 65.997813
+   city 		 65.543776
+   services 		 62.685917
+   community 		 51.546216
+   state 		 45.003806
+   party 		 37.088560
+   town 		 34.599879
+
+topic 018
+   new 		 18.430173
+   bar 		 11.360316
+   services 		 9.550407
+   south 		 7.126819
+   election 		 6.144940
+   text 		 6.118689
+   first 		 6.032153
+   two 		 5.687768
+   john 		 5.024691
+   north 		 4.804784
+
+topic 019
+   services 		 14.805549
+   world 		 6.213182
+   john 		 6.110141
+   community 		 5.404632
+   new 		 5.314344
+   first 		 5.090663
+   two 		 4.752067
+   high 		 4.445565
+   north 		 3.863142
+   und 		 3.554046
+
+topic 020
+   services 		 18.847291
+   first 		 6.469528
+   community 		 6.427522
+   election 		 6.147527
+   english 		 5.190224
+   london 		 5.145782
+   two 		 5.059742
+   high 		 4.933956
+   john 		 4.896563
+   und 		 4.428673
+
+topic 021
+   services 		 6.864095
+   new 		 5.533995
+   family 		 5.477141
+   team 		 5.025848
+   first 		 4.668976
+   two 		 4.624055
+   score 		 4.494935
+   time 		 4.094850
+   park 		 3.968689
+   school 		 3.862547
+
+topic 022
+   services 		 13.109415
+   first 		 8.446052
+   world 		 5.706334
+   two 		 5.525607
+   new 		 5.205981
+   national 		 4.591576
+   election 		 4.453374
+   community 		 4.400941
+   team 		 4.170940
+   time 		 4.168369
+
+topic 023
+   services 		 17.316242
+   first 		 9.218164
+   new 		 8.072931
+   election 		 5.845456
+   years 		 5.483401
+   two 		 5.119975
+   time 		 5.102241
+   john 		 4.760601
+   park 		 4.359154
+   team 		 4.319247
+
+topic 024
+   services 		 11.036924
+   london 		 4.371209
+   election 		 4.150396
+   two 		 4.053698
+   first 		 3.915529
+   john 		 3.771676
+   community 		 3.664478
+   area 		 3.639615
+   school 		 3.584296
+   high 		 3.522187
+
+topic 025
+   services 		 11.619787
+   new 		 5.674592
+   election 		 4.689139
+   north 		 4.687318
+   time 		 4.661824
+   john 		 4.486231
+   high 		 4.103751
+   university 		 3.972202
+   city 		 3.807310
+   two 		 3.716920
+
+topic 026
+   services 		 13.182433
+   new 		 11.969709
+   election 		 7.607800
+   world 		 6.787643
+   first 		 6.669490
+   two 		 6.359969
+   john 		 6.166209
+   time 		 5.971587
+   london 		 5.775035
+   team 		 5.764781
+
+topic 027
+   services 		 11.892194
+   new 		 6.082613
+   first 		 5.800964
+   years 		 4.220948
+   election 		 4.178496
+   population 		 4.082191
+   community 		 4.028437
+   two 		 3.893784
+   london 		 3.855635
+   world 		 3.805197
+
+topic 028
+   services 		 14.911486
+   first 		 9.401396
+   two 		 5.765610
+   new 		 5.620760
+   time 		 5.511777
+   community 		 5.495027
+   station 		 5.056212
+   years 		 4.748117
+   english 		 4.470894
+   university 		 4.349012
+
+topic 029
+   county 		 117.044635
+   community 		 109.679118
+   school 		 75.732783
+   services 		 75.631780
+   village 		 40.529827
+   south 		 35.032455
+   district 		 33.326680
+   election 		 27.733122
+   north 		 25.394383
+   east 		 24.778056
+
+topic 030
+   services 		 14.116153
+   first 		 8.279751
+   new 		 5.076708
+   two 		 4.842549
+   world 		 4.727443
+   election 		 4.388678
+   john 		 4.348485
+   team 		 4.178782
+   time 		 4.120226
+   der 		 3.923518
+
+topic 031
+   services 		 12.716723
+   election 		 7.617999
+   new 		 6.339693
+   first 		 6.285280
+   time 		 4.757392
+   two 		 4.579685
+   english 		 4.560872
+   score 		 4.363600
+   park 		 4.323399
+   made 		 4.053880
+
+topic 032
+   services 		 9.929232
+   two 		 7.184741
+   new 		 6.677631
+   first 		 4.882868
+   world 		 4.849328
+   years 		 4.629266
+   states 		 4.368243
+   university 		 4.339751
+   und 		 4.272553
+   place 		 4.143147
+
+topic 033
+   services 		 11.004735
+   new 		 6.505818
+   first 		 5.682531
+   community 		 4.174641
+   john 		 4.174291
+   service 		 4.028494
+   second 		 3.777232
+   english 		 3.727877
+   team 		 3.687618
+   made 		 3.660260
+
+topic 034
+   services 		 18.275986
+   election 		 8.304526
+   new 		 8.015969
+   first 		 7.250124
+   two 		 6.359064
+   high 		 4.495020
+   school 		 4.166221
+   service 		 4.078894
+   national 		 3.978186
+   london 		 3.909263
+
+topic 035
+   services 		 14.026292
+   first 		 8.936712
+   years 		 8.473772
+   new 		 8.320871
+   time 		 5.562645
+   world 		 4.995989
+   two 		 4.974571
+   united 		 4.846008
+   american 		 4.831631
+   community 		 4.805070
+
+topic 036
+   services 		 16.206120
+   new 		 6.375615
+   first 		 6.287152
+   john 		 4.202178
+   north 		 4.191956
+   east 		 3.989185
+   university 		 3.761798
+   community 		 3.753878
+   park 		 3.711683
+   national 		 3.679605
+
+topic 037
+   services 		 10.825208
+   first 		 6.195078
+   election 		 5.119871
+   community 		 4.744124
+   new 		 4.116828
+   high 		 3.919241
+   john 		 3.847677
+   education 		 3.545365
+   world 		 3.496969
+   bar 		 3.387330
+
+topic 038
+   services 		 17.910365
+   new 		 8.125031
+   john 		 6.469767
+   first 		 5.586515
+   election 		 5.309466
+   world 		 5.148235
+   community 		 4.991551
+   university 		 4.601213
+   north 		 4.449774
+   music 		 4.380702
+
+topic 039
+   services 		 11.627852
+   new 		 6.782777
+   first 		 5.140078
+   team 		 4.106457
+   election 		 3.757375
+   community 		 3.716372
+   und 		 3.689235
+   season 		 3.612594
+   score 		 3.544677
+   john 		 3.495814
+
+topic 040
+   services 		 17.533132
+   new 		 7.370309
+   first 		 6.662149
+   london 		 5.989387
+   john 		 5.660708
+   election 		 5.107726
+   north 		 4.879272
+   time 		 4.470546
+   world 		 4.273708
+   two 		 4.224408
+
+topic 041
+   services 		 12.158208
+   first 		 7.701946
+   election 		 6.976661
+   new 		 6.136316
+   two 		 5.830647
+   world 		 5.345504
+   born 		 5.227049
+   team 		 5.010669
+   university 		 4.565520
+   school 		 4.479385
+
+topic 042
+   services 		 29.600310
+   election 		 8.754146
+   new 		 6.812065
+   john 		 6.619392
+   community 		 6.121412
+   first 		 5.367109
+   education 		 5.099895
+   school 		 5.036190
+   north 		 4.624693
+   british 		 4.618974
+
+topic 043
+   services 		 14.695583
+   election 		 9.942056
+   new 		 6.359450
+   john 		 6.187006
+   first 		 5.947256
+   chief 		 4.220080
+   community 		 4.218902
+   council 		 4.199407
+   london 		 4.150334
+   und 		 4.097951
+
+topic 044
+   services 		 9.594864
+   first 		 6.200187
+   new 		 5.622045
+   world 		 3.851110
+   score 		 3.785997
+   community 		 3.620750
+   two 		 3.572394
+   second 		 3.398347
+   south 		 3.296785
+   known 		 3.102207
+
+topic 045
+   services 		 14.580625
+   first 		 7.037901
+   election 		 5.994709
+   new 		 5.814598
+   community 		 4.989162
+   two 		 3.883685
+   united 		 3.760824
+   bar 		 3.584642
+   service 		 3.557182
+   university 		 3.549544
+
+topic 046
+   services 		 12.529520
+   first 		 7.074593
+   new 		 6.446190
+   john 		 5.640789
+   two 		 5.508964
+   election 		 5.471420
+   years 		 5.168209
+   high 		 5.121783
+   north 		 5.092910
+   english 		 5.079857
+
+topic 047
+   services 		 10.460015
+   new 		 8.531133
+   first 		 6.727210
+   john 		 4.510397
+   time 		 4.421050
+   english 		 4.366151
+   education 		 4.264130
+   community 		 4.253002
+   two 		 3.865543
+   series 		 3.702954
+
+topic 048
+   services 		 11.045680
+   first 		 6.324009
+   world 		 5.758843
+   north 		 5.226491
+   new 		 5.211917
+   john 		 4.978687
+   two 		 4.602088
+   born 		 4.429217
+   score 		 4.117690
+   april 		 4.038427
+
+topic 049
+   services 		 8.184267
+   first 		 7.962302
+   election 		 6.613706
+   english 		 5.857791
+   world 		 5.533814
+   two 		 5.511345
+   new 		 5.072076
+   team 		 4.257641
+   castle 		 4.068432
+   high 		 3.884439
+
+topic 050
+   services 		 14.294753
+   first 		 5.609851
+   john 		 5.430621
+   community 		 4.512720
+   years 		 4.413782
+   two 		 4.308966
+   new 		 4.267914
+   time 		 4.247577
+   north 		 4.051243
+   und 		 3.968736
+
+topic 051
+   services 		 15.101423
+   election 		 5.405722
+   bar 		 5.331332
+   new 		 5.087090
+   two 		 4.789878
+   john 		 4.723024
+   first 		 4.451257
+   english 		 4.434771
+   service 		 4.385667
+   university 		 4.048299
+
+topic 052
+   services 		 17.200433
+   election 		 7.428025
+   new 		 7.326026
+   first 		 5.151435
+   university 		 4.769673
+   north 		 4.748765
+   john 		 4.549124
+   london 		 4.337088
+   second 		 4.237817
+   national 		 4.156290
+
+topic 053
+   born 		 34.010430
+   people 		 18.890171
+   services 		 17.343156
+   italian 		 14.598137
+   american 		 13.156983
+   first 		 8.933472
+   won 		 8.408496
+   new 		 7.618013
+   notable 		 7.599322
+   august 		 7.206929
+
+topic 054
+   services 		 12.987803
+   election 		 6.456767
+   first 		 6.185513
+   university 		 4.811577
+   two 		 4.193445
+   world 		 4.096322
+   time 		 3.958180
+   music 		 3.935122
+   london 		 3.796795
+   community 		 3.755026
+
+topic 055
+   services 		 16.546481
+   first 		 9.478121
+   john 		 8.148058
+   bar 		 6.648436
+   new 		 6.598870
+   school 		 6.130435
+   election 		 6.089879
+   building 		 5.329194
+   community 		 5.082141
+   years 		 5.028153
+
+topic 056
+   services 		 16.951940
+   new 		 8.145616
+   first 		 5.257606
+   world 		 5.051415
+   education 		 5.034121
+   two 		 4.695233
+   english 		 4.360065
+   team 		 4.278945
+   bar 		 4.171856
+   university 		 4.146121
+
+topic 057
+   services 		 9.620566
+   new 		 5.861653
+   first 		 5.484875
+   election 		 5.132609
+   world 		 4.934188
+   english 		 4.669649
+   john 		 4.098488
+   time 		 4.059735
+   team 		 3.976452
+   community 		 3.747548
+
+topic 058
+   services 		 10.715805
+   election 		 5.672065
+   school 		 5.323393
+   first 		 5.289789
+   two 		 5.038132
+   world 		 4.995050
+   new 		 4.685289
+   john 		 4.089952
+   place 		 3.892096
+   south 		 3.881899
+
+topic 059
+   services 		 17.282614
+   new 		 6.356997
+   community 		 5.250088
+   election 		 5.097983
+   john 		 5.083120
+   english 		 4.510620
+   two 		 4.343213
+   world 		 4.122141
+   special 		 3.836314
+   british 		 3.739580
+
+topic 060
+   services 		 14.502761
+   new 		 7.176708
+   english 		 4.989791
+   john 		 4.906234
+   first 		 4.784750
+   world 		 4.648705
+   und 		 4.426205
+   two 		 4.347933
+   time 		 4.226728
+   national 		 4.176108
+
+topic 061
+   services 		 41.602664
+   years 		 18.723320
+   goals 		 17.289185
+   team 		 13.016261
+   election 		 11.882092
+   new 		 7.985760
+   english 		 7.818409
+   clubs 		 7.682546
+   first 		 7.444278
+   world 		 7.109940
+
+topic 062
+   services 		 9.546615
+   election 		 8.777761
+   new 		 7.367841
+   first 		 4.769605
+   london 		 4.165069
+   world 		 4.090500
+   two 		 3.625415
+   community 		 3.581256
+   local 		 3.188625
+   years 		 3.095666
+
+topic 063
+   services 		 14.389580
+   first 		 6.147767
+   new 		 5.866436
+   community 		 4.955604
+   school 		 4.818067
+   english 		 4.670423
+   world 		 4.444491
+   high 		 4.290165
+   two 		 4.169769
+   team 		 3.977185
+
+topic 064
+   services 		 24.676398
+   election 		 10.558071
+   new 		 6.781354
+   first 		 6.509574
+   points 		 4.711414
+   community 		 4.303168
+   general 		 4.160960
+   english 		 4.082451
+   place 		 4.006998
+   london 		 3.995061
+
+topic 065
+   services 		 18.152149
+   new 		 8.599682
+   first 		 8.371512
+   john 		 5.494418
+   education 		 5.119085
+   national 		 4.845138
+   two 		 4.720239
+   university 		 4.539065
+   community 		 4.470722
+   school 		 4.435671
+
+topic 066
+   services 		 16.075364
+   first 		 10.505284
+   new 		 8.181369
+   two 		 7.124800
+   north 		 5.815208
+   time 		 5.584506
+   english 		 5.448932
+   john 		 5.299972
+   community 		 4.945337
+   world 		 4.933795
+
+topic 067
+   services 		 8.098748
+   new 		 8.068558
+   north 		 5.233371
+   election 		 5.077806
+   first 		 5.052713
+   university 		 4.497017
+   john 		 4.297404
+   time 		 4.237586
+   two 		 4.203974
+   state 		 4.012454
+
+topic 068
+   services 		 15.451756
+   two 		 6.425212
+   first 		 5.304575
+   john 		 5.001676
+   election 		 4.786544
+   born 		 4.736945
+   english 		 4.683184
+   german 		 4.400579
+   der 		 4.249104
+   west 		 4.145329
+
+topic 069
+   services 		 14.312732
+   new 		 6.898010
+   first 		 6.861734
+   castle 		 5.903907
+   election 		 5.420448
+   john 		 5.270514
+   world 		 5.231583
+   german 		 4.864134
+   education 		 4.718315
+   community 		 4.716426
+
+topic 070
+   services 		 16.648655
+   first 		 8.387635
+   election 		 6.904421
+   new 		 6.785486
+   community 		 5.011267
+   world 		 4.694477
+   two 		 4.421446
+   service 		 4.322109
+   john 		 4.295280
+   high 		 4.283341
+
+topic 071
+   services 		 8.952975
+   bar 		 5.856481
+   world 		 5.492146
+   two 		 5.378108
+   first 		 5.317773
+   text 		 4.978360
+   time 		 4.846148
+   und 		 4.196793
+   years 		 4.105123
+   london 		 3.982704
+
+topic 072
+   services 		 15.159460
+   new 		 8.897114
+   two 		 5.349294
+   first 		 5.343487
+   john 		 5.084859
+   time 		 4.904808
+   years 		 4.380684
+   world 		 4.322509
+   university 		 4.317992
+   election 		 4.252371
+
+topic 073
+   services 		 23.310372
+   new 		 9.051061
+   first 		 8.357848
+   election 		 8.342374
+   two 		 7.389991
+   world 		 6.968519
+   english 		 5.501489
+   high 		 5.492216
+   service 		 5.278586
+   time 		 5.070112
+
+topic 074
+   services 		 17.833789
+   new 		 11.084582
+   first 		 7.680425
+   world 		 5.728592
+   two 		 5.390795
+   und 		 5.046483
+   john 		 4.393896
+   service 		 4.276636
+   park 		 4.235755
+   community 		 4.227980
+
+topic 075
+   election 		 14.898086
+   services 		 11.712197
+   first 		 10.809316
+   new 		 9.793920
+   two 		 5.786627
+   london 		 5.573867
+   world 		 4.781484
+   international 		 4.142530
+   council 		 4.051790
+   north 		 4.029828
+
+topic 076
+   services 		 9.840616
+   bar 		 5.389039
+   first 		 5.184619
+   london 		 4.815822
+   japanese 		 4.651173
+   music 		 4.484064
+   area 		 4.403778
+   new 		 4.209555
+   und 		 4.050667
+   national 		 3.967470
+
+topic 077
+   services 		 12.713192
+   community 		 4.954168
+   two 		 4.422930
+   city 		 4.255403
+   united 		 4.032133
+   first 		 3.853762
+   school 		 3.819824
+   english 		 3.812277
+   area 		 3.789597
+   high 		 3.542526
+
+topic 078
+   services 		 21.752697
+   year 		 10.487978
+   first 		 7.466578
+   new 		 7.228328
+   election 		 6.734688
+   time 		 6.162110
+   name 		 6.128131
+   john 		 5.729741
+   international 		 5.587849
+   october 		 5.308173
+
+topic 079
+   services 		 12.108727
+   london 		 5.486241
+   world 		 5.030256
+   new 		 4.751572
+   north 		 4.616612
+   castle 		 4.511683
+   two 		 4.406766
+   high 		 4.130627
+   first 		 4.055122
+   school 		 3.997561
+
+topic 080
+   services 		 13.948916
+   election 		 7.616865
+   first 		 6.559352
+   school 		 4.425079
+   john 		 4.292113
+   community 		 4.233590
+   new 		 4.074918
+   war 		 4.003009
+   und 		 3.973926
+   south 		 3.882767
+
+topic 081
+   services 		 9.961496
+   new 		 5.821167
+   election 		 4.206880
+   two 		 4.104974
+   score 		 4.044814
+   park 		 3.629449
+   english 		 3.580364
+   und 		 3.537661
+   high 		 3.473314
+   years 		 3.456063
+
+topic 082
+   services 		 15.483972
+   years 		 9.221309
+   first 		 8.283728
+   new 		 7.289256
+   two 		 6.353094
+   election 		 6.072910
+   community 		 4.955613
+   und 		 4.891283
+   john 		 4.795152
+   service 		 4.677863
+
+topic 083
+   years 		 47.530341
+   clubs 		 27.695059
+   services 		 23.409534
+   goals 		 23.055505
+   born 		 14.636586
+   team 		 12.711166
+   position 		 12.338726
+   height 		 11.263397
+   new 		 9.656164
+   august 		 9.492743
+
+topic 084
+   new 		 12.225812
+   services 		 9.477611
+   election 		 6.189424
+   first 		 6.128756
+   team 		 4.840305
+   north 		 4.741619
+   world 		 4.559020
+   national 		 4.256049
+   university 		 4.093352
+   years 		 4.067793
+
+topic 085
+   election 		 6.763668
+   services 		 5.995406
+   first 		 5.136004
+   john 		 4.801761
+   released 		 4.362548
+   national 		 4.290811
+   new 		 4.230007
+   world 		 3.922179
+   united 		 3.739475
+   park 		 3.703868
+
+topic 086
+   services 		 13.658614
+   new 		 5.453944
+   election 		 4.990604
+   education 		 4.306487
+   john 		 4.283455
+   first 		 4.205986
+   north 		 4.095702
+   world 		 4.075651
+   two 		 3.913409
+   london 		 3.813977
+
+topic 087
+   services 		 14.346645
+   new 		 9.352662
+   north 		 6.276580
+   first 		 6.145959
+   election 		 5.370428
+   school 		 5.089768
+   high 		 5.032372
+   john 		 4.556321
+   time 		 4.376691
+   community 		 4.315590
+
+topic 088
+   services 		 8.942743
+   new 		 7.230492
+   election 		 6.769900
+   park 		 5.751476
+   peter 		 5.376718
+   united 		 4.877134
+   first 		 4.777601
+   place 		 4.613290
+   time 		 4.349141
+   world 		 4.257859
+
+topic 089
+   services 		 17.212390
+   new 		 6.064452
+   first 		 5.676406
+   john 		 5.053845
+   time 		 4.609659
+   election 		 4.543936
+   music 		 4.524575
+   community 		 4.490133
+   service 		 4.263401
+   world 		 4.241467
+
+topic 090
+   services 		 12.674641
+   first 		 7.941022
+   new 		 7.351827
+   high 		 5.721130
+   north 		 5.030813
+   score 		 4.778341
+   team 		 4.766177
+   university 		 4.682534
+   english 		 4.611590
+   world 		 4.562968
+
+topic 091
+   services 		 11.796336
+   new 		 6.003635
+   first 		 5.969015
+   international 		 4.990206
+   john 		 4.383769
+   ship 		 4.194268
+   education 		 4.129541
+   university 		 4.069495
+   election 		 3.922237
+   community 		 3.808130
+
+topic 092
+   services 		 12.486239
+   new 		 7.785954
+   first 		 7.437125
+   university 		 5.992172
+   election 		 5.969328
+   second 		 5.189104
+   education 		 4.871413
+   john 		 4.821149
+   time 		 4.450602
+   years 		 4.412076
+
+topic 093
+   services 		 12.756700
+   election 		 9.548118
+   school 		 8.546574
+   district 		 6.201533
+   new 		 6.141713
+   first 		 5.496501
+   history 		 5.318307
+   world 		 5.275798
+   years 		 5.091557
+   two 		 4.609461
+
+topic 094
+   services 		 12.381094
+   first 		 8.065786
+   two 		 5.706288
+   new 		 5.691417
+   international 		 5.061297
+   john 		 4.797400
+   community 		 4.793906
+   london 		 4.189540
+   service 		 4.078133
+   election 		 4.052816
+
+topic 095
+   services 		 20.137273
+   first 		 7.490379
+   years 		 5.611216
+   education 		 4.192460
+   time 		 4.096617
+   year 		 4.055179
+   john 		 4.015980
+   election 		 3.932829
+   new 		 3.711806
+   two 		 3.696512
+
+topic 096
+   services 		 20.374432
+   first 		 7.163300
+   world 		 5.051541
+   und 		 4.854253
+   election 		 4.261927
+   time 		 4.234036
+   new 		 3.884712
+   two 		 3.824299
+   community 		 3.743783
+   english 		 3.637027
+
+topic 097
+   services 		 11.513918
+   first 		 6.301694
+   new 		 5.296758
+   two 		 4.682584
+   election 		 4.115589
+   made 		 4.097928
+   john 		 4.057310
+   world 		 3.964315
+   team 		 3.941043
+   international 		 3.818528
+
+topic 098
+   services 		 17.589131
+   new 		 8.572355
+   first 		 6.383030
+   john 		 5.558704
+   two 		 5.355170
+   community 		 5.233276
+   time 		 5.132139
+   education 		 4.570111
+   service 		 4.449299
+   team 		 4.181211
+
+topic 099
+   services 		 8.490355
+   first 		 7.821757
+   new 		 5.498229
+   election 		 4.361069
+   time 		 4.307888
+   score 		 4.205037
+   national 		 3.887670
+   war 		 3.864032
+   august 		 3.653595
+   united 		 3.639906
+

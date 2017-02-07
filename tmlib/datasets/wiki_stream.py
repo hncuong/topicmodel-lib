@@ -185,14 +185,14 @@ def read_vocab(path_vocab):
     return d_vocab
 
 class WikiStream(DataIterator):
-    def __init__(self, batch_size, num_batch, save_into_file=False, path_vocab=None):
+    def __init__(self, batch_size, num_batch, save_into_file=False, vocab_file=None):
         """
         a class for crawl stream data from website wikipedia
         Args:
             batch_size:
             num_batch:
             save_into_file:
-            path_vocab:
+            vocab_file:
         """
         super(WikiStream, self).__init__()
         self.batch_size = batch_size
@@ -204,11 +204,11 @@ class WikiStream(DataIterator):
             self.fp = open(os.path.join(folder_data, 'articles.tf'), "w")
         self.save_into_file = save_into_file
         self.output_format = DataFormat.TERM_FREQUENCY
-        if path_vocab is None:
-            self.path_vocab = dir_path + "/data/wikipedia/vocab.txt"
+        if vocab_file is None:
+            self.vocab_file = dir_path + "/data/wikipedia/vocab.txt"
         else:
-            self.path_vocab = path_vocab
-        self.vocab = read_vocab(self.path_vocab)
+            self.vocab_file = vocab_file
+        self.vocab = read_vocab(self.vocab_file)
 
     def load_mini_batch(self):
         (docset, articlenames) = get_random_wikipedia_articles(self.batch_size)
@@ -223,7 +223,7 @@ class WikiStream(DataIterator):
         self.mini_batch_no += 1
         return mini_batch
 
-    def end_of_num_batch(self):
+    def check_end_of_data(self):
         if self.mini_batch_no == self.num_batch:
             self.end_of_data = True
         return self.end_of_data
@@ -232,6 +232,13 @@ class WikiStream(DataIterator):
         assert (output_format == DataFormat.TERM_SEQUENCE or output_format == DataFormat.TERM_FREQUENCY), \
             'Corpus format type must be term-frequency (tf) or sequences (sq)!'
         self.output_format = output_format
+
+    def get_num_terms(self):
+        if self.vocab_file is None:
+            self.vocab_file = dir_path + "/data/wikipedia/vocab.txt"
+        f = open(self.vocab_file , 'r')
+        list_terms = f.readlines()
+        return len(list_terms)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,1200 @@
+topic 000
+   i 		 92.220940
+   two 		 90.720679
+   new 		 86.475863
+   people 		 75.400330
+   year 		 71.725418
+   united 		 69.877733
+   president 		 63.861205
+   government 		 61.725767
+   police 		 60.599281
+   three 		 51.206917
+
+topic 001
+   i 		 102.283404
+   president 		 95.169243
+   soviet 		 87.571096
+   new 		 86.876744
+   year 		 84.235716
+   bush 		 80.801882
+   government 		 80.694818
+   last 		 79.018323
+   people 		 72.716206
+   years 		 68.148246
+
+topic 002
+   new 		 95.580664
+   i 		 86.522584
+   years 		 84.182134
+   last 		 78.709828
+   million 		 77.667073
+   year 		 71.643465
+   two 		 69.886386
+   president 		 65.908078
+   government 		 62.682845
+   people 		 61.192051
+
+topic 003
+   i 		 85.760131
+   government 		 75.465876
+   new 		 59.826832
+   first 		 59.712751
+   last 		 59.574690
+   president 		 59.394351
+   national 		 56.271164
+   two 		 51.909474
+   year 		 51.166930
+   years 		 49.729885
+
+topic 004
+   percent 		 119.066702
+   people 		 117.616180
+   government 		 114.208323
+   i 		 112.935432
+   new 		 109.199726
+   year 		 97.634066
+   two 		 85.517268
+   united 		 84.293900
+   million 		 69.817692
+   thursday 		 69.329587
+
+topic 005
+   i 		 139.051791
+   new 		 105.813197
+   people 		 100.952915
+   two 		 97.282976
+   years 		 91.733550
+   last 		 77.159602
+   president 		 69.933743
+   states 		 66.027720
+   government 		 63.298835
+   year 		 61.265874
+
+topic 006
+   stock 		 1495.523543
+   market 		 1371.243370
+   percent 		 1221.045764
+   prices 		 1024.027211
+   million 		 928.109334
+   dollar 		 920.065155
+   trading 		 831.789714
+   rose 		 821.186509
+   exchange 		 799.643828
+   index 		 750.579063
+
+topic 007
+   i 		 131.626079
+   people 		 80.083019
+   president 		 78.702043
+   two 		 78.489481
+   soviet 		 77.480869
+   new 		 72.098555
+   officials 		 67.983988
+   last 		 67.150900
+   years 		 58.849191
+   year 		 58.098613
+
+topic 008
+   i 		 134.835650
+   new 		 113.844873
+   years 		 70.263350
+   soviet 		 67.083363
+   president 		 66.856573
+   government 		 58.439527
+   year 		 58.155634
+   last 		 55.843229
+   first 		 54.262860
+   two 		 53.513303
+
+topic 009
+   i 		 153.108792
+   soviet 		 120.949258
+   last 		 108.319929
+   president 		 105.892980
+   government 		 104.209128
+   new 		 104.182000
+   people 		 100.595819
+   two 		 100.337079
+   years 		 91.375679
+   million 		 83.134553
+
+topic 010
+   i 		 98.009868
+   new 		 97.776176
+   people 		 86.687957
+   president 		 65.199954
+   year 		 60.512990
+   two 		 52.113155
+   police 		 49.521791
+   government 		 49.027615
+   percent 		 44.960107
+   first 		 44.329813
+
+topic 011
+   new 		 141.079096
+   states 		 124.987167
+   years 		 112.358029
+   last 		 106.667141
+   two 		 104.879343
+   million 		 102.368828
+   united 		 101.783449
+   president 		 99.789891
+   percent 		 99.525169
+   i 		 96.658270
+
+topic 012
+   i 		 211.281650
+   president 		 143.554488
+   new 		 128.199633
+   percent 		 122.046511
+   year 		 102.126608
+   million 		 96.816719
+   two 		 93.016944
+   years 		 89.664772
+   government 		 87.100756
+   people 		 75.277844
+
+topic 013
+   two 		 111.603646
+   i 		 107.033699
+   people 		 91.474866
+   percent 		 88.202820
+   year 		 86.296719
+   new 		 79.374481
+   years 		 78.034121
+   president 		 73.435980
+   police 		 72.026860
+   government 		 70.421061
+
+topic 014
+   new 		 98.502951
+   million 		 96.376714
+   president 		 95.772877
+   years 		 75.657620
+   percent 		 72.173903
+   people 		 67.242193
+   i 		 66.633395
+   year 		 62.977641
+   government 		 61.921019
+   state 		 58.369250
+
+topic 015
+   i 		 107.619615
+   people 		 79.608809
+   years 		 77.787724
+   new 		 71.685372
+   year 		 70.381643
+   percent 		 57.560991
+   government 		 57.272597
+   president 		 55.109340
+   first 		 53.859577
+   million 		 53.743322
+
+topic 016
+   soviet 		 160.988473
+   president 		 131.527720
+   i 		 98.885274
+   new 		 97.509380
+   last 		 86.714632
+   united 		 80.059722
+   two 		 71.416250
+   bush 		 66.161644
+   government 		 61.768566
+   million 		 60.867761
+
+topic 017
+   people 		 129.292267
+   i 		 106.263431
+   percent 		 104.608937
+   two 		 103.805423
+   new 		 99.990553
+   years 		 95.108670
+   time 		 85.741092
+   last 		 77.891684
+   president 		 65.095415
+   police 		 64.264173
+
+topic 018
+   president 		 75.010322
+   year 		 74.807012
+   million 		 74.365946
+   soviet 		 71.754794
+   years 		 70.046532
+   i 		 69.905296
+   new 		 69.242775
+   two 		 68.326433
+   government 		 65.572527
+   last 		 62.859273
+
+topic 019
+   new 		 113.651116
+   i 		 108.436386
+   government 		 103.808623
+   people 		 92.954401
+   year 		 92.407499
+   president 		 73.235745
+   police 		 71.231728
+   bush 		 65.255889
+   million 		 65.050001
+   percent 		 61.960700
+
+topic 020
+   two 		 114.990674
+   i 		 114.971322
+   year 		 111.701771
+   last 		 103.514318
+   people 		 102.173408
+   percent 		 95.577348
+   president 		 88.284130
+   new 		 86.669653
+   million 		 84.893031
+   government 		 75.157495
+
+topic 021
+   new 		 141.769946
+   i 		 107.068836
+   year 		 106.845800
+   last 		 99.968658
+   people 		 93.972537
+   two 		 86.712446
+   state 		 71.701759
+   percent 		 70.794508
+   president 		 70.755674
+   states 		 70.007566
+
+topic 022
+   people 		 98.930710
+   i 		 87.857930
+   new 		 85.000070
+   million 		 83.129243
+   year 		 79.803579
+   two 		 72.352548
+   states 		 70.393610
+   united 		 67.235782
+   last 		 65.930414
+   state 		 65.308668
+
+topic 023
+   i 		 102.398589
+   court 		 97.588440
+   new 		 93.102805
+   year 		 88.499771
+   president 		 78.435869
+   people 		 70.429587
+   years 		 65.826942
+   last 		 64.584462
+   states 		 64.314534
+   state 		 60.532976
+
+topic 024
+   new 		 130.539007
+   government 		 125.221549
+   people 		 124.103821
+   i 		 116.965091
+   percent 		 116.198952
+   year 		 90.130035
+   million 		 89.943114
+   two 		 78.876682
+   police 		 72.440577
+   state 		 71.271519
+
+topic 025
+   new 		 75.464160
+   i 		 62.171046
+   people 		 59.032525
+   two 		 57.181050
+   police 		 53.418607
+   government 		 51.854399
+   year 		 50.081256
+   years 		 49.952528
+   million 		 48.575155
+   president 		 47.306520
+
+topic 026
+   people 		 148.499782
+   year 		 142.457799
+   million 		 135.170390
+   last 		 134.623963
+   new 		 127.810171
+   i 		 127.717848
+   police 		 124.862501
+   state 		 114.305099
+   percent 		 112.266018
+   president 		 107.793060
+
+topic 027
+   percent 		 98.902707
+   i 		 93.645605
+   year 		 89.183572
+   years 		 83.083539
+   new 		 82.205295
+   president 		 81.073700
+   last 		 68.636796
+   million 		 63.850539
+   government 		 60.261569
+   first 		 59.567101
+
+topic 028
+   officials 		 139.556953
+   police 		 138.593952
+   people 		 125.340674
+   percent 		 105.300681
+   million 		 101.431036
+   new 		 101.240554
+   i 		 97.344997
+   years 		 94.422149
+   two 		 92.199706
+   united 		 83.407679
+
+topic 029
+   i 		 118.255972
+   new 		 93.717937
+   people 		 78.772051
+   president 		 70.303294
+   year 		 68.847364
+   last 		 62.638316
+   million 		 61.694914
+   government 		 59.572819
+   percent 		 52.233525
+   years 		 50.701388
+
+topic 030
+   two 		 180.342152
+   new 		 153.126734
+   people 		 123.306589
+   government 		 120.311188
+   last 		 102.137431
+   first 		 101.237208
+   percent 		 95.749792
+   years 		 88.790373
+   i 		 85.300211
+   year 		 85.088275
+
+topic 031
+   party 		 115.909375
+   congress 		 109.058639
+   government 		 104.836990
+   i 		 96.526618
+   year 		 93.258044
+   percent 		 92.228396
+   communist 		 91.639643
+   years 		 89.100832
+   two 		 84.534091
+   new 		 80.528463
+
+topic 032
+   percent 		 200.783823
+   new 		 169.495182
+   million 		 160.522423
+   i 		 128.467833
+   year 		 116.401637
+   last 		 111.222614
+   first 		 106.498310
+   president 		 95.140586
+   states 		 89.857294
+   two 		 88.409420
+
+topic 033
+   people 		 103.814771
+   i 		 102.606843
+   new 		 83.449874
+   state 		 80.528455
+   years 		 79.635677
+   year 		 77.283208
+   police 		 70.975117
+   million 		 60.366835
+   government 		 57.790409
+   told 		 57.713088
+
+topic 034
+   million 		 99.798974
+   i 		 91.027933
+   new 		 90.964631
+   percent 		 76.638200
+   year 		 72.585408
+   people 		 71.764803
+   last 		 70.466773
+   president 		 67.317956
+   two 		 64.583680
+   years 		 54.433713
+
+topic 035
+   i 		 172.354317
+   new 		 105.085817
+   government 		 99.857900
+   years 		 80.636787
+   last 		 79.665325
+   two 		 76.953061
+   first 		 73.841181
+   state 		 73.760480
+   percent 		 71.289853
+   president 		 71.125290
+
+topic 036
+   new 		 60.654575
+   states 		 56.093272
+   i 		 55.008104
+   two 		 52.594853
+   years 		 49.758370
+   people 		 47.463983
+   united 		 47.386221
+   state 		 46.705152
+   government 		 46.659053
+   week 		 42.277098
+
+topic 037
+   people 		 146.302705
+   i 		 126.120932
+   government 		 116.777259
+   president 		 105.088232
+   new 		 95.614597
+   two 		 93.429078
+   years 		 88.325155
+   percent 		 84.416493
+   million 		 83.053932
+   year 		 80.928964
+
+topic 038
+   i 		 100.462141
+   president 		 77.154715
+   two 		 52.901982
+   percent 		 49.968942
+   state 		 48.542429
+   time 		 46.084877
+   told 		 45.561732
+   years 		 44.384606
+   last 		 43.482359
+   first 		 42.453579
+
+topic 039
+   i 		 112.764260
+   people 		 69.835516
+   million 		 60.885168
+   percent 		 59.402605
+   year 		 58.166683
+   last 		 56.849354
+   two 		 54.624506
+   government 		 53.219322
+   years 		 52.897153
+   three 		 46.440435
+
+topic 040
+   i 		 172.411929
+   state 		 130.663170
+   percent 		 94.777244
+   people 		 94.497345
+   new 		 94.471705
+   government 		 94.356264
+   two 		 88.988766
+   president 		 79.284793
+   democratic 		 73.709855
+   year 		 71.002743
+
+topic 041
+   two 		 95.292889
+   police 		 88.857712
+   i 		 84.381243
+   last 		 74.733817
+   percent 		 70.471508
+   people 		 65.745458
+   new 		 64.864187
+   united 		 57.516874
+   states 		 54.958907
+   president 		 54.186675
+
+topic 042
+   new 		 128.374723
+   year 		 100.831406
+   last 		 86.298568
+   united 		 85.587820
+   i 		 82.799518
+   president 		 79.291964
+   people 		 74.774630
+   percent 		 74.017419
+   states 		 72.893243
+   first 		 69.171727
+
+topic 043
+   i 		 133.276087
+   people 		 117.182228
+   new 		 94.228277
+   year 		 86.120356
+   percent 		 73.866008
+   last 		 72.455073
+   government 		 70.715821
+   two 		 67.937417
+   president 		 62.731739
+   years 		 59.860238
+
+topic 044
+   i 		 90.213003
+   people 		 80.545429
+   two 		 70.559033
+   last 		 52.380610
+   years 		 50.211255
+   year 		 48.674336
+   new 		 48.558447
+   three 		 47.074628
+   state 		 42.742609
+   states 		 42.096469
+
+topic 045
+   new 		 139.249895
+   i 		 138.796528
+   years 		 100.297047
+   people 		 99.579064
+   percent 		 97.921482
+   last 		 94.394921
+   year 		 88.183264
+   two 		 88.031115
+   state 		 84.001802
+   time 		 83.778316
+
+topic 046
+   two 		 92.885261
+   million 		 91.950397
+   last 		 89.884060
+   new 		 84.479012
+   year 		 81.116969
+   government 		 80.241112
+   years 		 76.077675
+   first 		 72.636530
+   officials 		 71.307934
+   percent 		 69.432198
+
+topic 047
+   people 		 139.208824
+   new 		 130.610965
+   two 		 116.115039
+   soviet 		 115.354644
+   i 		 101.953826
+   police 		 92.118114
+   million 		 88.710797
+   last 		 88.698636
+   president 		 88.654742
+   government 		 88.386339
+
+topic 048
+   percent 		 135.898573
+   year 		 133.626919
+   i 		 132.418461
+   new 		 125.874394
+   last 		 118.706115
+   president 		 98.547617
+   officials 		 92.479976
+   years 		 88.821435
+   government 		 86.327156
+   two 		 78.973857
+
+topic 049
+   i 		 75.930019
+   million 		 61.687532
+   people 		 59.412724
+   percent 		 48.272214
+   years 		 45.416302
+   last 		 45.159953
+   government 		 45.154348
+   two 		 44.917165
+   first 		 44.354360
+   time 		 43.698672
+
+topic 050
+   i 		 128.565072
+   new 		 111.225300
+   two 		 98.556175
+   people 		 82.610922
+   percent 		 75.069074
+   government 		 69.422242
+   last 		 67.040448
+   years 		 64.339715
+   police 		 62.616964
+   states 		 54.883999
+
+topic 051
+   percent 		 217.799017
+   new 		 213.982396
+   last 		 182.047407
+   year 		 168.975787
+   people 		 144.727662
+   million 		 138.918729
+   two 		 112.364619
+   i 		 95.168971
+   years 		 92.453276
+   president 		 86.121423
+
+topic 052
+   people 		 122.549081
+   i 		 118.164677
+   two 		 60.652077
+   government 		 57.568469
+   years 		 53.459418
+   new 		 50.596546
+   million 		 47.787721
+   city 		 47.581247
+   last 		 46.856179
+   president 		 45.845218
+
+topic 053
+   i 		 126.564446
+   president 		 94.300548
+   people 		 90.665137
+   year 		 86.478724
+   new 		 72.318720
+   two 		 68.257420
+   percent 		 67.611144
+   last 		 67.197220
+   bush 		 66.237738
+   million 		 63.685958
+
+topic 054
+   million 		 141.004413
+   people 		 99.596100
+   percent 		 96.530486
+   new 		 93.500170
+   government 		 88.304687
+   president 		 81.775259
+   i 		 81.313823
+   two 		 78.707315
+   year 		 78.607820
+   bush 		 67.408339
+
+topic 055
+   i 		 71.737284
+   new 		 69.183684
+   people 		 60.752247
+   police 		 57.852216
+   state 		 53.635428
+   two 		 52.611069
+   years 		 50.969539
+   government 		 48.082114
+   first 		 46.327774
+   percent 		 44.320238
+
+topic 056
+   percent 		 63.290018
+   new 		 60.578299
+   last 		 58.539278
+   i 		 52.198474
+   people 		 47.184454
+   year 		 42.795334
+   million 		 42.237920
+   government 		 41.948060
+   two 		 38.491629
+   years 		 36.468854
+
+topic 057
+   i 		 84.935347
+   million 		 78.270949
+   last 		 72.137768
+   people 		 67.892591
+   government 		 59.487671
+   president 		 59.266170
+   years 		 57.496944
+   percent 		 57.101273
+   police 		 52.404893
+   state 		 50.649257
+
+topic 058
+   new 		 81.122884
+   i 		 71.417244
+   president 		 61.353320
+   two 		 58.362658
+   people 		 56.074911
+   government 		 55.541396
+   bush 		 50.583458
+   soviet 		 48.469010
+   police 		 47.063645
+   united 		 46.490583
+
+topic 059
+   percent 		 633.088072
+   million 		 218.335427
+   i 		 163.679907
+   new 		 156.719297
+   billion 		 128.882623
+   year 		 125.251495
+   last 		 117.902820
+   years 		 97.662582
+   two 		 93.393115
+   people 		 90.727969
+
+topic 060
+   i 		 61.754008
+   two 		 54.452008
+   people 		 51.493805
+   police 		 48.102322
+   president 		 48.041913
+   year 		 47.021849
+   first 		 45.739472
+   soviet 		 44.968326
+   state 		 44.745997
+   bush 		 42.433089
+
+topic 061
+   police 		 213.728453
+   percent 		 172.925433
+   new 		 169.195614
+   two 		 115.491739
+   year 		 108.974533
+   million 		 102.362993
+   president 		 91.590875
+   i 		 89.915279
+   government 		 89.391836
+   billion 		 84.322397
+
+topic 062
+   i 		 140.812709
+   new 		 87.762710
+   years 		 81.796492
+   two 		 79.724790
+   year 		 75.457218
+   president 		 73.227552
+   state 		 68.057651
+   million 		 65.265070
+   last 		 63.256479
+   percent 		 63.207240
+
+topic 063
+   two 		 88.990419
+   i 		 86.949458
+   new 		 85.043859
+   bush 		 83.742804
+   people 		 80.859040
+   million 		 73.452832
+   state 		 65.029696
+   today 		 58.194780
+   last 		 57.560462
+   year 		 55.403688
+
+topic 064
+   government 		 91.480039
+   state 		 90.776102
+   new 		 89.217811
+   two 		 85.168214
+   million 		 70.492690
+   year 		 69.401637
+   first 		 65.783997
+   united 		 64.875637
+   president 		 63.331124
+   people 		 62.893865
+
+topic 065
+   i 		 113.341977
+   president 		 92.502626
+   people 		 89.289725
+   new 		 88.731511
+   government 		 87.107766
+   two 		 84.685491
+   police 		 75.501064
+   years 		 72.200983
+   percent 		 66.162679
+   told 		 62.917107
+
+topic 066
+   i 		 54.933892
+   years 		 51.583004
+   last 		 49.680905
+   two 		 48.498332
+   new 		 48.361690
+   people 		 48.058043
+   million 		 47.476554
+   government 		 43.035100
+   year 		 40.512558
+   officials 		 40.391901
+
+topic 067
+   new 		 130.764722
+   year 		 99.032862
+   years 		 90.910338
+   i 		 88.763729
+   government 		 87.198841
+   people 		 82.574871
+   last 		 75.485537
+   state 		 68.248417
+   percent 		 67.858397
+   two 		 66.013906
+
+topic 068
+   i 		 122.532895
+   people 		 115.978053
+   percent 		 96.401840
+   president 		 88.001505
+   last 		 84.484345
+   million 		 81.287168
+   state 		 79.917940
+   new 		 79.248009
+   government 		 76.684531
+   time 		 73.296158
+
+topic 069
+   new 		 99.424781
+   two 		 91.875722
+   year 		 91.244287
+   percent 		 73.203611
+   president 		 68.443016
+   people 		 62.466363
+   last 		 58.473461
+   i 		 57.035112
+   united 		 56.314720
+   years 		 55.563296
+
+topic 070
+   i 		 166.457248
+   people 		 120.624449
+   two 		 107.407292
+   government 		 102.919602
+   percent 		 98.379694
+   president 		 85.567224
+   year 		 79.722497
+   last 		 70.516045
+   bush 		 69.074575
+   new 		 65.719688
+
+topic 071
+   i 		 113.358859
+   year 		 99.225237
+   last 		 88.288917
+   president 		 87.216281
+   new 		 84.720313
+   government 		 83.117165
+   people 		 80.775034
+   percent 		 78.131062
+   two 		 72.785326
+   million 		 69.318145
+
+topic 072
+   people 		 88.255880
+   president 		 87.080987
+   i 		 86.440528
+   new 		 76.982733
+   years 		 72.193529
+   state 		 65.682894
+   two 		 61.647163
+   million 		 57.775230
+   government 		 57.492462
+   year 		 55.666227
+
+topic 073
+   i 		 61.067250
+   year 		 53.460640
+   new 		 47.193266
+   people 		 46.651000
+   president 		 42.475817
+   two 		 41.905882
+   states 		 41.585602
+   last 		 37.819431
+   million 		 36.097279
+   government 		 35.322970
+
+topic 074
+   west 		 150.973598
+   people 		 132.866519
+   thursday 		 101.487378
+   new 		 98.833538
+   government 		 94.279466
+   two 		 92.903605
+   i 		 92.871711
+   million 		 86.099932
+   president 		 81.442099
+   last 		 77.977882
+
+topic 075
+   i 		 134.511788
+   two 		 99.208025
+   police 		 81.546181
+   state 		 77.842612
+   president 		 75.876890
+   people 		 68.716214
+   new 		 66.121098
+   government 		 65.495346
+   year 		 63.376711
+   years 		 61.669652
+
+topic 076
+   new 		 68.614216
+   i 		 62.932889
+   year 		 55.354625
+   two 		 55.193909
+   president 		 53.976380
+   soviet 		 53.017550
+   people 		 51.269112
+   government 		 47.370776
+   years 		 46.744410
+   first 		 42.808047
+
+topic 077
+   percent 		 216.663263
+   new 		 122.375552
+   i 		 119.264416
+   years 		 117.541948
+   people 		 113.286799
+   president 		 111.277405
+   bush 		 102.871777
+   government 		 102.815240
+   first 		 102.202108
+   two 		 92.444352
+
+topic 078
+   two 		 50.408280
+   president 		 49.325651
+   new 		 46.347076
+   police 		 45.590612
+   i 		 44.606754
+   people 		 43.440018
+   percent 		 42.614610
+   year 		 36.933215
+   government 		 36.377369
+   time 		 36.311009
+
+topic 079
+   i 		 113.382031
+   people 		 76.698230
+   years 		 76.661216
+   percent 		 73.114663
+   two 		 71.435199
+   year 		 63.795178
+   new 		 63.756184
+   last 		 61.036248
+   first 		 60.397103
+   soviet 		 57.896510
+
+topic 080
+   i 		 90.338355
+   year 		 86.011016
+   government 		 82.711529
+   two 		 77.473024
+   people 		 75.040930
+   new 		 69.061158
+   percent 		 68.080941
+   president 		 58.609786
+   last 		 55.846986
+   million 		 55.280944
+
+topic 081
+   new 		 116.290909
+   i 		 89.784608
+   percent 		 84.712976
+   last 		 79.753463
+   united 		 70.359370
+   people 		 66.007496
+   states 		 64.412747
+   two 		 60.445805
+   president 		 58.863798
+   government 		 58.525819
+
+topic 082
+   government 		 80.038677
+   i 		 79.197371
+   two 		 76.988784
+   million 		 69.851354
+   people 		 69.422815
+   new 		 65.792498
+   percent 		 63.744105
+   last 		 61.134089
+   first 		 60.734901
+   president 		 58.316139
+
+topic 083
+   i 		 65.799360
+   two 		 65.643798
+   year 		 63.746788
+   new 		 57.762427
+   people 		 57.219829
+   government 		 55.425792
+   president 		 55.095314
+   million 		 51.625705
+   officials 		 50.375592
+   state 		 50.209041
+
+topic 084
+   president 		 88.929893
+   bush 		 68.796808
+   new 		 68.316701
+   officials 		 65.797522
+   i 		 65.243539
+   two 		 61.987436
+   government 		 55.699733
+   years 		 47.030799
+   military 		 46.532562
+   million 		 45.338713
+
+topic 085
+   i 		 89.605811
+   percent 		 82.709075
+   year 		 75.690678
+   people 		 66.760829
+   president 		 66.378496
+   years 		 62.663585
+   new 		 62.604924
+   government 		 60.650174
+   last 		 58.712874
+   million 		 57.756198
+
+topic 086
+   percent 		 439.283687
+   million 		 278.520599
+   new 		 229.733238
+   states 		 182.052765
+   years 		 156.701834
+   year 		 151.275105
+   billion 		 135.572778
+   government 		 129.764159
+   last 		 124.597829
+   president 		 111.908896
+
+topic 087
+   i 		 120.374637
+   percent 		 119.098184
+   two 		 103.075742
+   people 		 81.506175
+   new 		 79.726582
+   last 		 74.723119
+   states 		 72.150405
+   president 		 69.279585
+   today 		 68.806045
+   government 		 62.862565
+
+topic 088
+   i 		 101.499764
+   year 		 81.534122
+   new 		 78.496071
+   president 		 70.200005
+   people 		 68.310094
+   two 		 67.333265
+   government 		 65.075036
+   percent 		 56.503040
+   million 		 53.679573
+   states 		 51.375294
+
+topic 089
+   state 		 78.538707
+   i 		 75.894243
+   million 		 75.808763
+   new 		 70.642691
+   two 		 68.205547
+   last 		 66.495354
+   government 		 65.468393
+   year 		 54.085529
+   president 		 53.769222
+   people 		 48.843346
+
+topic 090
+   i 		 104.221043
+   people 		 91.754859
+   two 		 82.000479
+   new 		 70.957187
+   police 		 69.062228
+   president 		 65.479818
+   percent 		 61.288276
+   years 		 60.469559
+   state 		 57.961328
+   soviet 		 56.774242
+
+topic 091
+   percent 		 183.042832
+   million 		 99.449992
+   president 		 88.599479
+   i 		 87.326608
+   year 		 81.742947
+   new 		 72.581992
+   people 		 72.359935
+   last 		 71.840684
+   years 		 58.902448
+   two 		 56.968949
+
+topic 092
+   i 		 73.124186
+   people 		 72.034401
+   year 		 59.874696
+   new 		 57.952131
+   two 		 56.635765
+   last 		 50.872082
+   years 		 50.312917
+   percent 		 49.390333
+   government 		 48.075958
+   states 		 47.376277
+
+topic 093
+   new 		 161.606626
+   year 		 146.599912
+   million 		 138.396659
+   percent 		 110.378186
+   united 		 110.243446
+   two 		 109.463200
+   president 		 104.447761
+   people 		 99.191228
+   states 		 96.405534
+   government 		 94.020561
+
+topic 094
+   i 		 157.581589
+   people 		 137.277120
+   president 		 134.976525
+   years 		 121.121640
+   government 		 120.888776
+   police 		 119.555460
+   two 		 114.216135
+   year 		 112.223224
+   new 		 108.931269
+   soviet 		 108.071390
+
+topic 095
+   new 		 109.182521
+   i 		 106.112056
+   two 		 90.105807
+   president 		 84.581415
+   people 		 74.469869
+   government 		 74.385161
+   police 		 62.618989
+   years 		 55.517705
+   year 		 53.272197
+   last 		 53.122652
+
+topic 096
+   people 		 69.977146
+   i 		 64.851861
+   new 		 52.518283
+   time 		 48.515567
+   government 		 47.413084
+   first 		 46.288320
+   percent 		 45.580711
+   two 		 45.327077
+   year 		 44.062650
+   court 		 42.002637
+
+topic 097
+   i 		 101.183338
+   new 		 65.341501
+   two 		 63.756015
+   government 		 54.175869
+   police 		 51.498521
+   president 		 49.624843
+   people 		 44.708879
+   years 		 42.880204
+   million 		 42.448509
+   state 		 40.894802
+
+topic 098
+   new 		 123.437041
+   i 		 99.906306
+   president 		 84.499072
+   two 		 81.964767
+   last 		 80.363506
+   year 		 76.666614
+   million 		 76.357643
+   people 		 76.093651
+   government 		 70.153460
+   percent 		 69.700316
+
+topic 099
+   i 		 101.137519
+   two 		 81.393018
+   president 		 79.635817
+   new 		 73.374678
+   million 		 69.771356
+   last 		 66.667086
+   people 		 63.199818
+   officials 		 59.830471
+   government 		 56.729699
+   percent 		 56.153025
+

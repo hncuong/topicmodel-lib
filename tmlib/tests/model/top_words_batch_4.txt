@@ -1,0 +1,1200 @@
+topic 000
+   new 		 2.596703
+   color 		 2.594197
+   time 		 2.087622
+   season 		 1.732378
+   first 		 1.716205
+   bar 		 1.712221
+   att 		 1.685357
+   temperature 		 1.670605
+   final 		 1.609080
+   ireland 		 1.600129
+
+topic 001
+   bar 		 3.900531
+   text 		 2.534475
+   temperature 		 1.930142
+   new 		 1.779528
+   color 		 1.688053
+   att 		 1.676159
+   clarence 		 1.555836
+   time 		 1.528651
+   north 		 1.503106
+   state 		 1.495007
+
+topic 002
+   color 		 2.314063
+   season 		 2.022739
+   time 		 1.832500
+   bar 		 1.699245
+   text 		 1.658468
+   light 		 1.579515
+   league 		 1.531194
+   round 		 1.514817
+   white 		 1.499206
+   new 		 1.497598
+
+topic 003
+   color 		 2.754509
+   temperature 		 2.147112
+   light 		 2.127351
+   text 		 2.094639
+   new 		 2.037276
+   bar 		 1.957467
+   white 		 1.760484
+   time 		 1.685919
+   first 		 1.627245
+   italian 		 1.590906
+
+topic 004
+   bar 		 2.349987
+   temperature 		 2.046748
+   new 		 2.009685
+   season 		 1.998760
+   text 		 1.945488
+   first 		 1.813208
+   color 		 1.795212
+   fire 		 1.688354
+   time 		 1.653196
+   league 		 1.579498
+
+topic 005
+   north 		 2.482784
+   new 		 2.457714
+   first 		 2.406377
+   color 		 2.264434
+   light 		 2.241280
+   time 		 2.034986
+   family 		 1.931446
+   described 		 1.926136
+   bar 		 1.858688
+   temperature 		 1.743342
+
+topic 006
+   light 		 2.104861
+   color 		 2.085149
+   bar 		 2.078238
+   temperature 		 1.919247
+   text 		 1.829335
+   second 		 1.767149
+   shift 		 1.727257
+   time 		 1.724629
+   new 		 1.687478
+   engine 		 1.647422
+
+topic 007
+   color 		 2.696359
+   temperature 		 2.123875
+   text 		 1.892290
+   season 		 1.846272
+   light 		 1.676807
+   north 		 1.673219
+   first 		 1.629244
+   new 		 1.557601
+   saturday 		 1.544953
+   sandy 		 1.509249
+
+topic 008
+   new 		 2.119586
+   color 		 1.844192
+   temperature 		 1.732940
+   league 		 1.690806
+   final 		 1.627146
+   time 		 1.592979
+   clarence 		 1.549379
+   red 		 1.531544
+   first 		 1.505559
+   light 		 1.486571
+
+topic 009
+   color 		 2.424326
+   bar 		 2.032373
+   text 		 1.918191
+   time 		 1.730053
+   two 		 1.715322
+   first 		 1.694048
+   season 		 1.677431
+   new 		 1.642426
+   shift 		 1.619966
+   city 		 1.604968
+
+topic 010
+   final 		 2.052418
+   temperature 		 2.000396
+   bar 		 1.908260
+   goals 		 1.887398
+   color 		 1.864053
+   season 		 1.807758
+   new 		 1.767752
+   text 		 1.685176
+   att 		 1.676657
+   club 		 1.612965
+
+topic 011
+   new 		 2.204194
+   color 		 2.183820
+   att 		 2.092613
+   north 		 1.997148
+   bar 		 1.838311
+   league 		 1.733167
+   clarence 		 1.732976
+   season 		 1.731279
+   sandy 		 1.692785
+   clubs 		 1.685532
+
+topic 012
+   north 		 2.628823
+   temperature 		 2.069025
+   village 		 1.824398
+   new 		 1.800254
+   season 		 1.777309
+   light 		 1.702402
+   color 		 1.664695
+   released 		 1.634692
+   league 		 1.611495
+   final 		 1.604844
+
+topic 013
+   bar 		 2.182273
+   temperature 		 2.130331
+   color 		 1.903914
+   time 		 1.863961
+   new 		 1.740184
+   text 		 1.642417
+   population 		 1.633241
+   district 		 1.594306
+   north 		 1.590342
+   light 		 1.582602
+
+topic 014
+   new 		 2.438255
+   bar 		 2.208032
+   att 		 2.164617
+   color 		 2.081175
+   north 		 1.859508
+   season 		 1.708036
+   sandy 		 1.592078
+   saturday 		 1.559412
+   final 		 1.545978
+   driver 		 1.527927
+
+topic 015
+   bar 		 2.352288
+   color 		 2.287593
+   temperature 		 2.254976
+   new 		 2.187910
+   light 		 2.000294
+   final 		 1.855292
+   att 		 1.822598
+   text 		 1.785518
+   time 		 1.751090
+   season 		 1.729099
+
+topic 016
+   att 		 2.386457
+   temperature 		 2.304619
+   color 		 2.196390
+   white 		 2.093305
+   season 		 1.893331
+   light 		 1.892722
+   new 		 1.787619
+   park 		 1.728503
+   second 		 1.691008
+   final 		 1.668643
+
+topic 017
+   population 		 4.084016
+   district 		 3.164123
+   color 		 2.464972
+   final 		 2.318318
+   new 		 2.224116
+   temperature 		 2.203556
+   time 		 2.034190
+   season 		 1.980813
+   city 		 1.888198
+   text 		 1.786721
+
+topic 018
+   bar 		 4.320934
+   new 		 3.505192
+   text 		 2.963868
+   color 		 2.373013
+   att 		 1.956004
+   till 		 1.917255
+   family 		 1.865020
+   south 		 1.817784
+   species 		 1.811490
+   final 		 1.768576
+
+topic 019
+   color 		 2.489382
+   temperature 		 2.326259
+   light 		 1.967350
+   bar 		 1.829948
+   new 		 1.717560
+   att 		 1.675832
+   white 		 1.588342
+   released 		 1.534039
+   solid 		 1.502650
+   saturday 		 1.487746
+
+topic 020
+   temperature 		 2.507192
+   second 		 1.898619
+   color 		 1.870443
+   att 		 1.736761
+   first 		 1.672784
+   final 		 1.645578
+   line 		 1.633926
+   light 		 1.607929
+   released 		 1.590691
+   city 		 1.581009
+
+topic 021
+   color 		 2.610136
+   temperature 		 2.580621
+   light 		 2.132730
+   family 		 1.924327
+   described 		 1.855806
+   second 		 1.687305
+   new 		 1.676704
+   time 		 1.673878
+   season 		 1.657350
+   found 		 1.649578
+
+topic 022
+   color 		 2.899616
+   first 		 1.990470
+   light 		 1.946005
+   temperature 		 1.905001
+   league 		 1.761349
+   elevation 		 1.695800
+   time 		 1.686766
+   sandy 		 1.680433
+   new 		 1.673574
+   bar 		 1.631168
+
+topic 023
+   color 		 2.410598
+   light 		 2.152702
+   new 		 2.136695
+   temperature 		 2.076113
+   first 		 2.018999
+   bar 		 1.943105
+   att 		 1.910545
+   time 		 1.802669
+   goals 		 1.751130
+   park 		 1.593127
+
+topic 024
+   color 		 1.947059
+   att 		 1.659600
+   temperature 		 1.652534
+   light 		 1.633594
+   line 		 1.465640
+   dance 		 1.458049
+   circuit 		 1.451647
+   islands 		 1.428504
+   series 		 1.426933
+   land 		 1.405527
+
+topic 025
+   temperature 		 2.056880
+   time 		 1.966440
+   color 		 1.876386
+   north 		 1.772007
+   new 		 1.706189
+   season 		 1.629501
+   city 		 1.557976
+   bar 		 1.530353
+   text 		 1.524020
+   white 		 1.477361
+
+topic 026
+   new 		 2.532886
+   bar 		 2.462457
+   color 		 2.365277
+   time 		 2.009213
+   temperature 		 2.004157
+   light 		 1.775312
+   north 		 1.763583
+   race 		 1.726788
+   att 		 1.715132
+   text 		 1.697264
+
+topic 027
+   population 		 2.368435
+   color 		 2.270663
+   new 		 2.050060
+   temperature 		 1.986695
+   bar 		 1.921108
+   light 		 1.755168
+   text 		 1.661774
+   first 		 1.660547
+   club 		 1.621534
+   pit 		 1.618401
+
+topic 028
+   color 		 2.523342
+   first 		 2.241174
+   temperature 		 2.181967
+   time 		 2.121262
+   bar 		 1.983455
+   new 		 1.788567
+   light 		 1.762179
+   city 		 1.639970
+   circuit 		 1.609125
+   michael 		 1.579132
+
+topic 029
+   county 		 2.867377
+   district 		 2.794061
+   population 		 2.203083
+   time 		 2.102920
+   temperature 		 2.019774
+   color 		 1.968538
+   text 		 1.746202
+   north 		 1.741765
+   village 		 1.675195
+   club 		 1.667689
+
+topic 030
+   color 		 2.139845
+   first 		 2.085177
+   temperature 		 2.043482
+   time 		 1.776929
+   new 		 1.743063
+   black 		 1.705927
+   light 		 1.683929
+   season 		 1.638585
+   att 		 1.618075
+   final 		 1.589428
+
+topic 031
+   color 		 2.924768
+   temperature 		 2.476507
+   att 		 1.985113
+   light 		 1.907126
+   new 		 1.878045
+   time 		 1.869398
+   bay 		 1.634142
+   park 		 1.616101
+   first 		 1.599184
+   final 		 1.569538
+
+topic 032
+   color 		 3.537526
+   temperature 		 2.681371
+   new 		 2.036474
+   att 		 1.865593
+   light 		 1.807225
+   bar 		 1.731963
+   two 		 1.663278
+   saturday 		 1.615254
+   final 		 1.607749
+   uses 		 1.583581
+
+topic 033
+   att 		 2.718289
+   color 		 2.592073
+   temperature 		 2.137309
+   new 		 1.971907
+   second 		 1.795510
+   dance 		 1.757221
+   first 		 1.669315
+   league 		 1.641189
+   light 		 1.618370
+   season 		 1.582984
+
+topic 034
+   temperature 		 2.309221
+   new 		 2.232753
+   color 		 2.227593
+   first 		 1.826723
+   league 		 1.670350
+   season 		 1.650325
+   att 		 1.603568
+   bar 		 1.600354
+   light 		 1.586913
+   time 		 1.586038
+
+topic 035
+   color 		 2.975664
+   temperature 		 2.157270
+   new 		 1.978998
+   time 		 1.942349
+   season 		 1.851630
+   league 		 1.819804
+   first 		 1.780726
+   club 		 1.722676
+   light 		 1.707720
+   years 		 1.701883
+
+topic 036
+   color 		 2.094292
+   new 		 2.086423
+   text 		 1.743493
+   first 		 1.660142
+   temperature 		 1.618463
+   north 		 1.597069
+   east 		 1.554481
+   light 		 1.487990
+   park 		 1.477179
+   run 		 1.475751
+
+topic 037
+   color 		 2.592976
+   bar 		 2.522920
+   temperature 		 2.476703
+   text 		 1.796650
+   first 		 1.761264
+   light 		 1.636179
+   season 		 1.583866
+   league 		 1.575275
+   new 		 1.492751
+   club 		 1.483121
+
+topic 038
+   color 		 2.660400
+   temperature 		 2.509587
+   new 		 2.227267
+   bar 		 1.882261
+   north 		 1.767663
+   dance 		 1.691458
+   august 		 1.557728
+   uses 		 1.540089
+   black 		 1.506228
+   till 		 1.505611
+
+topic 039
+   new 		 2.048564
+   season 		 2.004858
+   temperature 		 1.906108
+   light 		 1.742447
+   sandy 		 1.681740
+   text 		 1.646685
+   bar 		 1.609482
+   color 		 1.592078
+   bay 		 1.581861
+   league 		 1.547209
+
+topic 040
+   color 		 2.186268
+   new 		 2.028340
+   light 		 1.797214
+   att 		 1.777770
+   time 		 1.744050
+   north 		 1.713593
+   temperature 		 1.615839
+   saturday 		 1.603971
+   first 		 1.573722
+   league 		 1.544134
+
+topic 041
+   color 		 2.607804
+   bar 		 1.949122
+   new 		 1.922287
+   born 		 1.752621
+   temperature 		 1.728574
+   att 		 1.721694
+   league 		 1.711981
+   light 		 1.679236
+   text 		 1.676121
+   first 		 1.663547
+
+topic 042
+   color 		 2.753553
+   bar 		 2.015666
+   temperature 		 1.926225
+   new 		 1.819281
+   shift 		 1.683958
+   season 		 1.633458
+   dance 		 1.608807
+   time 		 1.593951
+   north 		 1.593418
+   att 		 1.583047
+
+topic 043
+   color 		 2.562756
+   temperature 		 1.925179
+   bar 		 1.923282
+   new 		 1.853813
+   bay 		 1.822614
+   text 		 1.781946
+   shift 		 1.752203
+   clarence 		 1.701917
+   north 		 1.610863
+   final 		 1.569679
+
+topic 044
+   color 		 1.975709
+   new 		 1.942208
+   temperature 		 1.869104
+   first 		 1.835000
+   described 		 1.689733
+   second 		 1.687950
+   engine 		 1.511217
+   degree 		 1.458164
+   september 		 1.446152
+   uses 		 1.424346
+
+topic 045
+   bar 		 2.256258
+   color 		 2.231152
+   new 		 2.004410
+   temperature 		 1.958679
+   first 		 1.898345
+   season 		 1.621317
+   district 		 1.604592
+   dance 		 1.589858
+   shift 		 1.580109
+   till 		 1.551035
+
+topic 046
+   color 		 2.282830
+   season 		 2.140303
+   bar 		 1.937425
+   league 		 1.880858
+   bay 		 1.872901
+   new 		 1.840226
+   released 		 1.761289
+   born 		 1.721911
+   north 		 1.715918
+   time 		 1.713476
+
+topic 047
+   new 		 2.435013
+   color 		 2.264445
+   att 		 2.102421
+   bar 		 2.031208
+   season 		 1.850795
+   first 		 1.779051
+   temperature 		 1.771722
+   september 		 1.731126
+   time 		 1.720472
+   clarence 		 1.661474
+
+topic 048
+   north 		 1.909187
+   born 		 1.839193
+   color 		 1.833769
+   season 		 1.710026
+   new 		 1.708833
+   first 		 1.648533
+   att 		 1.643331
+   week 		 1.640069
+   light 		 1.625855
+   text 		 1.598252
+
+topic 049
+   color 		 2.798085
+   bar 		 1.931862
+   first 		 1.865652
+   light 		 1.856801
+   second 		 1.690478
+   new 		 1.599274
+   season 		 1.572884
+   final 		 1.560951
+   lighting 		 1.512713
+   three 		 1.507515
+
+topic 050
+   color 		 2.665111
+   bar 		 2.365758
+   temperature 		 2.310127
+   light 		 2.215525
+   time 		 1.845917
+   first 		 1.648396
+   season 		 1.636979
+   att 		 1.632629
+   bay 		 1.631493
+   club 		 1.609480
+
+topic 051
+   bar 		 2.890086
+   color 		 2.307626
+   att 		 2.250278
+   text 		 2.094898
+   temperature 		 1.976519
+   red 		 1.851659
+   bay 		 1.692460
+   new 		 1.667883
+   light 		 1.654403
+   club 		 1.607118
+
+topic 052
+   color 		 2.553092
+   new 		 2.011952
+   second 		 1.887380
+   att 		 1.871838
+   north 		 1.705211
+   light 		 1.650247
+   bay 		 1.614885
+   sandy 		 1.609255
+   temperature 		 1.602897
+   season 		 1.570026
+
+topic 053
+   color 		 2.765699
+   born 		 2.442023
+   bar 		 2.016943
+   people 		 1.950617
+   time 		 1.933747
+   temperature 		 1.872936
+   new 		 1.866965
+   italian 		 1.751752
+   notable 		 1.721622
+   light 		 1.710776
+
+topic 054
+   bar 		 2.109987
+   text 		 1.992820
+   color 		 1.969379
+   time 		 1.706462
+   first 		 1.647197
+   second 		 1.564428
+   light 		 1.537830
+   till 		 1.527184
+   black 		 1.499562
+   saturday 		 1.467466
+
+topic 055
+   bar 		 2.975580
+   text 		 2.607204
+   temperature 		 2.563184
+   color 		 1.931091
+   first 		 1.921806
+   new 		 1.867805
+   light 		 1.721195
+   league 		 1.622392
+   season 		 1.618787
+   age 		 1.541508
+
+topic 056
+   color 		 2.751184
+   bar 		 2.429886
+   new 		 2.343926
+   light 		 2.058247
+   text 		 2.020954
+   black 		 1.927733
+   temperature 		 1.862168
+   bay 		 1.774161
+   training 		 1.659530
+   park 		 1.608328
+
+topic 057
+   color 		 2.370235
+   light 		 2.182404
+   temperature 		 1.883136
+   bar 		 1.863867
+   att 		 1.755967
+   new 		 1.715989
+   time 		 1.681145
+   bay 		 1.644845
+   league 		 1.621686
+   north 		 1.574256
+
+topic 058
+   color 		 2.111949
+   temperature 		 1.665785
+   new 		 1.546941
+   first 		 1.515697
+   described 		 1.504223
+   released 		 1.501155
+   light 		 1.488742
+   monks 		 1.482096
+   sandy 		 1.479820
+   alliance 		 1.447029
+
+topic 059
+   color 		 3.046946
+   season 		 2.013408
+   new 		 1.976469
+   temperature 		 1.856014
+   clarence 		 1.851887
+   sandy 		 1.751143
+   light 		 1.690447
+   red 		 1.624419
+   att 		 1.618570
+   italian 		 1.542215
+
+topic 060
+   temperature 		 2.164172
+   new 		 1.987684
+   color 		 1.754893
+   time 		 1.732565
+   city 		 1.592416
+   bay 		 1.579672
+   att 		 1.546636
+   york 		 1.536763
+   light 		 1.511445
+   top 		 1.488981
+
+topic 061
+   color 		 2.383139
+   bar 		 2.358018
+   light 		 2.116387
+   goals 		 2.078530
+   new 		 1.955636
+   temperature 		 1.916070
+   att 		 1.666097
+   saturday 		 1.604494
+   years 		 1.590216
+   north 		 1.578656
+
+topic 062
+   new 		 2.272461
+   color 		 2.197357
+   temperature 		 1.999066
+   light 		 1.635660
+   bar 		 1.537664
+   released 		 1.515963
+   league 		 1.515282
+   career 		 1.512804
+   att 		 1.488115
+   goals 		 1.464509
+
+topic 063
+   color 		 2.320153
+   att 		 1.915155
+   new 		 1.881654
+   temperature 		 1.761206
+   light 		 1.687711
+   north 		 1.593745
+   first 		 1.572230
+   office 		 1.568513
+   bay 		 1.559239
+   made 		 1.520354
+
+topic 064
+   color 		 2.502954
+   new 		 1.960467
+   temperature 		 1.952570
+   bar 		 1.816493
+   time 		 1.671616
+   first 		 1.654807
+   light 		 1.652533
+   shift 		 1.591749
+   att 		 1.590986
+   red 		 1.586364
+
+topic 065
+   new 		 2.186086
+   color 		 2.162830
+   first 		 2.004829
+   second 		 1.709849
+   att 		 1.659381
+   light 		 1.619320
+   season 		 1.579608
+   ireland 		 1.533740
+   white 		 1.522780
+   solid 		 1.518622
+
+topic 066
+   color 		 2.357732
+   new 		 2.055173
+   att 		 2.008807
+   first 		 2.001355
+   temperature 		 1.986895
+   time 		 1.891575
+   north 		 1.855218
+   light 		 1.845970
+   second 		 1.684453
+   round 		 1.641764
+
+topic 067
+   temperature 		 2.316399
+   new 		 2.300106
+   bar 		 2.247809
+   north 		 1.998571
+   color 		 1.989106
+   text 		 1.930148
+   club 		 1.890057
+   time 		 1.774196
+   state 		 1.726696
+   saturday 		 1.691889
+
+topic 068
+   color 		 2.575715
+   temperature 		 2.055617
+   born 		 1.959312
+   italian 		 1.730160
+   bar 		 1.716686
+   season 		 1.707764
+   second 		 1.704966
+   two 		 1.696365
+   light 		 1.686677
+   time 		 1.658945
+
+topic 069
+   new 		 2.044115
+   bar 		 2.025853
+   temperature 		 1.792288
+   first 		 1.748461
+   att 		 1.739632
+   light 		 1.712113
+   text 		 1.677477
+   season 		 1.669038
+   second 		 1.647993
+   bay 		 1.608908
+
+topic 070
+   color 		 2.812973
+   first 		 2.084871
+   new 		 2.034172
+   temperature 		 1.871555
+   final 		 1.803226
+   red 		 1.800823
+   text 		 1.684345
+   bar 		 1.633992
+   saturday 		 1.613918
+   season 		 1.596093
+
+topic 071
+   text 		 2.761678
+   bar 		 2.759026
+   time 		 2.003157
+   color 		 1.894396
+   light 		 1.617905
+   att 		 1.612089
+   sense 		 1.570413
+   red 		 1.554372
+   first 		 1.550040
+   clarence 		 1.522662
+
+topic 072
+   temperature 		 2.627553
+   color 		 2.573344
+   new 		 2.320594
+   bar 		 2.127298
+   time 		 1.950834
+   light 		 1.861894
+   second 		 1.691963
+   att 		 1.688416
+   text 		 1.680723
+   shift 		 1.658216
+
+topic 073
+   new 		 2.193934
+   color 		 2.106064
+   temperature 		 1.967194
+   second 		 1.812385
+   time 		 1.777572
+   league 		 1.748643
+   att 		 1.724649
+   red 		 1.686688
+   bay 		 1.678039
+   first 		 1.642444
+
+topic 074
+   new 		 2.830248
+   temperature 		 2.164065
+   color 		 2.119186
+   bar 		 1.757082
+   text 		 1.753913
+   first 		 1.719128
+   club 		 1.588592
+   sandy 		 1.552221
+   time 		 1.526495
+   january 		 1.519728
+
+topic 075
+   new 		 2.468745
+   first 		 2.138301
+   bar 		 2.130468
+   sandy 		 1.807880
+   att 		 1.759168
+   color 		 1.752254
+   text 		 1.727098
+   temperature 		 1.601786
+   club 		 1.591232
+   second 		 1.538517
+
+topic 076
+   bar 		 2.947844
+   color 		 2.935990
+   temperature 		 2.840406
+   text 		 2.510867
+   light 		 2.010242
+   shift 		 1.760033
+   till 		 1.670638
+   area 		 1.562165
+   league 		 1.532177
+   att 		 1.530467
+
+topic 077
+   color 		 2.141872
+   temperature 		 1.863512
+   light 		 1.824837
+   bar 		 1.773211
+   city 		 1.629487
+   time 		 1.587797
+   season 		 1.575568
+   att 		 1.563045
+   final 		 1.543303
+   white 		 1.542246
+
+topic 078
+   bar 		 2.944422
+   color 		 2.676323
+   year 		 2.506647
+   text 		 2.326792
+   time 		 2.068836
+   held 		 1.959733
+   new 		 1.813707
+   temperature 		 1.799269
+   october 		 1.792020
+   september 		 1.752841
+
+topic 079
+   color 		 2.375100
+   temperature 		 2.259132
+   light 		 1.988535
+   text 		 1.882382
+   league 		 1.804918
+   bar 		 1.748135
+   north 		 1.679358
+   season 		 1.672019
+   new 		 1.614024
+   race 		 1.582893
+
+topic 080
+   color 		 2.467962
+   temperature 		 2.077242
+   county 		 2.032302
+   district 		 1.929373
+   population 		 1.881934
+   first 		 1.755388
+   province 		 1.699106
+   time 		 1.675782
+   text 		 1.666071
+   bar 		 1.592848
+
+topic 081
+   temperature 		 2.596531
+   color 		 2.590648
+   att 		 2.249682
+   bar 		 2.231134
+   new 		 1.999257
+   light 		 1.987736
+   saturday 		 1.565749
+   period 		 1.513717
+   post 		 1.509705
+   north 		 1.499850
+
+topic 082
+   color 		 2.128727
+   light 		 2.009061
+   new 		 1.954078
+   years 		 1.930553
+   first 		 1.926876
+   goals 		 1.884194
+   clubs 		 1.806115
+   second 		 1.645857
+   august 		 1.627750
+   att 		 1.622172
+
+topic 083
+   color 		 3.597926
+   temperature 		 2.426220
+   clubs 		 2.268848
+   new 		 2.055893
+   years 		 1.972682
+   light 		 1.877344
+   time 		 1.843052
+   north 		 1.667094
+   final 		 1.652326
+   sandy 		 1.644481
+
+topic 084
+   new 		 2.512547
+   bar 		 2.042022
+   temperature 		 1.815140
+   north 		 1.809876
+   color 		 1.763866
+   att 		 1.725607
+   season 		 1.603472
+   engine 		 1.583583
+   flowers 		 1.582767
+   club 		 1.568070
+
+topic 085
+   color 		 2.166494
+   released 		 1.852452
+   text 		 1.774851
+   league 		 1.698043
+   final 		 1.669276
+   light 		 1.666241
+   temperature 		 1.643717
+   second 		 1.626620
+   season 		 1.611921
+   att 		 1.590800
+
+topic 086
+   color 		 2.580225
+   temperature 		 2.088524
+   new 		 1.852627
+   north 		 1.626004
+   light 		 1.617725
+   att 		 1.550704
+   saturday 		 1.525501
+   clarence 		 1.499005
+   final 		 1.486278
+   point 		 1.478858
+
+topic 087
+   new 		 2.507621
+   color 		 2.408395
+   temperature 		 2.112478
+   bar 		 2.007757
+   light 		 1.994513
+   league 		 1.901664
+   att 		 1.868862
+   north 		 1.865205
+   clarence 		 1.864550
+   time 		 1.671023
+
+topic 088
+   color 		 2.547397
+   temperature 		 2.268568
+   new 		 2.120574
+   att 		 2.073827
+   park 		 1.815729
+   single 		 1.776362
+   time 		 1.754463
+   bar 		 1.642188
+   main 		 1.623780
+   text 		 1.600666
+
+topic 089
+   color 		 2.322311
+   time 		 1.812523
+   new 		 1.798375
+   temperature 		 1.735537
+   bar 		 1.685966
+   light 		 1.598630
+   red 		 1.585668
+   lamps 		 1.572733
+   circuit 		 1.544706
+   dance 		 1.509248
+
+topic 090
+   color 		 2.486384
+   new 		 2.073095
+   light 		 2.017161
+   bar 		 2.013473
+   first 		 1.913990
+   north 		 1.876070
+   season 		 1.846161
+   temperature 		 1.728511
+   league 		 1.682858
+   single 		 1.591399
+
+topic 091
+   color 		 1.987419
+   temperature 		 1.981367
+   season 		 1.915772
+   new 		 1.881955
+   club 		 1.817028
+   light 		 1.659774
+   first 		 1.630752
+   district 		 1.594476
+   top 		 1.490989
+   title 		 1.483042
+
+topic 092
+   color 		 2.727435
+   new 		 2.239063
+   att 		 2.051022
+   second 		 1.982540
+   time 		 1.764308
+   first 		 1.706517
+   temperature 		 1.698869
+   population 		 1.676501
+   light 		 1.676012
+   dance 		 1.601416
+
+topic 093
+   district 		 2.878724
+   population 		 2.009116
+   league 		 1.939390
+   color 		 1.861333
+   new 		 1.847448
+   temperature 		 1.807540
+   county 		 1.732772
+   single 		 1.724285
+   rural 		 1.681333
+   history 		 1.678903
+
+topic 094
+   color 		 2.815704
+   first 		 2.016703
+   new 		 1.901982
+   bar 		 1.841915
+   final 		 1.796950
+   second 		 1.728665
+   temperature 		 1.697607
+   white 		 1.683546
+   league 		 1.683351
+   two 		 1.599979
+
+topic 095
+   color 		 2.851900
+   temperature 		 2.184218
+   first 		 1.913292
+   att 		 1.899263
+   clubs 		 1.665881
+   time 		 1.638772
+   body 		 1.622808
+   years 		 1.614420
+   light 		 1.588675
+   year 		 1.562206
+
+topic 096
+   first 		 1.977423
+   temperature 		 1.846409
+   time 		 1.787922
+   color 		 1.555480
+   att 		 1.552821
+   text 		 1.542048
+   engine 		 1.530685
+   removed 		 1.511975
+   york 		 1.492748
+   pool 		 1.462687
+
+topic 097
+   bar 		 2.182277
+   temperature 		 1.971858
+   att 		 1.849882
+   color 		 1.808774
+   new 		 1.693332
+   first 		 1.565939
+   made 		 1.560900
+   bay 		 1.501164
+   time 		 1.486649
+   second 		 1.478507
+
+topic 098
+   color 		 2.930834
+   new 		 2.382856
+   temperature 		 2.128606
+   time 		 1.920176
+   light 		 1.884190
+   final 		 1.883890
+   first 		 1.691857
+   goals 		 1.617917
+   att 		 1.573892
+   season 		 1.547371
+
+topic 099
+   first 		 2.097147
+   new 		 1.844645
+   color 		 1.838626
+   time 		 1.796888
+   club 		 1.608602
+   august 		 1.604970
+   engine 		 1.560046
+   temperature 		 1.558363
+   final 		 1.539524
+   war 		 1.472013
+

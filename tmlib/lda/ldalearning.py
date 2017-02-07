@@ -1,8 +1,8 @@
-import sys
-import os
-from ..datasets import base
+import sys, os
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../..'))
+from tmlib.datasets import base
 from ldamodel import LdaModel
-from ..datasets.dataset import DataSet
+from tmlib.datasets.dataset import DataSet
 
 import logging
 
@@ -68,7 +68,7 @@ class LdaLearning(object):
         self.num_topics = num_topics
         # Checking shape of input model
         if lda_model is not None:
-            assert lda_model.model.shape != (num_topics, num_terms), "Shape error: model must be shape of " \
+            assert lda_model.model.shape == (num_topics, num_terms), "Shape error: model must be shape of " \
                                                                      "(num_topics * num_terms)"
         self.lda_model = lda_model
 
@@ -95,6 +95,8 @@ class LdaLearning(object):
 
         """
         mini_batch_no = 0
+        if not os.path.exists(model_folder):
+            os.mkdir(model_folder)
         logger.info("Start learning Lda model, passes over")
 
         # Iterating
@@ -112,13 +114,14 @@ class LdaLearning(object):
 
             # save model : lambda, beta, N_phi
             if save_model_every > 0 and (data.mini_batch_no % save_model_every) == 0:
-                model_file = model_folder + '/model_batch' + str(mini_batch_no)
+                model_file = model_folder + '/model_batch' + str(mini_batch_no) + '.txt'
                 self.lda_model.save(model_file)
 
             # save top words
             if save_top_words_every > 0 and (data.mini_batch_no % save_top_words_every) == 0:
                 top_words_file = model_folder + '/top_words_batch_' + str(mini_batch_no) + '.txt'
-                self.lda_model.print_top_words(num_top_words, data.vocab_file, top_words_file)
+                self.lda_model.print_top_words(num_top_words, vocab_file=data.vocab_file, result_file=top_words_file)
+            mini_batch_no += 1
 
         # save learning statistic
         if save_statistic:

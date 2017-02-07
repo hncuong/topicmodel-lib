@@ -5,7 +5,7 @@ from scipy.special import psi
 import time
 
 from tmlib.datasets.base import DataFormat, convert_corpus_format
-from .utils import util_funcs
+from tmlib.lda.utils import util_funcs
 from ldamodel import LdaModel
 from ldalearning import LdaLearning
 

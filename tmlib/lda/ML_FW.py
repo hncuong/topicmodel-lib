@@ -154,7 +154,10 @@ class MLFW(LdaLearning):
                 ids.append(j)
         # Normalize the intermediate beta
         for k in range(self.num_topics):
-            beta[k, ids] /= sum(beta[k, ids])
+            if sum(beta[k, ids]) == 0:
+                beta[k, ids] = 0.
+            else:
+                beta[k, ids] /= sum(beta[k, ids])
         # Update beta    
         rhot = pow(self.tau0 + self.updatect, -self.kappa)
         self.rhot = rhot

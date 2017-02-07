@@ -4,6 +4,9 @@ import shutil
 from os.path import isdir, isfile, join
 import numpy as np
 from time import time
+
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../..'))
+
 import logging
 from tmlib.preprocessing import preprocessing
 from tmlib import config
@@ -75,6 +78,27 @@ def check_input_format(file_path):
     else:
         logging.error('Unknown file %s', file_path)
 
+def get_list_docs_raw_text(file_raw_text_path):
+    fread = open(file_raw_text_path)
+    line = fread.readline()
+    docs = list()
+    while line:
+        line = line.strip()
+        if line == "<TEXT>":
+            # print(num)
+            next_line = fread.readline().strip()
+            if len(next_line) > 30:
+                l = next_line
+            else:
+                l = fread.readline().strip()
+            doc = ''
+            while l != '</TEXT>' and len(l) > 10:
+                doc = doc + ' ' + l
+                l = fread.readline().strip()
+            # num += 1
+            docs.append(doc)
+        line = fread.readline()
+    return docs
 
 def pre_process(file_path):
     #self.is_raw_text = True
@@ -121,9 +145,9 @@ def reformat_file_to_term_sequence(file_path):
         fout = open(join(folder, main_name+'.sq'), 'w')
         for i in range(len(doc_tks)):
             N = len(doc_tks[i])
-            fout.write('%d' %N)
+            #fout.write('%d' %N)
             for j in range(N):
-                fout.write(' %d' %doc_tks[i][j])
+                fout.write('%d ' %doc_tks[i][j])
                 if j == N-1 and i < (len(doc_tks)-1):
                     fout.write('\n')
         fout.close()
@@ -418,7 +442,7 @@ def shuffle_formatted_data_file(data_path, batch_size):
         list_pointers[ip].close()
         os.remove('.'.join([data_path,"shuffle%d"%ip]))
     fout.close()
-
+    return file_shuffled
 
 def compute_sparsity(doc_tp, batch_size, num_topics, _type):
     sparsity = np.zeros(batch_size, dtype=np.float)

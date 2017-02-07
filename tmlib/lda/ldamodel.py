@@ -32,7 +32,7 @@ class LdaModel(object):
         beta_norm = self.model.sum(axis=1)
         self.model = self.model / beta_norm[:, np.newaxis]
 
-    def print_top_words(self, num_words, vocab_file=None, show_topics=None, result_file=None):
+    def print_top_words(self, num_words, vocab_file, show_topics=None, result_file=None):
         """
         display top words of topics:
         Args:
@@ -83,21 +83,21 @@ class LdaModel(object):
                 topic_no += 1
                 print('\n')
 
-    def load(self, beta_file):
+    def load(self, model_file):
         """
         load model (beta or lambda) from a file which is learnt to learn continue
         Args:
-            beta_file:
+            model_file:
 
         Returns:
 
         """
-        if os.path.isfile(beta_file):
-            tail = beta_file.split('.')[-1]
+        if os.path.isfile(model_file):
+            tail = model_file.split('.')[-1]
             assert tail != 'txt' or tail != 'npy', \
                 'Unsupported format.Please convert to .txt (text file) or .npy (binary file)!'
             if tail == 'txt':
-                f = open(beta_file)
+                f = open(model_file)
                 lines = f.readlines()
                 words = lines[0].strip().split()
                 K = len(lines)
@@ -106,19 +106,21 @@ class LdaModel(object):
                 for i in xrange(K):
                     words = lines[0].strip().split()
                     if len(words) != W:
-                        print('File %s is error' % beta_file)
-                    exit()
+                        print('File %s is error' % model_file)
+                        exit()
                     for j in xrange(W):
                         beta[i][j] = float(words[j])
             elif tail == 'npy':
-                beta = np.load(beta_file)
+                beta = np.load(model_file)
             self.model = beta
+            self.num_topics = beta.shape[0]
+            self.num_terms = beta.shape[1]
             return beta
         else:
-            print('Unknown file %s' % beta_file)
+            print('Unknown file %s' % model_file)
             exit()
 
-    def save(self, file_beta, file_type='binary'):
+    def save(self, model_file, file_type='binary'):
         """
             save model into a file.
             <optional>: type file default is binary, file is saved with tail is .npy
@@ -126,8 +128,8 @@ class LdaModel(object):
         """
         type_file = file_type.lower()
         if type_file == 'text':
-            tail = file_beta.split('.')[-1]
-            filename = file_beta[:-(len(tail))] + 'txt'
+            tail = model_file.split('.')[-1]
+            filename = model_file[:-(len(tail))] + 'txt'
             f = open(filename, 'w')
             for k in range(self.num_topics):
                 for i in range(self.num_terms - 1):
@@ -135,8 +137,8 @@ class LdaModel(object):
                 f.write('%.10f\n' % (self.model[k][self.num_terms - 1]))
             f.close()
         else:
-            tail = file_beta.split('.')[-1]
-            filename = file_beta[:-(len(tail))] + 'npy'
+            tail = model_file.split('.')[-1]
+            filename = model_file[:-(len(tail))] + 'npy'
             np.save(filename, self.model)
 
 

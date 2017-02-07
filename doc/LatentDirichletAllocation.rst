@@ -1,9 +1,11 @@
 .. _lda:
+
 Latent Dirichlet allocation
 ===========================
 .. _Wikipedia: https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation
 .. _bag of words: https://en.wikipedia.org/wiki/Bag-of-words_model
-.. |Lda model| .. image:: images/lda_model.png
+.. |Lda model| image:: images/lda_model.png
+
 This documentation refers to this link: `Wikipedia`_
 
 - In natural language processing, latent Dirichlet allocation (LDA) is a generative statistical model that allows sets of observations to be explained by unobserved groups that explain why some parts of the data are similar.
@@ -25,14 +27,17 @@ Model
 _____
 - With plate notation, the dependencies among the many variables can be captured concisely. The boxes are “plates” representing replicates. The outer plate represents documents, while the inner plate represents the repeated choice of topics and words within a document. M denotes the number of documents, N the number of words in a document.
     |Lda model|
-Thus::
+
+Thus:
+
     - α is the parameter of the Dirichlet prior on the per-document topic distributions,
     - β is the parameter of the Dirichlet prior on the per-topic word distribution,
-    - :math: `\theta _{i}}` is the topic distribution for document i,
-    - :math: `\varphi _{k}` is the word distribution for topic k,
-    - :math: `z_{ij}` is the topic for the jth word in document i,
-    - :math: `w_{ij}` is the specific word.
-- The :math: `w_{ij}` are the only observable variables, and the other variables are latent variables.
+    - :math:`\theta_{i}` is the topic distribution for document i,
+    - :math:`\varphi_{k}` is the word distribution for topic k,
+    - :math:`z_{ij}` is the topic for the jth word in document i,
+    - :math:`w_{ij}` is the specific word.
+
+The :math:`w_{ij}` are the only observable variables, and the other variables are latent variables.
 
 
 

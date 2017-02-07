@@ -1,0 +1,1200 @@
+topic 000
+   new 		 6.080513
+   first 		 3.712075
+   und 		 3.494587
+   world 		 3.255138
+   time 		 3.173315
+   two 		 3.074602
+   years 		 3.049635
+   team 		 2.964049
+   color 		 2.706580
+   castle 		 2.463507
+
+topic 001
+   bar 		 4.449436
+   und 		 4.413963
+   english 		 3.982685
+   new 		 3.486987
+   german 		 3.426772
+   years 		 3.359296
+   first 		 2.996385
+   der 		 2.945259
+   two 		 2.902164
+   john 		 2.679828
+
+topic 002
+   und 		 3.427308
+   english 		 3.383408
+   german 		 2.853804
+   time 		 2.776083
+   two 		 2.775406
+   season 		 2.771400
+   first 		 2.722172
+   years 		 2.661175
+   der 		 2.655635
+   new 		 2.620915
+
+topic 003
+   und 		 4.543557
+   new 		 4.295034
+   first 		 3.336943
+   two 		 3.160252
+   german 		 3.034154
+   color 		 2.884099
+   der 		 2.736870
+   light 		 2.691019
+   time 		 2.541272
+   john 		 2.459022
+
+topic 004
+   new 		 4.126102
+   first 		 4.004979
+   und 		 3.441737
+   english 		 3.051376
+   der 		 2.776990
+   two 		 2.750535
+   bar 		 2.673400
+   time 		 2.568679
+   season 		 2.556265
+   german 		 2.506607
+
+topic 005
+   family 		 8.761749
+   species 		 8.270455
+   new 		 6.589718
+   first 		 5.967056
+   north 		 5.177689
+   found 		 4.972336
+   english 		 4.736320
+   german 		 4.607525
+   genus 		 3.976568
+   der 		 3.933671
+
+topic 006
+   actor 		 4.695511
+   german 		 3.965487
+   und 		 3.764757
+   der 		 3.685224
+   english 		 3.559868
+   new 		 3.209279
+   first 		 2.866115
+   born 		 2.840542
+   two 		 2.737110
+   november 		 2.647545
+
+topic 007
+   und 		 3.121417
+   first 		 3.054792
+   color 		 2.845512
+   english 		 2.811328
+   german 		 2.699921
+   new 		 2.681659
+   north 		 2.418799
+   years 		 2.334595
+   season 		 2.253126
+   two 		 2.210984
+
+topic 008
+   und 		 4.542880
+   german 		 4.387870
+   new 		 4.034410
+   der 		 3.273027
+   von 		 2.896669
+   first 		 2.802397
+   park 		 2.486985
+   area 		 2.378306
+   time 		 2.372312
+   english 		 2.322458
+
+topic 009
+   und 		 4.915700
+   german 		 4.128130
+   years 		 3.997296
+   two 		 3.847011
+   der 		 3.632454
+   first 		 3.610070
+   new 		 3.385841
+   von 		 3.355580
+   english 		 3.088287
+   city 		 2.887900
+
+topic 010
+   years 		 3.616813
+   new 		 3.409146
+   english 		 3.018282
+   german 		 2.636561
+   goals 		 2.595434
+   history 		 2.578422
+   final 		 2.557611
+   und 		 2.523236
+   north 		 2.442586
+   march 		 2.402878
+
+topic 011
+   new 		 4.324849
+   years 		 3.967031
+   first 		 3.600579
+   north 		 3.255848
+   english 		 3.028780
+   und 		 2.927472
+   world 		 2.895141
+   city 		 2.863201
+   german 		 2.792703
+   area 		 2.732014
+
+topic 012
+   north 		 4.527786
+   und 		 3.849681
+   english 		 3.831721
+   der 		 3.672801
+   new 		 3.504195
+   south 		 2.914631
+   german 		 2.876162
+   area 		 2.827377
+   early 		 2.731450
+   station 		 2.571653
+
+topic 013
+   new 		 3.046263
+   und 		 2.955440
+   german 		 2.940526
+   english 		 2.732577
+   time 		 2.714627
+   der 		 2.566287
+   first 		 2.543611
+   years 		 2.539313
+   bar 		 2.420970
+   william 		 2.352487
+
+topic 014
+   new 		 4.598088
+   english 		 3.222440
+   und 		 3.095581
+   north 		 3.094180
+   german 		 2.867640
+   der 		 2.792165
+   area 		 2.582190
+   island 		 2.528342
+   bar 		 2.497110
+   john 		 2.368398
+
+topic 015
+   new 		 4.101642
+   und 		 4.050141
+   german 		 3.580118
+   english 		 3.244692
+   two 		 2.988977
+   john 		 2.714878
+   bar 		 2.635602
+   time 		 2.611444
+   years 		 2.567711
+   light 		 2.566722
+
+topic 016
+   german 		 3.421041
+   new 		 3.396259
+   first 		 3.253494
+   und 		 3.157578
+   park 		 3.083015
+   two 		 3.080045
+   english 		 2.745788
+   der 		 2.695538
+   john 		 2.549364
+   white 		 2.515049
+
+topic 017
+   district 		 38.824794
+   population 		 28.261582
+   city 		 15.692164
+   area 		 13.523189
+   province 		 9.899915
+   rural 		 9.108818
+   party 		 8.913150
+   south 		 7.662230
+   located 		 7.347230
+   state 		 7.149044
+
+topic 018
+   new 		 9.099092
+   bar 		 5.017679
+   south 		 3.630548
+   english 		 3.315706
+   family 		 3.241993
+   text 		 3.176257
+   two 		 2.919316
+   first 		 2.910182
+   und 		 2.858426
+   years 		 2.737129
+
+topic 019
+   und 		 3.542779
+   der 		 3.421812
+   german 		 3.177212
+   john 		 3.102058
+   world 		 3.098483
+   new 		 3.092381
+   english 		 2.966803
+   two 		 2.736728
+   light 		 2.646708
+   first 		 2.634741
+
+topic 020
+   und 		 4.416006
+   english 		 4.414008
+   der 		 4.057202
+   german 		 3.349135
+   first 		 3.284829
+   two 		 2.836155
+   area 		 2.775988
+   city 		 2.712268
+   second 		 2.682260
+   years 		 2.674258
+
+topic 021
+   family 		 3.652242
+   new 		 3.125032
+   light 		 2.984741
+   german 		 2.969715
+   und 		 2.841969
+   der 		 2.795156
+   park 		 2.728081
+   english 		 2.705504
+   color 		 2.685098
+   temperature 		 2.580621
+
+topic 022
+   first 		 4.230218
+   two 		 3.100858
+   color 		 3.059167
+   world 		 2.942066
+   new 		 2.933751
+   time 		 2.568276
+   light 		 2.550275
+   der 		 2.499545
+   national 		 2.467232
+   und 		 2.450007
+
+topic 023
+   new 		 4.275872
+   first 		 4.271770
+   years 		 3.608562
+   und 		 3.588624
+   der 		 3.497078
+   english 		 3.171510
+   light 		 2.901189
+   time 		 2.894814
+   city 		 2.801803
+   two 		 2.798827
+
+topic 024
+   und 		 3.457368
+   english 		 3.110001
+   german 		 3.079272
+   castle 		 2.861329
+   area 		 2.599085
+   two 		 2.482611
+   der 		 2.428147
+   park 		 2.230558
+   first 		 2.228055
+   john 		 2.210038
+
+topic 025
+   new 		 3.320787
+   island 		 3.146612
+   time 		 3.010474
+   und 		 2.915356
+   english 		 2.852813
+   city 		 2.700582
+   north 		 2.677154
+   der 		 2.664255
+   area 		 2.630622
+   john 		 2.507247
+
+topic 026
+   new 		 5.875978
+   english 		 3.727089
+   world 		 3.268162
+   time 		 3.240256
+   two 		 3.201103
+   first 		 3.189297
+   john 		 3.176737
+   und 		 3.171774
+   park 		 3.132051
+   german 		 3.011116
+
+topic 027
+   population 		 3.649958
+   new 		 3.600519
+   first 		 3.127347
+   years 		 3.041273
+   und 		 2.735111
+   english 		 2.702038
+   island 		 2.553607
+   der 		 2.430187
+   color 		 2.394591
+   time 		 2.331222
+
+topic 028
+   first 		 4.749120
+   english 		 3.947452
+   und 		 3.373304
+   years 		 3.308918
+   time 		 3.303822
+   new 		 3.255368
+   two 		 3.133481
+   der 		 2.950740
+   city 		 2.930617
+   university 		 2.709540
+
+topic 029
+   county 		 28.026437
+   district 		 17.466363
+   village 		 11.974360
+   province 		 6.981002
+   population 		 5.741918
+   school 		 5.570644
+   history 		 5.495308
+   german 		 5.353444
+   south 		 5.233364
+   rural 		 5.074205
+
+topic 030
+   first 		 4.210962
+   der 		 3.800015
+   und 		 3.641735
+   new 		 3.036436
+   two 		 2.729486
+   english 		 2.660422
+   time 		 2.533710
+   world 		 2.532671
+   john 		 2.347822
+   german 		 2.322110
+
+topic 031
+   english 		 3.923910
+   new 		 3.505573
+   first 		 3.138601
+   color 		 3.017035
+   time 		 2.860169
+   park 		 2.807773
+   der 		 2.788690
+   two 		 2.640243
+   german 		 2.569353
+   und 		 2.484936
+
+topic 032
+   und 		 4.252192
+   new 		 3.919361
+   two 		 3.843928
+   color 		 3.627621
+   der 		 3.350612
+   years 		 3.152548
+   english 		 3.040193
+   temperature 		 2.681371
+   first 		 2.567475
+   university 		 2.560256
+
+topic 033
+   new 		 3.854901
+   und 		 3.563346
+   english 		 3.302594
+   first 		 3.126630
+   german 		 2.962195
+   att 		 2.718289
+   color 		 2.665738
+   years 		 2.557650
+   second 		 2.551489
+   louis 		 2.522331
+
+topic 034
+   new 		 4.484462
+   und 		 3.890322
+   first 		 3.725623
+   two 		 3.570431
+   english 		 2.925177
+   german 		 2.604597
+   years 		 2.512595
+   der 		 2.458565
+   time 		 2.405833
+   color 		 2.387175
+
+topic 035
+   years 		 5.157616
+   new 		 4.280249
+   first 		 4.008325
+   und 		 3.948800
+   english 		 3.722528
+   german 		 3.334517
+   time 		 3.091148
+   color 		 3.089441
+   early 		 2.931620
+   area 		 2.763712
+
+topic 036
+   new 		 3.823713
+   first 		 3.485516
+   und 		 2.904626
+   east 		 2.641092
+   english 		 2.629557
+   park 		 2.576020
+   north 		 2.513951
+   german 		 2.469649
+   john 		 2.396418
+   university 		 2.393690
+
+topic 037
+   first 		 3.406347
+   english 		 3.020361
+   und 		 2.823682
+   bar 		 2.771292
+   color 		 2.709658
+   new 		 2.520193
+   temperature 		 2.476703
+   city 		 2.336625
+   years 		 2.262911
+   john 		 2.240232
+
+topic 038
+   new 		 4.499617
+   und 		 3.599137
+   john 		 3.072129
+   first 		 2.976497
+   world 		 2.885336
+   english 		 2.848861
+   german 		 2.814131
+   color 		 2.796144
+   der 		 2.727167
+   university 		 2.584200
+
+topic 039
+   new 		 3.916412
+   und 		 3.672961
+   english 		 2.986234
+   first 		 2.754689
+   season 		 2.586783
+   german 		 2.315615
+   april 		 2.297512
+   col 		 2.215192
+   light 		 2.205174
+   national 		 2.131935
+
+topic 040
+   new 		 4.143484
+   und 		 3.628653
+   first 		 3.276593
+   english 		 3.122307
+   john 		 2.891270
+   area 		 2.725372
+   time 		 2.715628
+   north 		 2.622776
+   years 		 2.493629
+   two 		 2.448755
+
+topic 041
+   first 		 3.807405
+   born 		 3.581653
+   new 		 3.453492
+   two 		 3.300817
+   english 		 3.069593
+   und 		 2.921065
+   world 		 2.796337
+   german 		 2.718369
+   der 		 2.712901
+   color 		 2.710673
+
+topic 042
+   und 		 3.946519
+   new 		 3.561621
+   german 		 3.393676
+   color 		 2.912045
+   john 		 2.847073
+   first 		 2.719622
+   north 		 2.513226
+   der 		 2.438237
+   east 		 2.384440
+   history 		 2.355973
+
+topic 043
+   und 		 4.089988
+   new 		 3.654064
+   english 		 3.258001
+   first 		 3.134136
+   german 		 3.104842
+   john 		 3.038602
+   der 		 2.998240
+   color 		 2.763142
+   von 		 2.661478
+   castle 		 2.612245
+
+topic 044
+   first 		 3.390940
+   new 		 3.364554
+   und 		 2.848069
+   der 		 2.414436
+   second 		 2.297628
+   von 		 2.280214
+   world 		 2.276271
+   island 		 2.252690
+   years 		 2.236217
+   two 		 2.231096
+
+topic 045
+   first 		 3.744289
+   new 		 3.474480
+   und 		 3.284623
+   der 		 2.803348
+   german 		 2.783676
+   bar 		 2.497539
+   king 		 2.418541
+   color 		 2.352631
+   english 		 2.351738
+   two 		 2.330759
+
+topic 046
+   english 		 4.315786
+   new 		 3.460960
+   years 		 3.357389
+   first 		 3.332708
+   und 		 3.132266
+   born 		 3.040465
+   season 		 3.022632
+   german 		 2.995800
+   john 		 2.887153
+   two 		 2.854180
+
+topic 047
+   new 		 4.845668
+   english 		 3.787173
+   first 		 3.563118
+   german 		 3.399765
+   und 		 3.396144
+   der 		 3.065258
+   time 		 2.725493
+   von 		 2.627959
+   state 		 2.558024
+   john 		 2.436681
+
+topic 048
+   und 		 3.335370
+   first 		 3.232023
+   born 		 3.067774
+   new 		 3.020573
+   north 		 2.947893
+   world 		 2.932752
+   der 		 2.891125
+   march 		 2.620460
+   park 		 2.557716
+   april 		 2.555502
+
+topic 049
+   english 		 5.023366
+   first 		 3.914450
+   german 		 3.597629
+   und 		 3.544410
+   castle 		 3.162875
+   two 		 3.119645
+   new 		 3.000786
+   color 		 2.938158
+   world 		 2.837601
+   years 		 2.531138
+
+topic 050
+   und 		 3.961492
+   first 		 3.176888
+   years 		 3.139404
+   light 		 2.896522
+   german 		 2.816286
+   john 		 2.778041
+   color 		 2.773090
+   time 		 2.704198
+   new 		 2.687211
+   bar 		 2.621106
+
+topic 051
+   english 		 3.879359
+   german 		 3.619181
+   und 		 3.524725
+   bar 		 3.282404
+   der 		 3.279764
+   new 		 2.936686
+   two 		 2.813579
+   order 		 2.572999
+   john 		 2.509803
+   area 		 2.492394
+
+topic 052
+   new 		 3.942844
+   und 		 3.460503
+   german 		 3.443378
+   english 		 3.247172
+   der 		 2.860037
+   first 		 2.789569
+   second 		 2.760024
+   color 		 2.740177
+   university 		 2.684636
+   north 		 2.612417
+
+topic 053
+   born 		 10.705385
+   people 		 5.843858
+   notable 		 4.337558
+   american 		 4.180607
+   new 		 3.827803
+   first 		 3.550392
+   english 		 3.503959
+   und 		 3.417584
+   island 		 3.279697
+   august 		 3.189806
+
+topic 054
+   first 		 3.226533
+   und 		 3.129022
+   university 		 3.046769
+   english 		 2.618643
+   time 		 2.488846
+   two 		 2.486461
+   bar 		 2.423646
+   area 		 2.406607
+   world 		 2.299496
+   city 		 2.227103
+
+topic 055
+   und 		 4.473247
+   first 		 4.447834
+   english 		 3.895867
+   john 		 3.891197
+   bar 		 3.810054
+   new 		 3.599526
+   der 		 3.338419
+   years 		 3.262411
+   building 		 3.196547
+   german 		 3.159003
+
+topic 056
+   new 		 4.637972
+   german 		 3.835161
+   english 		 3.824263
+   und 		 3.477129
+   der 		 3.040831
+   color 		 2.853229
+   first 		 2.795423
+   two 		 2.789930
+   world 		 2.730282
+   bar 		 2.684557
+
+topic 057
+   english 		 4.124487
+   und 		 3.705870
+   new 		 3.366632
+   first 		 2.938760
+   area 		 2.657176
+   german 		 2.645196
+   light 		 2.630904
+   der 		 2.627328
+   world 		 2.594281
+   time 		 2.591015
+
+topic 058
+   der 		 3.089087
+   two 		 2.909203
+   first 		 2.853499
+   new 		 2.802667
+   world 		 2.714730
+   und 		 2.670131
+   years 		 2.628944
+   school 		 2.349257
+   john 		 2.304571
+   south 		 2.289162
+
+topic 059
+   english 		 3.917716
+   new 		 3.616830
+   color 		 3.188215
+   german 		 2.918711
+   der 		 2.805652
+   und 		 2.766215
+   von 		 2.680745
+   two 		 2.602878
+   john 		 2.506743
+   war 		 2.461914
+
+topic 060
+   und 		 4.383436
+   english 		 4.255700
+   new 		 3.853200
+   german 		 3.667821
+   der 		 3.268735
+   von 		 2.751743
+   time 		 2.641856
+   first 		 2.551696
+   john 		 2.512891
+   two 		 2.509494
+
+topic 061
+   goals 		 9.124541
+   years 		 8.959584
+   english 		 6.043119
+   clubs 		 5.264346
+   und 		 4.674087
+   german 		 3.976224
+   new 		 3.902467
+   der 		 3.726218
+   french 		 3.695327
+   team 		 3.621685
+
+topic 062
+   new 		 4.311142
+   und 		 2.927660
+   german 		 2.763681
+   english 		 2.640464
+   first 		 2.605874
+   der 		 2.444505
+   election 		 2.428006
+   color 		 2.362649
+   world 		 2.357398
+   years 		 2.230754
+
+topic 063
+   english 		 4.055097
+   und 		 3.571807
+   new 		 3.429315
+   first 		 3.214703
+   german 		 3.166177
+   der 		 3.086781
+   von 		 2.619225
+   world 		 2.576630
+   native 		 2.486307
+   color 		 2.472294
+
+topic 064
+   new 		 3.883666
+   english 		 3.569830
+   first 		 3.554957
+   und 		 3.520357
+   der 		 3.120382
+   german 		 2.933059
+   born 		 2.722069
+   color 		 2.685742
+   time 		 2.507542
+   election 		 2.428087
+
+topic 065
+   new 		 4.718443
+   first 		 4.325687
+   english 		 3.733068
+   german 		 3.012690
+   und 		 2.964563
+   der 		 2.873553
+   second 		 2.749224
+   two 		 2.702105
+   national 		 2.675517
+   years 		 2.641494
+
+topic 066
+   first 		 4.577496
+   english 		 4.449977
+   new 		 4.253870
+   und 		 3.921073
+   german 		 3.874845
+   der 		 3.619204
+   two 		 3.583948
+   time 		 2.998150
+   north 		 2.969785
+   island 		 2.744087
+
+topic 067
+   new 		 4.352867
+   north 		 2.896331
+   german 		 2.884394
+   english 		 2.804678
+   first 		 2.687981
+   state 		 2.631216
+   university 		 2.616719
+   time 		 2.608862
+   und 		 2.591269
+   der 		 2.590216
+
+topic 068
+   der 		 4.168084
+   german 		 4.134892
+   english 		 4.013197
+   two 		 3.613178
+   born 		 3.368847
+   und 		 3.196031
+   first 		 2.793117
+   march 		 2.758453
+   color 		 2.682671
+   john 		 2.651576
+
+topic 069
+   german 		 4.653767
+   castle 		 4.329829
+   new 		 3.960029
+   first 		 3.624544
+   english 		 3.430341
+   der 		 3.248919
+   und 		 2.923786
+   world 		 2.746516
+   john 		 2.613297
+   king 		 2.579982
+
+topic 070
+   first 		 4.286368
+   und 		 4.067247
+   new 		 3.923223
+   german 		 3.318384
+   der 		 3.248598
+   color 		 3.022748
+   two 		 2.583763
+   world 		 2.533937
+   university 		 2.462005
+   von 		 2.394432
+
+topic 071
+   und 		 4.187349
+   german 		 3.617635
+   two 		 3.155248
+   bar 		 3.075206
+   world 		 3.044545
+   english 		 3.011735
+   time 		 2.997161
+   first 		 2.981733
+   text 		 2.901986
+   years 		 2.882571
+
+topic 072
+   new 		 4.785095
+   und 		 3.818114
+   years 		 3.039612
+   time 		 2.960138
+   two 		 2.928734
+   german 		 2.878169
+   age 		 2.831107
+   first 		 2.729221
+   color 		 2.696005
+   temperature 		 2.627553
+
+topic 073
+   new 		 4.515331
+   german 		 4.429096
+   english 		 4.313773
+   und 		 3.950537
+   two 		 3.739791
+   first 		 3.705823
+   world 		 3.208863
+   der 		 3.013185
+   area 		 2.888289
+   time 		 2.789267
+
+topic 074
+   new 		 5.935674
+   und 		 5.021186
+   first 		 3.731631
+   english 		 3.516928
+   der 		 3.441799
+   german 		 3.208347
+   world 		 2.969519
+   two 		 2.822869
+   january 		 2.779981
+   area 		 2.640657
+
+topic 075
+   first 		 4.990246
+   new 		 4.945713
+   two 		 3.155174
+   und 		 3.109954
+   election 		 2.735205
+   der 		 2.589945
+   world 		 2.491616
+   years 		 2.484161
+   english 		 2.460249
+   north 		 2.359275
+
+topic 076
+   japanese 		 4.258131
+   und 		 4.041365
+   der 		 3.532171
+   bar 		 3.341758
+   area 		 3.250614
+   german 		 3.129767
+   english 		 3.073437
+   color 		 3.060894
+   temperature 		 2.840406
+   first 		 2.813506
+
+topic 077
+   und 		 3.530532
+   english 		 3.362023
+   german 		 3.153334
+   city 		 3.070234
+   area 		 2.823654
+   two 		 2.659828
+   light 		 2.422651
+   united 		 2.326013
+   time 		 2.295880
+   first 		 2.255680
+
+topic 078
+   year 		 4.945467
+   und 		 3.956885
+   name 		 3.618419
+   new 		 3.612857
+   first 		 3.508600
+   english 		 3.390618
+   bar 		 3.370862
+   time 		 3.324134
+   october 		 3.129157
+   held 		 3.045379
+
+topic 079
+   und 		 3.567796
+   castle 		 3.259031
+   english 		 3.234438
+   german 		 2.881037
+   new 		 2.823548
+   world 		 2.735535
+   north 		 2.674535
+   two 		 2.615721
+   park 		 2.550850
+   color 		 2.492243
+
+topic 080
+   und 		 3.940570
+   first 		 3.607513
+   der 		 3.341286
+   german 		 3.097568
+   english 		 3.002004
+   population 		 2.906341
+   county 		 2.802215
+   war 		 2.646719
+   color 		 2.586682
+   district 		 2.533456
+
+topic 081
+   new 		 3.527684
+   und 		 3.527669
+   english 		 3.195912
+   der 		 2.998765
+   color 		 2.710156
+   german 		 2.636664
+   temperature 		 2.596531
+   years 		 2.536119
+   park 		 2.531158
+   light 		 2.524739
+
+topic 082
+   years 		 5.818187
+   und 		 4.853237
+   first 		 4.131569
+   new 		 3.939521
+   english 		 3.858441
+   two 		 3.386415
+   der 		 2.886284
+   august 		 2.758307
+   german 		 2.737006
+   area 		 2.691675
+
+topic 083
+   years 		 14.021079
+   clubs 		 10.798328
+   goals 		 6.260859
+   born 		 4.616881
+   new 		 4.580693
+   position 		 4.558597
+   height 		 4.458151
+   und 		 4.012493
+   color 		 3.808182
+   first 		 3.193339
+
+topic 084
+   new 		 6.517799
+   german 		 3.530153
+   und 		 3.379734
+   first 		 3.109109
+   years 		 2.771995
+   north 		 2.722037
+   english 		 2.713987
+   der 		 2.507408
+   party 		 2.489014
+   university 		 2.408196
+
+topic 085
+   und 		 3.152786
+   first 		 2.869967
+   march 		 2.743945
+   john 		 2.737089
+   louis 		 2.653886
+   new 		 2.598873
+   national 		 2.529642
+   park 		 2.489773
+   william 		 2.435149
+   english 		 2.411928
+
+topic 086
+   und 		 3.376919
+   island 		 3.318257
+   new 		 3.308201
+   english 		 3.252851
+   der 		 2.967367
+   german 		 2.937349
+   color 		 2.712577
+   north 		 2.519854
+   first 		 2.478026
+   order 		 2.476179
+
+topic 087
+   new 		 5.011627
+   english 		 3.491388
+   north 		 3.476690
+   und 		 3.414539
+   first 		 3.059973
+   german 		 2.855171
+   born 		 2.784305
+   time 		 2.554208
+   early 		 2.547080
+   light 		 2.538668
+
+topic 088
+   new 		 4.158123
+   und 		 3.803338
+   park 		 3.671400
+   english 		 3.503392
+   der 		 3.224058
+   color 		 2.723282
+   time 		 2.665365
+   years 		 2.616809
+   first 		 2.557075
+   main 		 2.543106
+
+topic 089
+   new 		 3.368355
+   und 		 3.205584
+   english 		 3.153711
+   german 		 2.964563
+   first 		 2.940040
+   time 		 2.753663
+   der 		 2.689015
+   area 		 2.558802
+   john 		 2.553261
+   located 		 2.528254
+
+topic 090
+   und 		 4.396342
+   new 		 4.132644
+   first 		 3.934764
+   english 		 3.895858
+   german 		 3.583499
+   north 		 2.810644
+   der 		 2.723757
+   island 		 2.670685
+   years 		 2.658936
+   university 		 2.633381
+
+topic 091
+   und 		 3.592355
+   der 		 3.581138
+   new 		 3.509400
+   german 		 3.440487
+   first 		 3.236195
+   ship 		 2.993975
+   english 		 2.826049
+   island 		 2.490802
+   john 		 2.487138
+   season 		 2.464785
+
+topic 092
+   new 		 4.190800
+   und 		 3.798678
+   first 		 3.700010
+   german 		 3.298250
+   der 		 3.279304
+   second 		 3.125305
+   university 		 3.099244
+   english 		 3.013743
+   years 		 2.997217
+   color 		 2.886831
+
+topic 093
+   district 		 5.565077
+   german 		 3.749180
+   und 		 3.638082
+   years 		 3.470803
+   history 		 3.404689
+   new 		 3.345075
+   school 		 3.021219
+   population 		 2.861772
+   first 		 2.826651
+   world 		 2.784680
+
+topic 094
+   first 		 4.075482
+   und 		 3.840200
+   new 		 3.381372
+   two 		 3.220976
+   color 		 2.955388
+   german 		 2.786852
+   der 		 2.734359
+   john 		 2.609315
+   english 		 2.532539
+   march 		 2.413920
+
+topic 095
+   first 		 3.880063
+   years 		 3.802667
+   color 		 2.973678
+   english 		 2.941738
+   der 		 2.874967
+   area 		 2.699946
+   year 		 2.592135
+   german 		 2.454810
+   time 		 2.428851
+   und 		 2.308849
+
+topic 096
+   und 		 4.833709
+   first 		 3.928613
+   english 		 3.211140
+   der 		 3.062754
+   german 		 2.830438
+   world 		 2.801279
+   time 		 2.635336
+   area 		 2.606296
+   island 		 2.425645
+   new 		 2.416118
+
+topic 097
+   first 		 3.200049
+   new 		 3.153870
+   english 		 3.149009
+   two 		 2.665654
+   und 		 2.576798
+   der 		 2.567093
+   german 		 2.487539
+   made 		 2.444109
+   bar 		 2.439118
+   island 		 2.404646
+
+topic 098
+   new 		 4.607348
+   first 		 3.216378
+   und 		 3.013947
+   color 		 2.991481
+   time 		 2.905172
+   two 		 2.891568
+   ship 		 2.736519
+   john 		 2.667148
+   english 		 2.434020
+   light 		 2.421044
+
+topic 099
+   first 		 4.218507
+   german 		 3.445302
+   new 		 3.271542
+   english 		 2.997343
+   und 		 2.989218
+   der 		 2.726158
+   time 		 2.699653
+   war 		 2.627964
+   august 		 2.543122
+   years 		 2.311688
+

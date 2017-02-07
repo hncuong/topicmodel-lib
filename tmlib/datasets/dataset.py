@@ -4,7 +4,7 @@ from .base import Corpus, DataIterator, DataFormat
 
 
 class DataSet(DataIterator):
-    def __init__(self, data_path, batch_size=None, passes=1, shuffle_every=None,
+    def __init__(self, data_path, batch_size, passes=1, shuffle_every=None,
                  vocab_file=None):
         """
         A class for loading mini-batches of data from a file
@@ -26,6 +26,8 @@ class DataSet(DataIterator):
             self.vocab_file = vocab_file
             self.data_format = DataFormat.TERM_FREQUENCY
         else:
+            if vocab_file is None:
+                logging.error('File vocabulary is not found!')
             self.data_path = data_path
             self.data_format = input_format
         self.output_format = DataFormat.TERM_FREQUENCY
@@ -50,10 +52,11 @@ class DataSet(DataIterator):
             # reset batch no and increase pass no
             self.batch_no_in_pass = 0
             self.pass_no += 1
+            self.end_of_file = False
             logging.info('Pass no: %s', self.pass_no)
             # shuffle after number of passes
             if self.shuffle_every > 0 and self.pass_no % self.shuffle_every == 0:
-                self.work_path = base.shuffle_formatted_data_file(self.data_path)
+                self.work_path = base.shuffle_formatted_data_file(self.data_path, self.batch_size)
 
         if self.batch_no_in_pass == 0:
             self.fp = open(self.work_path, 'r')
@@ -104,3 +107,21 @@ class DataSet(DataIterator):
 
     def get_total_docs(self):
         return self.get_num_docs_per_pass() * self.passes
+
+    def get_num_tokens(self):
+        sq_file_path = base.reformat_file_to_term_sequence(self.data_path)
+        sq_file = open(sq_file_path)
+        line = sq_file.readline()
+        num_tokens = 0
+        while line:
+            tks = line.strip().split()
+            num_tokens += len(tks)
+            line = sq_file.readline()
+        return num_tokens
+
+    def get_num_terms(self):
+        if self.vocab_file is None:
+            logging.error('File vocabulary is not found!')
+        f = open(self.vocab_file, 'r')
+        list_terms = f.readlines()
+        return len(list_terms)
