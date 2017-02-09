@@ -19,14 +19,14 @@ Topic models are probabilistic models of document collections that use latent va
 
 Large-scale learning
 ====================
-Modern data analysis requires computation with massive data. These problems illustrate some of the challenges to modern data analysis. Our data are complex and high-dimensional; we have assumptions to make�from science, intuition, or other data analyses�that involve structures we believe exist in the data but that we cannot directly observe; and finally our data sets are large, possibly even arriving in a never-ending stream. We deploy this library to computing with graphical models that is appropriate for massive data sets, data that might not fit in memory or even be stored locally. This is an efficient tool for learning LDA at large scales
+Modern data analysis requires computation with massive data. These problems illustrate some of the challenges to modern data analysis. Our data are complex and high-dimensional; we have assumptions to make - from science, intuition, or other data analyses - that involve structures we believe exist in the data but that we cannot directly observe; and finally our data sets are large, possibly even arriving in a never-ending stream. We deploy this library to computing with graphical models that is appropriate for massive data sets, data that might not fit in memory or even be stored locally. This is an efficient tool for learning LDA at large scales
 
 
 Learning models for LDA
 ========================
 To learn LDA at large-scale, a good and efficient approach is stochastic inference [1]_. The learning process includes 2 main steps:
 
-- Inference for individual document: infer to find out the **local variables**: topic proportion :math:`\theta` and topic indices **z** (estimate directly or estimate their distribution :math:`\gamma`, :math:`\phi` - "variational parameters")
+- Inference for individual document: infer to find out the **local variables**: topic proportion :math:`\theta` and topic indices **z** (estimate directly or estimate their distribution :math:`\\gamma`, :math:`\phi` - "variational parameters")
 - Update **global variable** in a stochastic way to find out directly topics :math:`\beta` (regularized online learning) or its distribution by estimating :math:`\lambda` (online, stream). Global variable here maybe :math:`\beta` or :math:`\lambda` depend on each stochastic methods.
 
 Indeed, this phase is as same as training step in machine learning. 
