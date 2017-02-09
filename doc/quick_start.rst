@@ -26,7 +26,7 @@ Learning models for LDA
 ========================
 To learn LDA at large-scale, a good and efficient approach is stochastic inference [1]_. The learning process includes 2 main steps:
 
-- Inference for individual document: infer to find out the **local variables**: topic proportion :math:`\theta` and topic indices **z** (estimate directly or estimate their distribution :math:`\\gamma`, :math:`\phi` - "variational parameters")
+- Inference for individual document: infer to find out the **local variables**: topic proportion :math:`\theta` and topic indices **z** (estimate directly or estimate their distribution :math:`\gamma`, :math:`\phi` - "variational parameters")
 - Update **global variable** in a stochastic way to find out directly topics :math:`\beta` (regularized online learning) or its distribution by estimating :math:`\lambda` (online, stream). Global variable here maybe :math:`\beta` or :math:`\lambda` depend on each stochastic methods.
 
 Indeed, this phase is as same as training step in machine learning. 
@@ -152,4 +152,4 @@ Our framework is support for 3 input format:
        27 29 30 25 31 32 
        27 29 7 
 
-.. [1] M.D. Hoffman, D.M. Blei, C. Wang, and J. Paisley, "Stochastic variational inference," The Journal of Machine Learning Research, vol. 14, no. 1, pp. 1303�1347, 2013.
+.. [1] M.D. Hoffman, D.M. Blei, C. Wang, and J. Paisley, "Stochastic variational inference," The Journal of Machine Learning Research, vol. 14, no. 1, pp. 1303-1347, 2013.
