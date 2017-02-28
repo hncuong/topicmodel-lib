@@ -17,7 +17,7 @@ To design and implement for this part, we refered `source code`_ Online-VB (Hoff
 
 .. _source code: https://github.com/blei-lab/onlineldavb/blob/master/onlinewikipedia.py
 .. _vocabulary: ../../tmlib/datasets/data/wikipedia/vocab.txt
-.. _how to load a mini-batch from wikipedia: ../user_guides/work_data_input.rst#load-a-minibatch-from-wikipedia-website.rst
+.. _how to load a mini-batch from wikipedia: ../user_guides/work_data_input.rst#loading-a-minibatch-from-wikipedia-website.rst
 
 ------------------------------
 Learning
