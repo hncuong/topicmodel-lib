@@ -75,7 +75,7 @@ Our framework is support for 3 input format:
   The implementations only support reading data type in LDA. Please refer to the following site for instructions: http://www.cs.columbia.edu/~blei/lda-c/
   Under LDA, the words of each document are assumed exchangeable.  Thus, each document is succinctly represented as a sparse vector of word counts. The data is a file where each line is of the form:
 
-  [N] [term_1]:[count] [term_2]:[count] ...  [term_N]:[count]
+  `[N] [term_1]:[count] [term_2]:[count] ...  [term_N]:[count]`
 
   where [N] is the number of unique terms in the document, and the [count] associated with each term is how many times that term appeared in the document.  Note that [term_i] is an integer which indexes the term (index of that term in file vocabulary); it is not a string.
 
@@ -119,7 +119,7 @@ Our framework is support for 3 input format:
 
   The tf format of corpus will be:
      
-     ::
+  ::
 
        7 0:1 1:1 2:1 3:1 4:1 5:1 6:1 
        7 7:1 8:1 9:1 5:1 10:1 11:1 12:1 
@@ -135,12 +135,12 @@ Our framework is support for 3 input format:
 
   Each document is represented by a sequence of token as follow
     
-      [token_1] [token_2] ....
+      `[token_1] [token_2] ....`
 
   [token_i] also is index of it in vocabulary file, not a string. 
   The sq format of corpus above will be:
 
-     ::
+  ::
 
        0 1 2 3 4 5 6 
        7 8 9 5 10 11 12 
@@ -197,7 +197,7 @@ Uninstall
 
 To uninstall library:
 
-  ::
+::
 
     .../topicmodel-lib$ sudo python setup.py install --record files.txt
 
