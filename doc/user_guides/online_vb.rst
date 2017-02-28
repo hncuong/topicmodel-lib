@@ -8,28 +8,28 @@ Path of training file is *training_file_path*. If file is formatted (tf or sq), 
 
 First, import 2 class: `OnlineVB`_ and `DataSet`_
 
-  ::
+::
   
     from tmlib.lda.Online_VB import OnlineVB
     from tmlib.datasets.dataset import DataSet
 
 Create object of class DataSet to work with training data
 
-  ::
+::
 
     # if training file is raw text
     training_data = DataSet(traing_file_path, batch_size=100, passes=5, shuffle_every=2)
 
 Or 
 
-  ::
+::
 
     # if training file is formatted
     training_data = DataSet(training_file_path, batch_size=100, passes=5, shuffle_every=2, vocab_file=vocab_file_path)
 
 Create object of class OnlineVB to implement learning model
 
-  ::
+::
   
    # get number words in file vocabulary
    num_terms = training_data.get_num_terms()
@@ -39,13 +39,13 @@ Create object of class OnlineVB to implement learning model
 
 or change settings as follow:
  
-  ::
+::
 
     obj_onlvb = OnlineVB(num_terms, num_topics=50, alpha=0.02, eta=0.02, kappa=0.8, conv_infer=0.001, iter_infer=60)
 
 Learning model by call function learn_model() of object OnlineVB
 
-  ::
+::
 
     obj_model = obj_onlvb.learn_model(training_data)
 
@@ -61,7 +61,7 @@ Inference for new documents
 
 With the learned model, we need inference for new corpus with path file is *new_file_path*
 
-  ::
+::
 
     from tmlib.datasets import base
     from tmlib.lda.Online_VB import OnlineVB
