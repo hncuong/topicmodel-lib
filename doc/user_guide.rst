@@ -91,17 +91,17 @@ Our library is deployed with 5 inference methods: VB [3]_, CVB0 [4]_, CGS [5]_, 
 `2.11. ML-FW`_
 ===============
 
-.. _2.1. Online-VB: learning_tutors/online_vb.rst
-.. _2.2. Online-CVB0: learning_tutors/online_cvb0.rst
-.. _2.3. Online-CGS: learning_tutors/online_cgs.rst
-.. _2.4. Online-OPE: learning_tutors/online_ope.rst
-.. _2.5. Online-FW: learning_tutors/online_fw.rst
-.. _2.6. Streaming-VB: learning_tutors/streaming_vb.rst
-.. _2.7. Streaming-OPE: learning_tutors/streaming_ope.rst
-.. _2.8. Streaming-FW: learning_tutors/streaming_fw.rst
-.. _2.9. ML-CGS: learning_tutors/ml_cgs.rst
-.. _2.10. ML-OPE: learning_tutors/ml_ope.rst
-.. _2.11. ML-FW: learning_tutors/ml_fw.rst
+.. _2.1. Online-VB: user_guides/online_vb.rst
+.. _2.2. Online-CVB0: user_guides/online_cvb0.rst
+.. _2.3. Online-CGS: user_guides/online_cgs.rst
+.. _2.4. Online-OPE: user_guides/online_ope.rst
+.. _2.5. Online-FW: user_guides/online_fw.rst
+.. _2.6. Streaming-VB: user_guides/streaming_vb.rst
+.. _2.7. Streaming-OPE: user_guides/streaming_ope.rst
+.. _2.8. Streaming-FW: user_guides/streaming_fw.rst
+.. _2.9. ML-CGS: user_guides/ml_cgs.rst
+.. _2.10. ML-OPE: user_guides/ml_ope.rst
+.. _2.11. ML-FW: user_guides/ml_fw.rst
 
 
 --------------------------------
