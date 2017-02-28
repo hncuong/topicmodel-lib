@@ -14,7 +14,7 @@ All of steps are quite similar with `Online-VB`_. See class `Online-CVB0`_ to se
 Learning
 ````````
 
-  ::
+::
    
     from tmlib.lda.Online_CVB0 import OnlineCVB0
     from tmlib.datasets.dataset import DataSet
@@ -29,7 +29,7 @@ Learning
 Inference for new corpus
 ````````````````````````
 
-  ::
+::
   
     from tmlib.datasets import base
     from tmlib.lda.Online_CVB0 import OnlineCVB0
