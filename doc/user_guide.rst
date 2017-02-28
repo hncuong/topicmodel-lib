@@ -35,7 +35,7 @@ This section includes some tutorials for process data input of model (documents 
 .. _1. Working with data input: user_guides/work_data_input.rst
 .. _1.1. Preprocessing: user_guides/work_data_input.rst#preprocessing
 .. _1.2. Loading a "mini-batch" from corpus: user_guides/work_data_input.rst#loading-a-mini-batch-from-corpus
-.. _1.2. Loading a "mini-batch" from Wikipedia website: user_guides/work_data_input.rst#loading-a-mini-batch-from-wikipedia-website
+.. _1.3. Loading a minibatch from Wikipedia website: user_guides/work_data_input.rst#loading-a-mini-batch-from-wikipedia-website
 
 
 ---------------------------------------------------------
