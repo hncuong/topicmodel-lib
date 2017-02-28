@@ -75,13 +75,13 @@ Our framework is support for 3 input format:
   The implementations only support reading data type in LDA. Please refer to the following site for instructions: http://www.cs.columbia.edu/~blei/lda-c/
   Under LDA, the words of each document are assumed exchangeable.  Thus, each document is succinctly represented as a sparse vector of word counts. The data is a file where each line is of the form:
 
-     [N] [term_1]:[count] [term_2]:[count] ...  [term_N]:[count]
+  [N] [term_1]:[count] [term_2]:[count] ...  [term_N]:[count]
 
   where [N] is the number of unique terms in the document, and the [count] associated with each term is how many times that term appeared in the document.  Note that [term_i] is an integer which indexes the term (index of that term in file vocabulary); it is not a string.
 
   For example, with corpus as raw_corpus above and file vocabulary is:
 
-     ::
+  ::
 
        0. "human"
        1. "machine"
