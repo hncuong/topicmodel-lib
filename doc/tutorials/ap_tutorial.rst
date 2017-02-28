@@ -4,7 +4,7 @@ Learning LDA and inference with an example dataset
 
 The purpose of this tutorial is to show you how to train the LDA model on a specific data and after that, use this model to infer a new data. In this library, we designed a lot of learning methods but those methods are similar in the way of using. Therefore, we will select a detailed method to guide all of you. If you want to go into detail , you can find out more these methods in `user guide`_ document.
 
-.. _user guide: ./user_guide.rst
+.. _user guide: ../user_guide.rst
 
 .. Contents::
 
