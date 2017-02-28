@@ -22,7 +22,7 @@ This section includes some tutorials for process data input of model (documents 
   - Corpus includes many documents, all of that are saved into a file. 
   - Each document is represented as follow
 
-    .. image:: images/format.PNG
+    .. image:: ../images/format.PNG
    
 - This is tutorial for how to preprocess a file raw text:
 
@@ -40,7 +40,7 @@ This section includes some tutorials for process data input of model (documents 
 
   The result files is automatically saved in a folder named "tmlib_data" in the user data home. User can change the position by set value parameters in functions such as extract_vocab(), save_format_sq() or save_format_tf(). User can also change the setting parameters of preprocessing algorithm by set value when create object. More detailed, refer to the `api preprocessing`_ document.
 
-.. _api preprocessing: ./api/api_preprocessing.rst
+.. _api preprocessing: ../api/api_preprocessing.rst
 
 ---------------------------------------
 1.2. Loading a "mini-batch" from corpus
@@ -133,7 +133,7 @@ This section includes some tutorials for process data input of model (documents 
 
 - Note: minibatch is object of class `Corpus`_ . This mini-corpus is stored with term-frequency format or term-sequence format
   
-.. _Corpus: api/api_base.rst
+.. _Corpus: ../api/api_base.rst
 
 -----------------------------------------------
 1.3. Loading a minibatch from Wikipedia website
