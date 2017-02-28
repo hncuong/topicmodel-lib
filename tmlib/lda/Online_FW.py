@@ -163,7 +163,7 @@ class OnlineFW(LdaLearning):
                         save_statistic=save_statistic, save_top_words_every=save_top_words_every,
                         num_top_words=num_top_words, model_folder=model_folder)
 
-    def __getitem__(self, docs):
-        docs = convert_corpus_format(docs, DataFormat.TERM_FREQUENCY)
+    def infer_new_docs(self, new_corpus):
+        docs = convert_corpus_format(new_corpus, DataFormat.TERM_FREQUENCY)
         theta, index = self.e_step(docs.word_ids_tks, docs.cts_lens)
         return theta

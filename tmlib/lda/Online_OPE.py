@@ -28,7 +28,7 @@ class OnlineOPE(LdaLearning):
         """
         super(OnlineOPE, self).__init__(num_terms, num_topics, lda_model)
         self.num_docs = 0
-        self.num_topics = num_topics
+        self._docs_topics = num_topics
         self.num_terms = num_terms
         self.alpha = alpha
         self.eta = eta
@@ -146,7 +146,7 @@ class OnlineOPE(LdaLearning):
                         save_statistic=save_statistic, save_top_words_every=save_top_words_every,
                         num_top_words=num_top_words, model_folder=model_folder)
 
-    def __getitem__(self, docs):
-        docs = convert_corpus_format(docs, DataFormat.TERM_FREQUENCY)
+    def infer_new_docs(self, new_corpus):
+        docs = convert_corpus_format(new_corpus, DataFormat.TERM_FREQUENCY)
         theta = self.e_step(docs.word_ids_tks, docs.cts_lens)
         return theta

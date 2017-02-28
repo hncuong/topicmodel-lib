@@ -185,11 +185,13 @@ Methods
 
 .. _Corpus: ./api_base.rst
 
-- __getitem__ (*docs*)
+- **infer_new_docs** (*new_corpus*)
 
   This is also abstract method. This used for inference new documents. 
 
-  **docs**: object of class Corpus, store new documents used for inference
+  - **new_corpus**: object of class Corpus, store new documents used for inference
+  
+  **Return**: topic proportions of documents (:math:`\theta`)
 
 - **learn_model** (*data, save_model_every=0, compute_sparsity_every=0, save_statistic=False, save_top_words_every=0, num_top_words=20, model_folder='model'*) 
 
@@ -304,10 +306,14 @@ Methods
 
 - **learn_model** (*data, save_model_every=0, compute_sparsity_every=0, save_statistic=False, save_top_words_every=0, num_top_words=20, model_folder='model'*)
 
+  Inheritted method
+  
   see class LdaLearning
 
-- __getitem__(docs)
+- **infer_new_docs** (*new_corpus*)
 
+  Inheritted method
+  
   see class LdaLearning
 
 --------------------------------------
@@ -385,10 +391,14 @@ Methods
 
 - **learn_model** (*data, save_model_every=0, compute_sparsity_every=0, save_statistic=False, save_top_words_every=0, num_top_words=20, model_folder='model'*)
 
+  Inheritted method
+  
   see class LdaLearning
 
-- __getitem__(docs)
+- **infer_new_docs** (*new_corpus*)
 
+  Inheritted method
+  
   see class LdaLearning
 
 ------------------------------------
@@ -479,10 +489,14 @@ Methods
 
 - **learn_model** (*data, save_model_every=0, compute_sparsity_every=0, save_statistic=False, save_top_words_every=0, num_top_words=20, model_folder='model'*)
 
+  Inheritted method
+  
   see class LdaLearning
 
-- __getitem__(docs)
+- **infer_new_docs** (*new_corpus*)
 
+  Inheritted method
+  
   see class LdaLearning
 
 ----------------------------------
@@ -586,10 +600,14 @@ Methods
 
 - **learn_model** (*data, save_model_every=0, compute_sparsity_every=0, save_statistic=False, save_top_words_every=0, num_top_words=20, model_folder='model'*)
 
+  Inheritted method
+  
   see class LdaLearning
 
-- __getitem__(docs)
+- **infer_new_docs** (*new_corpus*)
 
+  Inheritted method
+  
   see class LdaLearning
 
 ------------------------------------
@@ -697,10 +715,14 @@ Methods
 
 - **learn_model** (*data, save_model_every=0, compute_sparsity_every=0, save_statistic=False, save_top_words_every=0, num_top_words=20, model_folder='model'*)
 
+  Inheritted method
+  
   see class LdaLearning
 
-- __getitem__(docs)
+- **infer_new_docs** (*new_corpus*)
 
+  Inheritted method
+  
   see class LdaLearning
 
 
@@ -787,10 +809,14 @@ Methods
 
 - **learn_model** (*data, save_model_every=0, compute_sparsity_every=0, save_statistic=False, save_top_words_every=0, num_top_words=20, model_folder='model'*)
 
+  Inheritted method
+  
   see class LdaLearning
 
-- __getitem__(docs)
+- **infer_new_docs** (*new_corpus*)
 
+  Inheritted method
+  
   see class LdaLearning
 
 ----------------------------------------
@@ -880,10 +906,14 @@ Methods
 
 - **learn_model** (*data, save_model_every=0, compute_sparsity_every=0, save_statistic=False, save_top_words_every=0, num_top_words=20, model_folder='model'*)
 
+  Inheritted method
+  
   see class LdaLearning
 
-- __getitem__(docs)
+- **infer_new_docs** (*new_corpus*)
 
+  Inheritted method
+  
   see class LdaLearning
 
 ------------------------------------------
@@ -979,10 +1009,14 @@ Methods
 
 - **learn_model** (*data, save_model_every=0, compute_sparsity_every=0, save_statistic=False, save_top_words_every=0, num_top_words=20, model_folder='model'*)
 
+  Inheritted method
+  
   see class LdaLearning
 
-- __getitem__(docs)
+- **infer_new_docs** (*new_corpus*)
 
+  Inheritted method
+  
   see class LdaLearning
 
 
@@ -1074,10 +1108,14 @@ Methods
 
 - **learn_model** (*data, save_model_every=0, compute_sparsity_every=0, save_statistic=False, save_top_words_every=0, num_top_words=20, model_folder='model'*)
 
+  Inheritted method
+  
   see class LdaLearning
 
-- __getitem__(docs)
+- **infer_new_docs** (*new_corpus*)
 
+  Inheritted method
+  
   see class LdaLearning
 
 ----------------------------------------
@@ -1179,10 +1217,14 @@ Methods
 
 - **learn_model** (*data, save_model_every=0, compute_sparsity_every=0, save_statistic=False, save_top_words_every=0, num_top_words=20, model_folder='model'*)
 
+  Inheritted method
+  
   see class LdaLearning
 
-- __getitem__(docs)
+- **infer_new_docs** (*new_corpus*)
 
+  Inheritted method
+  
   see class LdaLearning
 
 ------------------------------------------
@@ -1284,9 +1326,13 @@ Methods
 
 - **learn_model** (*data, save_model_every=0, compute_sparsity_every=0, save_statistic=False, save_top_words_every=0, num_top_words=20, model_folder='model'*)
 
+  Inheritted method
+  
   see class LdaLearning
 
-- __getitem__(docs)
+- **infer_new_docs** (*new_corpus*)
 
+  Inheritted method
+  
   see class LdaLearning
 

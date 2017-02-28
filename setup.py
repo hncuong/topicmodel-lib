@@ -1,8 +1,23 @@
 from setuptools import setup, find_packages
+from setuptools import Extension
+from Cython.Build import cythonize
+from Cython.Distutils import build_ext
+
+import numpy
+
+extensions = [
+  Extension(
+     "tmlib.lda.utils.util_funcs",
+     ["tmlib/lda/utils/util_funcs.pyx"],
+     include_dirs=[numpy.get_include()]
+  )
+]
+
 setup(
     name="tmlib",
     version="0.1",
-    packages=find_packages(),
+    packages=find_packages(),#['tmlib'],
+    cmdclass = {'build_ext': build_ext},
 
     # Project uses reStructuredText, so ensure that the docutils get
     # installed or upgraded on the target machine
@@ -14,6 +29,8 @@ setup(
         # And include any *.msg files found in the 'hello' package, too:
     },
 
+    ext_modules=extensions,
+
     # metadata for upload to PyPI
     author="dslab tmlib team",
     author_email="",
@@ -24,3 +41,5 @@ setup(
 
     # could also include long_description, download_url, classifiers, etc.
 )
+
+

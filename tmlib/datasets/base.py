@@ -1,5 +1,5 @@
 import os, os.path
-import sys
+import sys, re, string
 import shutil
 from os.path import isdir, isfile, join
 import numpy as np
@@ -78,7 +78,7 @@ def check_input_format(file_path):
     else:
         logging.error('Unknown file %s', file_path)
 
-def get_list_docs_raw_text(file_raw_text_path):
+def load_batch_raw_text(file_raw_text_path):
     fread = open(file_raw_text_path)
     line = fread.readline()
     docs = list()
@@ -273,6 +273,29 @@ class DataIterator(object):
     def end_of_data(self):
         raise NotImplementedError("This functions need to be implemented")
 
+def load_batch_formatted_from_file(file_name, output_format=DataFormat.TERM_FREQUENCY):
+    assert output_format == DataFormat.TERM_FREQUENCY or output_format == DataFormat.TERM_SEQUENCE, \
+        "Corpus format type of output must be term-frequency (tf) or sequences (sq)!"
+    input_format = check_input_format(file_name)
+    assert input_format == DataFormat.TERM_FREQUENCY or input_format == DataFormat.TERM_SEQUENCE, \
+        "format type of file input must be term-frequency (tf) or sequences (sq)!"
+    fp = open(file_name)
+    for i, l in enumerate(fp):
+        pass
+    num_docs = i + 1
+    fp.seek(0, 0)
+    if input_format == DataFormat.TERM_SEQUENCE:
+	if output_format == DataFormat.TERM_SEQUENCE:
+	    batch, end_file = load_mini_batch_term_sequence_from_sequence_file(fp, num_docs)
+	else:
+	    batch, end_file = load_mini_batch_term_frequency_from_sequence_file(fp, num_docs)
+    else:
+	if output_format == DataFormat.TERM_SEQUENCE:
+	    batch, end_file = load_mini_batch_term_sequence_from_term_frequency_file(fp, num_docs)
+	else:
+	    batch, end_file = load_mini_batch_term_frequency_from_term_frequency_file(fp, num_docs)
+    fp.close()
+    return batch
 
 def load_mini_batch_term_sequence_from_sequence_file(fp, batch_size):
     """
@@ -300,6 +323,9 @@ def load_mini_batch_term_sequence_from_sequence_file(fp, batch_size):
                 doc_terms[j] = int(list_word[j])
             doc_length = N
             mini_batch.append_doc(doc_terms, doc_length)
+        next_line = fp.readline()
+        if len(next_line) < 1:
+            end_file = True
         return mini_batch, end_file
     except Exception as inst:
         logging.error(inst)
@@ -334,6 +360,9 @@ def load_mini_batch_term_sequence_from_term_frequency_file(fp, batch_size):
                 for k in range(0, int(tf[1])):
                     tokens.append(int(tf[0]))
             mini_batch.append_doc(np.array(tokens), len(tokens))
+        next_line = fp.readline()
+        if len(next_line) < 1:
+            end_file = True
         return mini_batch, end_file
     except Exception as inst:
         logging.error(inst)
@@ -349,7 +378,7 @@ def load_mini_batch_term_frequency_from_term_frequency_file(fp, batch_size):
     Returns:
 
     """
-    mini_batch = Corpus(DataFormat.TERM_SEQUENCE)
+    mini_batch = Corpus(DataFormat.TERM_FREQUENCY)
     end_file = False
     try:
         for i in range(0, batch_size):
@@ -369,6 +398,9 @@ def load_mini_batch_term_frequency_from_term_frequency_file(fp, batch_size):
                 doc_terms[j - 1] = int(tf[0])
                 doc_frequency[j - 1] = int(tf[1])
             mini_batch.append_doc(doc_terms, doc_frequency)
+        next_line = fp.readline()
+        if len(next_line) < 1:
+            end_file = True
         return mini_batch, end_file
     except Exception as inst:
         logging.error(inst)
@@ -384,7 +416,7 @@ def load_mini_batch_term_frequency_from_sequence_file(fp, batch_size):
     Returns:
 
     """
-    mini_batch = Corpus(DataFormat.TERM_SEQUENCE)
+    mini_batch = Corpus(DataFormat.TERM_FREQUENCY)
     end_file = False
     try:
         for i in range(0, batch_size):
@@ -403,6 +435,9 @@ def load_mini_batch_term_frequency_from_sequence_file(fp, batch_size):
                     term_frequency_dict[term] += 1
             mini_batch.append_doc(np.array(term_frequency_dict.keys()),
                                   np.array(term_frequency_dict.values()))
+        next_line = fp.readline()
+        if len(next_line) < 1:
+            end_file = True
         return mini_batch, end_file
     except Exception as inst:
         logging.error(inst)
@@ -463,12 +498,78 @@ def compute_sparsity(doc_tp, batch_size, num_topics, _type):
 def write_topic_mixtures(theta, file_name):
     batch_size = theta.shape[0]
     num_topics = theta.shape[1]
-    f = open(file_name, 'a')
+    f = open(file_name, 'w')
     for d in range(batch_size):
         for k in range(num_topics - 1):
             f.write('%.5f ' % (theta[d][k]))
         f.write('%.5f\n' % (theta[d][num_topics - 1]))
     f.close()
+
+def parse_doc_list(docs, vocab):
+    """
+    Parse a document into a list of word ids and a list of counts,
+    or parse a set of documents into two lists of lists of word ids
+    and counts.
+
+    Arguments:
+    docs:  List of D documents. Each document must be represented as
+           a single string. (Word order is unimportant.) Any
+           words not in the vocabulary will be ignored.
+    vocab: Dictionary mapping from words to integer ids.
+
+    Returns a pair of lists of lists.
+
+    The first, wordids, says what vocabulary tokens are present in
+    each document. wordids[i][j] gives the jth unique token present in
+    document i. (Don't count on these tokens being in any particular
+    order.)
+
+    The second, wordcts, says how many times each vocabulary token is
+    present. wordcts[i][j] is the number of times that the token given
+    by wordids[i][j] appears in document i.
+    """
+    if (type(docs).__name__ == 'str'):
+        temp = list()
+        temp.append(docs)
+        docs = temp
+
+    D = len(docs)
+
+    #wordids = list()
+    #wordcts = list()
+    copus = Corpus(DataFormat.TERM_FREQUENCY)
+    for d in range(0, D):
+        docs[d] = docs[d].lower()
+        docs[d] = re.sub(r'-', ' ', docs[d])
+        docs[d] = re.sub(r'[^a-z ]', '', docs[d])
+        docs[d] = re.sub(r' +', ' ', docs[d])
+        words = string.split(docs[d])
+        ddict = dict()
+        for word in words:
+            if (word in vocab):
+                wordtoken = vocab[word]
+                if (not wordtoken in ddict):
+                    ddict[wordtoken] = 0
+                ddict[wordtoken] += 1
+        copus.append_doc(ddict.keys(), ddict.values())
+
+    return copus
+
+def read_vocab(path_vocab):
+    if (os.path.isfile(path_vocab)):
+        f = open(path_vocab, 'r')
+        l_vocab = f.readlines()
+        f.close()
+    else:
+        print('Unknown file %s' % path_vocab)
+        exit()
+    d_vocab = dict()
+    for word in l_vocab:
+        word = word.lower()
+        word = re.sub(r'[^a-z]', '', word)
+        d_vocab[word] = len(d_vocab)
+    del l_vocab
+    return d_vocab
 
 
 if __name__ == '__main__':

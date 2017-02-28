@@ -140,6 +140,19 @@ tmlib.datasets.base.check_input_format(*file_path*)
   Path of file input
 - **Return**: format of input (DataFormat.RAW_TEXT, DataFormat.TERM_FREQUENCY or DataFormat.TERM_SEQUENCE)
 
+-----------------------------------------
+Function base.get_list_docs_raw_text
+-----------------------------------------
+
+tmlib.datasets.base.get_list_docs_raw_text(*file_raw_text_path*)
+
+- Read file input which is raw text format, this function usually is used for inference new documents
+- **Parameters**: file_raw_text_path (string)
+
+  Path of file input 
+  
+- **Return**: list, each element in list is string type and also is text of a document
+
 ------------------------------------
 Function base.pre_process
 ------------------------------------
@@ -201,7 +214,7 @@ tmlib.datasets.base.load_mini_batch_term_sequence_from_sequence_file(*fp, batch_
 
   - **fp**: file pointer of file term-sequence format
   - **batch_size**: int, size of mini-batch
-- **Return**: a mini-batch (object of class Corpus) with term-sequence format
+- **Return**: *(minibatch, end_file)*. *minibatch* is object of class Corpus with term-sequence format and *end_file* is boolean variable which check that file pointer is at end of file or not
 
 --------------------------------------------------------------------
 Function base.load_mini_batch_term_sequence_from_term_frequency_file
@@ -258,3 +271,24 @@ tmlib.datasets.base.write_topic_mixtures(*theta, file_name*)
 
   - **theta**: numpy.array, 2-dimention
   - **file_name**: name (path) of file which is written
+
+-------------------------------
+Function base.read_vocab
+-------------------------------
+
+tmlib.datasets.base. **read_vocab** (*path_vocab*)
+
+Return a dictionary as described with **vocab** attribute above, it's used as input parameter for function **parse_doc_list**
+
+-----------------------------------
+Function base.parse_doc_list
+-----------------------------------
+
+tmlib.datasets.base. **parse_doc_list** (*docs, vocab_dict*)
+
+- **Parameters**:
+
+  - **docs**: list of document. Each document is represented as a string of words (same as raw text)
+  - **vocab_dict**: vocabulary is represented as dictionary format described above
+
+- **Return**: object of class Corpus

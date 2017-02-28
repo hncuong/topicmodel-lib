@@ -29,6 +29,8 @@ Module
   - Function **base.clear_data_home**
 
   - Function **base.check_input_format**
+  
+  - Function **base.get_list_docs_raw_text**
 
   - Function **base.pre_process**
 
@@ -51,6 +53,11 @@ Module
   - Function **base.compute_sparsity**
 
   - Function **base.write_topic_mixtures**
+  
+  - Function **base.read_vocab**
+
+  - Function **base.parse_doc_list**
+  
 
 `tmlib.datasets.dataset`_
 -------------------------
@@ -65,10 +72,6 @@ Module
 .. _tmlib.datasets.wiki_stream: ..api/api_wiki.rst
 
 - class **tmlib.datasets.wiki_stream.WikiStream**
-
-- function **tmlib.datasets.wiki_stream.read_vocab**
-
-- function **tmlib.datasets.wiki_stream.parse_doc_list**
 
 
 `tmlib.lda`_

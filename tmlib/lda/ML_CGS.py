@@ -77,10 +77,10 @@ class MLCGS(LdaLearning):
         # normalize Ndk_mean
         Ndk_mean_norm = Ndk_mean.sum(axis=1)
         for d in range(len(Ndk_mean_norm)):
-	    if Ndk_mean_norm[d] == 0:
-		Ndk_mean[d, :] = 0
+            if Ndk_mean_norm[d] == 0:
+                Ndk_mean[d, :] = 0
             else:
-		Ndk_mean[d, :] /= Ndk_mean_norm[d]
+                Ndk_mean[d, :] /= Ndk_mean_norm[d]
         #Ndk_mean /= Ndk_mean_norm[:, np.newaxis]
         return Ndk_mean, z
 
@@ -110,7 +110,7 @@ class MLCGS(LdaLearning):
                         num_top_words=num_top_words, model_folder=model_folder)
         return self.lda_model
 
-    def __getitem__(self, docs):
-        docs = convert_corpus_format(docs, DataFormat.TERM_SEQUENCE)
+    def infer_new_docs(self, new_corpus):
+        docs = convert_corpus_format(new_corpus, DataFormat.TERM_SEQUENCE)
         theta, z = self.sample_z(docs.word_ids_tks, docs.cts_lens)
         return theta

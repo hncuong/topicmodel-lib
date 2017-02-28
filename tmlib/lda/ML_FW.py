@@ -184,7 +184,7 @@ class MLFW(LdaLearning):
         self.lda_model.model += beta * rhot
         self.updatect += 1
 
-    def __getitem__(self, docs):
-        docs = convert_corpus_format(docs, DataFormat.TERM_FREQUENCY)
+    def infer_docs(self, new_corpus):
+        docs = convert_corpus_format(new_corpus, DataFormat.TERM_FREQUENCY)
         theta, index = self.e_step(docs.word_ids_tks, docs.cts_lens)
         return theta

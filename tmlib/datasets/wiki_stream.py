@@ -1,6 +1,6 @@
 """Reference: M.Hoffman - onlineldavb"""
 
-import sys, os, urllib2, re, string, time, threading
+import sys, os, urllib2, re, time, threading
 import logging
 import base
 from base import Corpus, DataIterator, DataFormat
@@ -108,57 +108,6 @@ def get_random_wikipedia_articles(n):
 
     return (WikiThread.articles, WikiThread.articlenames)
 
-
-def parse_doc_list(docs, vocab):
-    """
-    Parse a document into a list of word ids and a list of counts,
-    or parse a set of documents into two lists of lists of word ids
-    and counts.
-
-    Arguments:
-    docs:  List of D documents. Each document must be represented as
-           a single string. (Word order is unimportant.) Any
-           words not in the vocabulary will be ignored.
-    vocab: Dictionary mapping from words to integer ids.
-
-    Returns a pair of lists of lists.
-
-    The first, wordids, says what vocabulary tokens are present in
-    each document. wordids[i][j] gives the jth unique token present in
-    document i. (Don't count on these tokens being in any particular
-    order.)
-
-    The second, wordcts, says how many times each vocabulary token is
-    present. wordcts[i][j] is the number of times that the token given
-    by wordids[i][j] appears in document i.
-    """
-    if (type(docs).__name__ == 'str'):
-        temp = list()
-        temp.append(docs)
-        docs = temp
-
-    D = len(docs)
-
-    #wordids = list()
-    #wordcts = list()
-    copus = Corpus(DataFormat.TERM_FREQUENCY)
-    for d in range(0, D):
-        docs[d] = docs[d].lower()
-        docs[d] = re.sub(r'-', ' ', docs[d])
-        docs[d] = re.sub(r'[^a-z ]', '', docs[d])
-        docs[d] = re.sub(r' +', ' ', docs[d])
-        words = string.split(docs[d])
-        ddict = dict()
-        for word in words:
-            if (word in vocab):
-                wordtoken = vocab[word]
-                if (not wordtoken in ddict):
-                    ddict[wordtoken] = 0
-                ddict[wordtoken] += 1
-        copus.append_doc(ddict.keys(), ddict.values())
-
-    return copus
-
 def save(fp, wordids, wordcts):
     D = len(wordids)
     for d in xrange(D):
@@ -167,22 +116,6 @@ def save(fp, wordids, wordcts):
             fp.write('%d:%d ' % (wordids[d][i], wordcts[d][i]))
         if d < D - 1:
             fp.write('\n')
-
-def read_vocab(path_vocab):
-    if (os.path.isfile(path_vocab)):
-        f = open(path_vocab, 'r')
-        l_vocab = f.readlines()
-        f.close()
-    else:
-        print('Unknown file %s' % path_vocab)
-        exit()
-    d_vocab = dict()
-    for word in l_vocab:
-        word = word.lower()
-        word = re.sub(r'[^a-z]', '', word)
-        d_vocab[word] = len(d_vocab)
-    del l_vocab
-    return d_vocab
 
 class WikiStream(DataIterator):
     def __init__(self, batch_size, num_batch, save_into_file=False, vocab_file=None):
@@ -208,12 +141,12 @@ class WikiStream(DataIterator):
             self.vocab_file = dir_path + "/data/wikipedia/vocab.txt"
         else:
             self.vocab_file = vocab_file
-        self.vocab = read_vocab(self.vocab_file)
+        self.vocab = base.read_vocab(self.vocab_file)
 
     def load_mini_batch(self):
         (docset, articlenames) = get_random_wikipedia_articles(self.batch_size)
         logging.info("Mini batch no: %s", self.mini_batch_no)
-        mini_batch = parse_doc_list(docset, self.vocab)
+        mini_batch = base.parse_doc_list(docset, self.vocab)
         if self.output_format == DataFormat.TERM_FREQUENCY:
             mini_batch = base.convert_corpus_format(mini_batch, DataFormat.TERM_FREQUENCY)
             if self.save_into_file:
@@ -239,6 +172,10 @@ class WikiStream(DataIterator):
         f = open(self.vocab_file , 'r')
         list_terms = f.readlines()
         return len(list_terms)
+
+    def get_total_docs(self):
+	# The total number of documents in Wikipedia, refer Hoffman source code: https://github.com/blei-lab/onlineldavb/blob/master/onlinewikipedia.py
+    	return 3.3e6
 
 
 if __name__ == '__main__':

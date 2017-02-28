@@ -1,5 +1,6 @@
 from tmlib.lda.Online_VB import OnlineVB
 from tmlib.datasets.dataset import DataSet
+from tmlib.datasets import base
 import sys
 from tmlib.config import get_config
 
@@ -27,4 +28,7 @@ def main():
 
 if __name__ == '__main__':
     # main()
-    print get_config('datasets', 'tmlib_data_home')
+    #print get_config('datasets', 'tmlib_data_home')
+    file_name = 'tmlib/tests/ap/ap_infer.txt'
+    corpus = base.load_batch_formatted_from_file(file_name, base.DataFormat.TERM_SEQUENCE)
+    print len(corpus.word_ids_tks), corpus.cts_lens

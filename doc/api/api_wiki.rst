@@ -69,23 +69,4 @@ Methods
 
   - **Parameters**: output_format (DataFormat.TERM_SEQUENCE or DataFormat.TERM_FREQUENCY)
 
--------------------------------
-Function wiki_stream.read_vocab
--------------------------------
 
-tmlib.datasets.wiki_stream. **read_vocab** (*path_vocab*)
-
-Return a dictionary as described with **vocab** attribute above, it's used as input parameter for function **parse_doc_list**
-
------------------------------------
-Function wiki_stream.parse_doc_list
------------------------------------
-
-tmlib.datasets.wiki_stream. **parse_doc_list** (*docs, vocab_dict*)
-
-- **Parameters**:
-
-  - **docs**: list of document. Each document is represented as a string of words (same as raw text)
-  - **vocab_dict**: vocabulary is represented as dictionary format described above
-
-- **Return**: object of class Corpus

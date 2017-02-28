@@ -1,4 +1,4 @@
-import logging
+import logging, os
 import base
 from .base import Corpus, DataIterator, DataFormat
 
@@ -27,7 +27,9 @@ class DataSet(DataIterator):
             self.data_format = DataFormat.TERM_FREQUENCY
         else:
             if vocab_file is None:
-                logging.error('File vocabulary is not found!')
+                logging.error('File input is formatted, but you must supply file vocabulary!')
+            if not os.path.isfile(vocab_file):
+                logging.error("Can't find the vocabulary file")
             self.data_path = data_path
             self.data_format = input_format
         self.output_format = DataFormat.TERM_FREQUENCY

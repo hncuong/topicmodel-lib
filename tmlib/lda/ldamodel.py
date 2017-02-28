@@ -110,6 +110,7 @@ class LdaModel(object):
                         exit()
                     for j in xrange(W):
                         beta[i][j] = float(words[j])
+                f.close()
             elif tail == 'npy':
                 beta = np.load(model_file)
             self.model = beta

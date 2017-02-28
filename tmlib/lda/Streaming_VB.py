@@ -122,7 +122,9 @@ class StreamingVB(LdaLearning):
         self._Elogbeta = dirichlet_expectation(self.lda_model.model)
         self._expElogbeta = n.exp(self._Elogbeta)
 
-    def __getitem__(self, docs):
-        docs = convert_corpus_format(docs, DataFormat.TERM_FREQUENCY)
+    def infer_new_docs(self, new_corpus):
+        docs = convert_corpus_format(new_corpus, DataFormat.TERM_FREQUENCY)
         gamma, sstats = self.e_step(docs.word_ids_tks, docs.cts_lens)
-        return gamma
+        gamma_norm = gamma.sum(axis=1)
+        theta = gamma / gamma_norm[:, n.newaxis]
+        return theta
