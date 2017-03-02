@@ -9,7 +9,7 @@ Module
 
 - class `tmlib.preprocessing.preprocessing.PreProcessing`_
 
-.. _tmlib.preprocessing.preprocessing.PreProcessing: api/api_preprocessing.rst#class-tmlib-preprocessing-preprocessing-PreProcessing
+.. _tmlib.preprocessing.preprocessing.PreProcessing: api/api_preprocessing.rst#class-tmlib-preprocessing-preprocessing-preprocessing
 
 `tmlib.datasets.base`_
 ----------------------
