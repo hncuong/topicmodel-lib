@@ -236,7 +236,7 @@ Function base.load_mini_batch_term_sequence_from_sequence_file
 
 tmlib.datasets.base.load_mini_batch_term_sequence_from_sequence_file(*fp, batch_size*)
 
-- loading a mini-batch with size **batch_size** from a file which has the file pointer **fp**. This file is term-sequence format and the loaded mini-batch is also term-sequence format
+- loading a mini-batch with size: **batch_size** from a file which has the file pointer **fp**. This file includes the documents with term-sequence format and the loaded mini-batch is also term-sequence format
 - **Parameter**:
 
   - **fp**: file pointer of file term-sequence format
@@ -249,10 +249,10 @@ Function base.load_mini_batch_term_sequence_from_term_frequency_file
 
 tmlib.datasets.base.load_mini_batch_term_sequence_from_term_frequency_file(*fp, batch_size*)
 
-- loading a mini-batch with size: **batch_size** from a file which has the file pointer **fp**. This file is term-sequence format and the loaded mini-batch is also term-sequence format
+- loading a mini-batch with size: **batch_size** from a file which has the file pointer **fp**. This file includes the documents with term-frequency format and the returned mini-batch is term-sequence format
 - **Parameter**:
 
-  - **fp**: file pointer of file term-sequence format
+  - **fp**: file pointer of file term-frequency format
   - **batch_size**: int, size of mini-batch
 - **Return**: *(minibatch, end_file)*. *minibatch* is object of class Corpus with term-sequence format and *end_file* is boolean variable which check that file pointer is at end of file or not
 
@@ -260,12 +260,26 @@ tmlib.datasets.base.load_mini_batch_term_sequence_from_term_frequency_file(*fp, 
 ---------------------------------------------------------------
 Function base.load_mini_batch_term_frequency_from_sequence_file
 ---------------------------------------------------------------
-Similar
+
+tmlib.datasets.base.load_mini_batch_term_frequency_from_term_sequence_file(*fp, batch_size*)
+
+- loading a mini-batch with size: **batch_size** from a file which has the file pointer **fp**. This file includes the documents with term-sequence format and the returned mini-batch is term-frequency format
+- **Parameter**:
+
+  - **fp**: file pointer of file term-sequence format
+  - **batch_size**: int, size of mini-batch
+- **Return**: *(minibatch, end_file)*. *minibatch* is object of class Corpus with term-frequency format and *end_file* is boolean variable which check that file pointer is at end of file or not
 
 ---------------------------------------------------------------------
 Function base.load_mini_batch_term_frequency_from_term_frequency_file
 ---------------------------------------------------------------------
-Similar
+
+- loading a mini-batch with size: **batch_size** from a file which has the file pointer **fp**. This file includes the documents with term-frequency format and the returned mini-batch is also term-frequency format
+- **Parameter**:
+
+  - **fp**: file pointer of file term-frequency format
+  - **batch_size**: int, size of mini-batch
+- **Return**: *(minibatch, end_file)*. *minibatch* is object of class Corpus with term-frequency format and *end_file* is boolean variable which check that file pointer is at end of file or not
 
 -----------------------------------------------------------
 Function shuffle_formatted_data_file
@@ -273,11 +287,11 @@ Function shuffle_formatted_data_file
 
 tmlib.datasets.base.shuffle_formatted_data_file(*data_path, batch_size*)
 
-- shuffle file input and write to new file
+- Random permutation of all documents in file input. Because the learning methods are stochastic, so this fuction help sample randomly mini-batch from corpus. And after shuffling, the documents with new position will be written to a new file.
 - **Parameter**:
 
   - **data_path**: file input which is formatted (tf or sq)
-  - **batch_size**: the necessary parameter for shuffling algorithm designed by us
+  - **batch_size**: the necessary parameter for the shuffling algorithm designed by us
 
 - **Return**: path of new file which is shuffled
 
@@ -285,15 +299,16 @@ tmlib.datasets.base.shuffle_formatted_data_file(*data_path, batch_size*)
 Function base.compute_sparsity
 ------------------------------
 
-tmlib.datasets.base.compute_sparsity(*doc_tp, batch_size, num_topics, _type*)
+tmlib.datasets.base.compute_sparsity(*doc_tp, num_docs, num_topics, _type*)
 
 - Compute document sparsity.
 - **Parameters**:
 
-  - **doc_tp**: 
-  - **batch_size**:
-  - **num_topics**:
-  - **_type**: 
+  - **doc_tp**: numpy.array, 2-dimention, the estimated topic mixtures of all documents in corpus
+  - **num_docs**: int, the number of documents in corpus
+  - **num_topics**: int, is the number of requested latent topics to be extracted from the training corpus.
+  - **_type**: string, if the value is 'z', the topic mixtures is estimated by the sampling method as CGS or CVB0, so we have the individual caculation for this. Otherwise, if the value of it isn't 'z', this is for the methods as: VB, OPE or FW
+  
 - **Return**: float, sparsity of documents
 
 ----------------------------------
@@ -302,7 +317,7 @@ Function base.write_topic_mixtures
 
 tmlib.datasets.base.write_topic_mixtures(*theta, file_name*)
 
-- write theta to a file
+- save topic mixtures (theta) to a file
 - **Parameters**:
 
   - **theta**: numpy.array, 2-dimention
@@ -314,7 +329,11 @@ Function base.read_vocab
 
 tmlib.datasets.base. **read_vocab** (*path_vocab*)
 
-Return a dictionary as described with **vocab** attribute above, it's used as input parameter for function **parse_doc_list**
+- Read file vocabulary and store it with dictionary type of python (for example: the word 'hello' is the 2nd word (index = 2) in file vocabulary, this function return a object named *dict*, we have: dict['hello'] = 2), it's used as input parameter for function **parse_doc_list**
+
+- **Parameters**:
+  
+  - **path_vocab**: path of file vocabulary 
 
 -----------------------------------
 Function base.parse_doc_list
