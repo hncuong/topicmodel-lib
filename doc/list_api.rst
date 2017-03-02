@@ -52,7 +52,7 @@ Module
 
   - Function `base.load_mini_batch_term_frequency_from_term_frequency_file`_
 
-  - Function `shuffle_formatted_data_file`_
+  - Function `base.shuffle_formatted_data_file`_
 
   - Function `base.compute_sparsity`_
 
