@@ -85,8 +85,10 @@ Methods
 
 - **check_end_of_data** ()
 
-  Return True if the pass is the last pass and loading to end of file
-
+  To check out that whether we visit to the last iteration or not.
+  
+  Return True if the last mini-batch is loaded
+  
 - **set_output_format** (output_format)
 
   set format for the loaded mini-batch
@@ -96,12 +98,12 @@ Methods
 
 - **get_total_docs** ()
 
-  get number of documents which is analyzed
+  Return number of documents which have been analyzed until now
 
 - **get_num_tokens** ()
 
-  get number of words of corpus 
+  Return number of words in corpus 
 
 - **get_num_terms** ()
 
-  get number of terms of vocabulary
+  Return number of unique terms in corpus (size of vocabulary set)
