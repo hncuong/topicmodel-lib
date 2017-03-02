@@ -157,7 +157,7 @@ Function base.load_batch_raw_text
 
 tmlib.datasets.base.load_batch_raw_text(*file_raw_text_path*)
 
-- load all of documents and store as a list. Each element in this list is a document with raw text format (string) , this function usually is used for inference new documents
+- load all of documents and store as a list. Each element in this list is a document with raw text format (string)
 
 - **Parameters**: file_raw_text_path (string)
 
