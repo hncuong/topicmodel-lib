@@ -12,7 +12,9 @@ This module includes some base classes and base functions which support for work
 class tmlib.datasets.base.DataFormat
 -----------------------------------------------------
 
-This is class which contains 3 data-format types of library is: raw text, term_sequence, term-frequency
+This is class which contains 3 `data-format`_ types of library is: raw text, term_sequence, term-frequency
+
+.. _data-format: ../quick_start.rst#data-input-format
 
 Static Attributes
 =================
@@ -23,19 +25,27 @@ Static Attributes
 
 Example
 =======
-This example allows checking data format of corpus *path_file*
+This example allows checking data format for: corpus *examples/ap/ap_train_raw.txt*
 
-  ::
+::
 
     from tmlib.datasets.base import DataFormat, check_input_format
 
-    input_format = check_input_format(path_file)
+    input_format = check_input_format('examples/ap/ap_train_raw.txt')
+    print(input_format)
     if input_format == DataFormat.RAW_TEXT:
         print('Corpus is raw text')
     elif input_format == DataFormat.TERM_SEQUENCE:
         print('Corpus is term-sequence format')
     else:
         print(Corpus is term-frequency format')
+        
+**Output**:
+
+::
+
+  txt
+  Corpus is raw text
 
 --------------------------------
 class tmlib.datasets.base.Corpus
@@ -43,7 +53,7 @@ class tmlib.datasets.base.Corpus
 
 tmlib.datasets.base. **Corpus** (*format_type*)
 
-This class is used to store the corpus in 2 format: term-frequency and term-sequence
+This class is used to store the corpus with 2 formats: term-frequency and term-sequence
 
 Parameters
 ==========
@@ -56,20 +66,23 @@ Attributes
 - **format_type**: format of corpus
 - **word_ids_tks**: list of list,
 
-  Each document is represented by list of words (list of indexs if format is term-frequency and list of tokens if format is term-sequence). Corpus is represented by list of documents. This attribute represents for corpus
+  Each element in this list is a list which include the words of a document in corpus (words is unique terms if format is term-frequency and is list of tokens if format is term-sequence)
 
 - **cts_lens**: list
 
-  if format is term-frequency, this attribute represents for frequency of ids in each document of curpus. If format is term-sequence, this is list of length of each document (number of tokens in each doc).
+  if format is term-frequency, each element in list is a list frequency of unique terms in respectly document of corpus. If format is term-sequence, each element in list is the number of tokens in document (number of tokens in each doc).
 
 Methods
 =======
 
 - **append_doc** (ids_tks, cts_lens)
 
-  Add a document to corpus
+  Add a document to corpus. If format of this document is term-frequency, this method will append list of unique terms to **word_ids_tks** and append list of frequency to **cts_lens**. If format is term-sequence, the list of tokens and number of tokens will be appended respectly
 
   - **Parameters**: ids_tks and cts_lens is format (tf or sq) of added document
+    
+    **ids_tks**: list of unique terms (term-frequency format) or list of tokens (term-sequence format)
+    **cts_lens**: list of frequency of unique terms (term-frequency format) or number tokens in document (term-sequence format)
 
 --------------------------------------
 class tmlib.datasets.base.DataIterator
@@ -109,14 +122,12 @@ Function base.get_data_home
 
 tmlib.datasets.base. **get_data_home** (data_home=None)
 
-    This folder is used by some large dataset loaders to avoid
-    downloading the data several times.
+This folder is used by some large dataset loaders to avoid downloading the data several times.
 
-    By default the data dir is set to a folder named 'tmlib_data'
-    in the user home folder. We can change it by change value of data_home parameter
-    The '~' symbol is expanded to the user home folder.
+By default the data dir is set to a folder named 'tmlib_data' in the user home folder. We can change it by change value of data_home parameter
+The '~' symbol is expanded to the user home folder.
 
-    If the folder does not already exist, it is automatically created.
+If the folder does not already exist, it is automatically created.
 
 - **Return**: path of the tmlib data dir.
 
@@ -126,7 +137,7 @@ Function base.clear_data_home
 
 tmlib.datasets.base. **clear_data_home** (data_home=None)
 
- Delete all the content of the data home cache. 
+Delete all the content of the data home cache. 
 
 --------------------------------
 Function base.check_input_format
@@ -141,12 +152,13 @@ tmlib.datasets.base.check_input_format(*file_path*)
 - **Return**: format of input (DataFormat.RAW_TEXT, DataFormat.TERM_FREQUENCY or DataFormat.TERM_SEQUENCE)
 
 -----------------------------------------
-Function base.get_list_docs_raw_text
+Function base.load_batch_raw_text
 -----------------------------------------
 
-tmlib.datasets.base.get_list_docs_raw_text(*file_raw_text_path*)
+tmlib.datasets.base.load_batch_raw_text(*file_raw_text_path*)
 
-- Read file input which is raw text format, this function usually is used for inference new documents
+- load all of documents and store as a list. Each element in this list is a document with raw text format (string) , this function usually is used for inference new documents
+
 - **Parameters**: file_raw_text_path (string)
 
   Path of file input 
@@ -159,11 +171,11 @@ Function base.pre_process
 
 tmlib.datasets.base.pre_process(*file_path*)
 
-- Preprocessing for file input (raw text)
+- Preprocessing for file input if format of data is raw text 
 - **Paremeter**: file_path (string)
 
   Path of file input
-- **Return**: list which respectly includes vocabulary file, tf, sq file after preprocessing
+- **Return**: list which respectly includes path of vocabulary file, term-frequency file, term-sequence file after preprocessing
 
 -------------------------------------------------------
 Function base.reformat_file_to_term_sequence
@@ -203,6 +215,21 @@ tmlib.datasets.base.convert_corpus_format(*corpus, data_format*)
 
 - **Return**: object corpus with desired format
 
+--------------------------------------------
+Function base.load_batch_formatted_from_file
+--------------------------------------------
+
+tmlib.datasets.base.load_batch_formatted_from_file(*data_path, output_format=DataFormat.TERM_FREQUENCY*)
+
+- load all of documents in file which is formatted as term-frequency format or term-sequence format and return a corpus with format is **output_format**
+- **Parameters**:
+
+  - **data_path**: path of file data input which is formatted
+  - **output_format**: format data of output, default: term-frequence format
+  
+- **Return**: object corpus which is the data input for learning 
+
+
 --------------------------------------------------------------
 Function base.load_mini_batch_term_sequence_from_sequence_file
 --------------------------------------------------------------
@@ -219,7 +246,16 @@ tmlib.datasets.base.load_mini_batch_term_sequence_from_sequence_file(*fp, batch_
 --------------------------------------------------------------------
 Function base.load_mini_batch_term_sequence_from_term_frequency_file
 --------------------------------------------------------------------
-Similar
+
+tmlib.datasets.base.load_mini_batch_term_sequence_from_term_frequency_file(*fp, batch_size*)
+
+- loading a mini-batch with size: **batch_size** from a file which has the file pointer **fp**. This file is term-sequence format and the loaded mini-batch is also term-sequence format
+- **Parameter**:
+
+  - **fp**: file pointer of file term-sequence format
+  - **batch_size**: int, size of mini-batch
+- **Return**: *(minibatch, end_file)*. *minibatch* is object of class Corpus with term-sequence format and *end_file* is boolean variable which check that file pointer is at end of file or not
+
 
 ---------------------------------------------------------------
 Function base.load_mini_batch_term_frequency_from_sequence_file
