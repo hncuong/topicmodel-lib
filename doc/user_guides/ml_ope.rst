@@ -10,7 +10,7 @@ Refer to the detail guide of `Online VB`_ or in tutorial `here`_
 Learning
 ````````
 
-  ::
+::
    
     from tmlib.lda.ML_OPE import MLOPE
     from tmlib.datasets.dataset import DataSet
@@ -24,7 +24,7 @@ Learning
 Inference for new corpus
 ````````````````````````
 
-  ::
+::
 
     from tmlib.datasets import base
     from tmlib.lda.ML_OPE import MLOPE
