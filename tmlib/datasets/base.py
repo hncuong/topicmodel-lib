@@ -323,9 +323,11 @@ def load_mini_batch_term_sequence_from_sequence_file(fp, batch_size):
                 doc_terms[j] = int(list_word[j])
             doc_length = N
             mini_batch.append_doc(doc_terms, doc_length)
-        next_line = fp.readline()
+        pre_pos = fp.tell()
+	next_line = fp.readline()
         if len(next_line) < 1:
             end_file = True
+	fp.seek(pre_pos)
         return mini_batch, end_file
     except Exception as inst:
         logging.error(inst)
@@ -360,9 +362,11 @@ def load_mini_batch_term_sequence_from_term_frequency_file(fp, batch_size):
                 for k in range(0, int(tf[1])):
                     tokens.append(int(tf[0]))
             mini_batch.append_doc(np.array(tokens), len(tokens))
-        next_line = fp.readline()
+        pre_pos = fp.tell()
+	next_line = fp.readline()
         if len(next_line) < 1:
             end_file = True
+	fp.seek(pre_pos)
         return mini_batch, end_file
     except Exception as inst:
         logging.error(inst)
@@ -398,9 +402,11 @@ def load_mini_batch_term_frequency_from_term_frequency_file(fp, batch_size):
                 doc_terms[j - 1] = int(tf[0])
                 doc_frequency[j - 1] = int(tf[1])
             mini_batch.append_doc(doc_terms, doc_frequency)
+	pre_pos = fp.tell()
         next_line = fp.readline()
         if len(next_line) < 1:
             end_file = True
+	fp.seek(pre_pos)
         return mini_batch, end_file
     except Exception as inst:
         logging.error(inst)
@@ -435,9 +441,11 @@ def load_mini_batch_term_frequency_from_sequence_file(fp, batch_size):
                     term_frequency_dict[term] += 1
             mini_batch.append_doc(np.array(term_frequency_dict.keys()),
                                   np.array(term_frequency_dict.values()))
+	pre_pos = fp.tell()
         next_line = fp.readline()
         if len(next_line) < 1:
             end_file = True
+	fp.seek(pre_pos)
         return mini_batch, end_file
     except Exception as inst:
         logging.error(inst)
