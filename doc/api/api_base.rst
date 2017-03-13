@@ -131,7 +131,8 @@ If the folder does not already exist, it is automatically created.
 
 - **Return**: path of the tmlib data dir.
 
->>> print get_data_home()
+>>> from tmlib.datasets import base
+>>> print base.get_data_home()
 /home/kde/tmlib_data
 
 -----------------------------
@@ -154,6 +155,14 @@ tmlib.datasets.base.check_input_format(*file_path*)
   Path of file input
 - **Return**: format of input (DataFormat.RAW_TEXT, DataFormat.TERM_FREQUENCY or DataFormat.TERM_SEQUENCE)
 
+>>> from tmlib.datasets import base
+>>> file_path = '/home/kde/Desktop/topicmodel-lib/examples/ap/ap_train.txt'
+>>> print base.check_input_format(file_path)
+tf
+>>> file_path = '/home/kde/Desktop/topicmodel-lib/examples/ap/ap_train_raw.txt'
+>>> print base.check_input_format(file_path)
+txt
+
 -----------------------------------------
 Function base.load_batch_raw_text
 -----------------------------------------
@@ -168,6 +177,14 @@ tmlib.datasets.base.load_batch_raw_text(*file_raw_text_path*)
   
 - **Return**: list, each element in list is string type and also is text of a document
 
+>>> from tmlib.datasets import base
+>>> path_file_raw_text = '/home/kde/Desktop/topicmodel-lib/examples/ap/ap_infer_raw.txt'
+>>> list_docs = base.load_batch_raw_text(path_file_raw_text)
+>>> print 'number of documents: ', len(list_docs)
+number of documents:  50
+>>> print list_docs[8]
+ Here is a summary of developments in forest and brush fires in Western states:
+
 ------------------------------------
 Function base.pre_process
 ------------------------------------
@@ -179,6 +196,44 @@ tmlib.datasets.base.pre_process(*file_path*)
 
   Path of file input
 - **Return**: list which respectly includes path of vocabulary file, term-frequency file, term-sequence file after preprocessing
+
+>>> from tmlib.datasets import base
+>>> path_file = '/home/kde/Desktop/topicmodel-lib/examples/ap/ap_train_raw.txt'
+>>> path_vocab, path_tf, path_sq = base.pre_process(path_file)
+Waiting...
+>>> print 'path to file vocabulary extracted: ', path_vocab
+path to file vocabulary extracted:  /home/kde/tmlib_data/ap_train_raw/vocab.txt
+>>> print 'path to file with term-frequency format: ', path_tf
+path to file with term-frequency format:  /home/kde/tmlib_data/ap_train_raw/ap_train_raw.tf
+>>> print 'path to file with term-sequence format: ', path_sq
+path to file with term-sequence format:  /home/kde/tmlib_data/ap_train_raw/ap_train_raw.sq
+
+--------------------------------------------
+Function base.load_batch_formatted_from_file
+--------------------------------------------
+
+tmlib.datasets.base.load_batch_formatted_from_file(*data_path, output_format=DataFormat.TERM_FREQUENCY*)
+
+- load all of documents in file which is formatted as term-frequency format or term-sequence format and return a corpus with format is **output_format**
+- **Parameters**:
+
+  - **data_path**: path of file data input which is formatted
+  - **output_format**: format data of output, default: term-frequence format
+  
+- **Return**: object corpus which is the data input for learning 
+
+>>> path_file_tf = '/home/kde/Desktop/topicmodel-lib/examples/ap/ap_train.txt'
+>>> corpus_tf = base.load_batch_formatted_from_file(path_file_tf)
+>>> print 'Unique terms in the 9th documents: ', corpus_tf.word_ids_tks[8]
+Unique terms in the 9th documents:  [5829 4040 2891   14 1783  381 2693]
+>>> print 'Frequency of unique terms in the 9th documents: ', corpus_tf.cts_lens[8]
+Frequency of unique terms in the 9th documents:  [1 1 1 1 1 1 1]
+>>> corpus_sq = base.load_batch_formatted_from_file(path_file_tf, output_format=base.DataFormat.TERM_SEQUENCE)
+>>> print 'List of tokens in the 9th documents: ', corpus_sq.word_ids_tks[8]
+List of tokens in the 9th documents:  [5829 4040 2891   14 1783  381 2693]
+>>> print 'Number of tokens in the 9th document: ', corpus_sq.cts_lens[8]
+Number of tokens in the 9th document:  7
+
 
 -------------------------------------------------------
 Function base.reformat_file_to_term_sequence
@@ -192,6 +247,12 @@ tmlib.datasets.base.reformat_file_to_term_sequence(*file_path*)
   Path of file input
 - **Return**: path of file which is formatted to term-sequence
 
+>>> from tmlib.datasets import base
+>>> path_file_tf = '/home/kde/Desktop/topicmodel-lib/examples/ap/ap_train.txt'
+>>> path_file_sq = base.reformat_file_to_term_sequence(path_file_tf)
+>>> print 'path to file term-sequence: ', path_file_sq
+path to file term-sequence:  /home/kde/tmlib_data/ap_train/ap_train.sq
+
 --------------------------------------------------------
 Function base.reformat_file_to_term_frequency
 --------------------------------------------------------
@@ -203,6 +264,12 @@ tmlib.datasets.base.reformat_file_to_term_sequence(*file_path*)
 
   Path of file input
 - **Return**: path of file which is formatted to term-frequency
+
+>>> from tmlib.datasets import base
+>>> path_file = '/home/kde/Desktop/topicmodel-lib/examples/ap/ap_train.txt'
+>>> path_file_tf = base.reformat_file_to_term_sequence(path_file)
+>>> print 'path to file term-frequency: ', path_file_tf
+path to file term-frequency:  /home/kde/tmlib_data/ap_train/ap_train.tf
 
 -----------------------------------
 Function base.convert_corpus_format
@@ -218,19 +285,17 @@ tmlib.datasets.base.convert_corpus_format(*corpus, data_format*)
 
 - **Return**: object corpus with desired format
 
---------------------------------------------
-Function base.load_batch_formatted_from_file
---------------------------------------------
-
-tmlib.datasets.base.load_batch_formatted_from_file(*data_path, output_format=DataFormat.TERM_FREQUENCY*)
-
-- load all of documents in file which is formatted as term-frequency format or term-sequence format and return a corpus with format is **output_format**
-- **Parameters**:
-
-  - **data_path**: path of file data input which is formatted
-  - **output_format**: format data of output, default: term-frequence format
-  
-- **Return**: object corpus which is the data input for learning 
+>>> path_file_tf = '/home/kde/Desktop/topicmodel-lib/examples/ap/ap_train.txt'
+>>> corpus = base.load_batch_formatted_from_file(path_file_tf)
+>>> corpus_sq = base.convert_corpus_format(corpus, base.DataFormat.TERM_SEQUENCE)
+>>> print 'Unique terms in the 22th documents: ', corpus.word_ids_tks[21]
+Unique terms in the 22th documents:  [  32  396  246   87  824 3259  316  285]
+>>> print 'Frequency of unique terms in the 22th documents: ', corpus.cts_lens[21]
+Frequency of unique terms in the 22th documents:  [1 1 1 2 1 1 2 1]
+>>> print 'List of tokens in the 22th documents: ', corpus_sq.word_ids_tks[21]
+List of tokens in the 22th documents:  [32, 396, 246, 87, 87, 824, 3259, 316, 316, 285]
+>>> print 'Number of tokens in the 22th document: ', corpus_sq.cts_lens[21]
+Number of tokens in the 22th document:  10
 
 
 --------------------------------------------------------------
@@ -258,6 +323,19 @@ tmlib.datasets.base.load_mini_batch_term_sequence_from_term_frequency_file(*fp, 
   - **fp**: file pointer of file term-frequency format
   - **batch_size**: int, size of mini-batch
 - **Return**: *(minibatch, end_file)*. *minibatch* is object of class Corpus with term-sequence format and *end_file* is boolean variable which check that file pointer is at end of file or not
+
+>>> path_file_tf = '/home/kde/Desktop/topicmodel-lib/examples/ap/ap_train.txt'
+>>> fp = open(path_file_tf)
+>>> mini_batch1, end_file = base.load_mini_batch_term_sequence_from_term_frequency_file(fp, 1500)
+>>> print 'Size of mini_batch1: ', len(mini_batch1.word_ids_tks)
+Size of mini_batch1:  1500
+>>> print 'End file: ', end_file
+End file:  False
+>>> mini_batch2, end_file = base.load_mini_batch_term_sequence_from_term_frequency_file(fp, 1500)
+>>> print 'Size of mini_batch2: ', len(mini_batch2.word_ids_tks)
+Size of mini_batch2:  700
+>>> print 'End file: ', end_file
+End file:  True
 
 
 ---------------------------------------------------------------
