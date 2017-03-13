@@ -131,6 +131,9 @@ If the folder does not already exist, it is automatically created.
 
 - **Return**: path of the tmlib data dir.
 
+>>> print get_data_home()
+/home/kde/tmlib_data
+
 -----------------------------
 Function base.clear_data_home
 -----------------------------
