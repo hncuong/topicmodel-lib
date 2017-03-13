@@ -9,7 +9,7 @@ Refer to the detail guide of `Online VB`_ or in tutorial `here`_
 Learning
 ````````
 
-  ::
+::
    
     from tmlib.lda.ML_CGS import MLCGS
     from tmlib.datasets.dataset import DataSet
@@ -25,7 +25,7 @@ With ML-methods, model returned is :math:`\beta`.
 Inference for new corpus
 ````````````````````````
 
-  ::
+::
 
     from tmlib.datasets import base
     from tmlib.lda.ML_CGS import MLCGS
