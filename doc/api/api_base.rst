@@ -285,6 +285,7 @@ tmlib.datasets.base.convert_corpus_format(*corpus, data_format*)
 
 - **Return**: object corpus with desired format
 
+>>> from tmlib.datasets import base
 >>> path_file_tf = '/home/kde/Desktop/topicmodel-lib/examples/ap/ap_train.txt'
 >>> corpus = base.load_batch_formatted_from_file(path_file_tf)
 >>> corpus_sq = base.convert_corpus_format(corpus, base.DataFormat.TERM_SEQUENCE)
@@ -311,6 +312,42 @@ tmlib.datasets.base.load_mini_batch_term_sequence_from_sequence_file(*fp, batch_
   - **batch_size**: int, size of mini-batch
 - **Return**: *(minibatch, end_file)*. *minibatch* is object of class Corpus with term-sequence format and *end_file* is boolean variable which check that file pointer is at end of file or not
 
+>>> from tmlib.datasets import base
+>>> path_file_tf = '/home/kde/Desktop/topicmodel-lib/examples/ap/ap_train.txt'
+>>> path_file_sq = base.reformat_file_to_term_sequence(path_file_tf)
+>>> fp = open(path_file_sq)
+>>> mini_batch, end_file = base.load_mini_batch_term_sequence_from_sequence_file(fp, 1500)
+>>> print 'Format of mini_batch: ', mini_batch.format_type
+Format of mini_batch:  sq
+>>> print 'List of tokens in the first document of mini_batch: \n', mini_batch.word_ids_tks[0]
+List of tokens in the first document of mini_batch: 
+[    0  6144  3586  3586     3     4  1541     8    10  3927    12    12
+    12    12    12    12    12  4621   527  9232  1112  1112    20  2587
+  6172 10269 10269    37    42  3117  1582  1585  1585  1585   435  9268
+  9268  9268   571   571    60    61    63    63    64    64  5185    11
+  4683   590   590  1103  1103   592  5718  1623  1623  1624  1624  1624
+  1624    89    89  6234  8802  1638   103   600  9404   106  3691   720
+  2672   113  2165  5751   123   123   123  1148   128   128  1670  1670
+  4231  1167   144   147   149   149   149   149   149   149   149  3735
+  3735  5272  5272  1732   673   673  5282    27  1700  9893  9893   166
+   167   173   174  2224  2248   372   372   186  4284  4284  4284  3450
+  3450   117   117   203  2244  5320   201  4215  9932  9932   207   207
+   208   208   208   208   208  8914  7898   733   733  1760  1744   744
+   234  1259  1259  4287  7254   249  8311  5884  5884   298   254   767
+   767  2304  4876   270   557   786   789   789  2331   287  5409   290
+  5923  2854  1834  1834  1834   303  3888  3888  3888  3888   817   817
+  9523   334  1333   311   311  1855  1417   325  1870  1870  1870  1870
+  1870  1870  1870  1361  1362  6995   342   343   344   857  5469  5469
+   351   351   351   351   351  1377  2402   487   884   885   890  4477
+  3455  1410  5099  4489   395  2570   152   404  1429  1430  3992   416
+  3491  2033  3499   429  3502  5040   433   433  1971  1971  1971  1971
+   437  9667  9667   322  7119  8656  1102   985   989  1840  2529   997
+  2022  2022  4071  2536 10219  1517  1009   221  3059   500   511]
+>>> print 'Number of tokens in the first document of mini_batch: \n', mini_batch.cts_lens[0]
+Number of tokens in the first document of mini_batch: 
+263
+
+
 --------------------------------------------------------------------
 Function base.load_mini_batch_term_sequence_from_term_frequency_file
 --------------------------------------------------------------------
@@ -324,9 +361,12 @@ tmlib.datasets.base.load_mini_batch_term_sequence_from_term_frequency_file(*fp, 
   - **batch_size**: int, size of mini-batch
 - **Return**: *(minibatch, end_file)*. *minibatch* is object of class Corpus with term-sequence format and *end_file* is boolean variable which check that file pointer is at end of file or not
 
+>>> from tmlib.datasets import base
 >>> path_file_tf = '/home/kde/Desktop/topicmodel-lib/examples/ap/ap_train.txt'
 >>> fp = open(path_file_tf)
 >>> mini_batch1, end_file = base.load_mini_batch_term_sequence_from_term_frequency_file(fp, 1500)
+>>> print 'Format of mini_batch1: ', mini_batch1.format_type
+Format of mini_batch1:  sq
 >>> print 'Size of mini_batch1: ', len(mini_batch1.word_ids_tks)
 Size of mini_batch1:  1500
 >>> print 'End file: ', end_file
@@ -342,7 +382,7 @@ End file:  True
 Function base.load_mini_batch_term_frequency_from_sequence_file
 ---------------------------------------------------------------
 
-tmlib.datasets.base.load_mini_batch_term_frequency_from_term_sequence_file(*fp, batch_size*)
+tmlib.datasets.base.load_mini_batch_term_frequency_from_sequence_file(*fp, batch_size*)
 
 - loading a mini-batch with size: **batch_size** from a file which has the file pointer **fp**. This file includes the documents with term-sequence format and the returned mini-batch is term-frequency format
 - **Parameter**:
@@ -350,6 +390,40 @@ tmlib.datasets.base.load_mini_batch_term_frequency_from_term_sequence_file(*fp, 
   - **fp**: file pointer of file term-sequence format
   - **batch_size**: int, size of mini-batch
 - **Return**: *(minibatch, end_file)*. *minibatch* is object of class Corpus with term-frequency format and *end_file* is boolean variable which check that file pointer is at end of file or not
+
+>>> from tmlib.datasets import base
+>>> path_file_tf = '/home/kde/Desktop/topicmodel-lib/examples/ap/ap_train.txt'
+>>> path_file_sq = base.reformat_file_to_term_sequence(path_file_tf)
+>>> fp = open(path_file_sq)
+>>> mini_batch, end_file = base.load_mini_batch_term_frequency_from_sequence_file(fp, 1500)
+>>> print 'Format of mini_batch: ', mini_batch.format_type
+Format of mini_batch:  tf
+>>> print 'Unique terms in the first document of mini_batch: \n', mini_batch.word_ids_tks[0]
+Unique terms in the first document of mini_batch: 
+[    0  6144  3586     3     4  1541     8    10    11    12  4621   527
+  9232  1112    20  2587  6172 10269    37    42  3117  1582  1585  1971
+  9268   571    60    61    63    64  5185   343  4683   590  1103   592
+  5718  1623  1624    89  6234  8802  1638   103   600  9404   106  3691
+   890  2672   113  2165  4215   123  1148   128  1670  4231  1167   144
+   147   149  3735  5272  1732  1744  4489   673  5282    27  1700  9893
+   166   167  5751   173   174  2224  2248   884   186  4284   117  2244
+  5320   201   203  9932   207   720  8914  7898   733  1760   208   744
+   234  1259  4287   249  8311  7254  1834   254   767  2304  4876   270
+   557   786   789  2331   287  5409   290  5923  2854   298   303  3888
+   817  9523  1333   311  1855   322   325  1102   334  1361  1362  6995
+   342  3927   344   857  5469   351  1377  2402  4071   372   885  3450
+  4477  3455  1410 10219  1417   395  2570   152   404  1429  1430  3992
+   416  3491  1009  3499   429  3502  5040   433   435   437  9667  7119
+  8656  1870   985   989  1840  2529   997  2022   487  2536  5884  5099
+  1517  2033   221  3059   500   511]
+>>> print 'Frequency of unique terms in the first document of mini_batch: \n', mini_batch.cts_lens[0]
+Frequency of unique terms in the first document of mini_batch: 
+[1 1 2 1 1 1 1 1 1 7 1 1 1 2 1 1 1 2 1 1 1 1 3 4 3 2 1 1 2 2 1 1 1 2 2 1 1
+ 2 4 2 1 1 1 1 1 1 1 1 1 1 1 1 1 3 1 2 2 1 1 1 1 7 2 2 1 1 1 2 1 1 1 2 1 1
+ 1 1 1 1 1 1 1 3 2 1 1 1 1 2 2 1 1 1 2 1 5 1 1 2 1 1 1 1 3 1 2 1 1 1 1 1 2
+ 1 1 1 1 1 1 1 1 4 2 1 1 2 1 1 1 1 1 1 1 1 1 1 1 1 2 5 1 1 1 2 1 2 1 1 1 1
+ 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 1 1 2 1 1 7 1 1 1 1 1 2 1 1 2 1 1 1 1 1 1
+ 1]
 
 ---------------------------------------------------------------------
 Function base.load_mini_batch_term_frequency_from_term_frequency_file
@@ -361,6 +435,40 @@ Function base.load_mini_batch_term_frequency_from_term_frequency_file
   - **fp**: file pointer of file term-frequency format
   - **batch_size**: int, size of mini-batch
 - **Return**: *(minibatch, end_file)*. *minibatch* is object of class Corpus with term-frequency format and *end_file* is boolean variable which check that file pointer is at end of file or not
+
+>>> from tmlib.datasets import base
+>>> path_file_tf = '/home/kde/Desktop/topicmodel-lib/examples/ap/ap_train.txt'
+>>> fp = open(path_file_tf)
+>>> mini_batch, end_file = base.load_mini_batch_term_frequency_from_term_frequency_file(fp, 1500)
+>>> print 'Format of mini_batch: ', mini_batch.format_type
+Format of mini_batch:  tf
+>>> print 'Unique terms in the first document of mini_batch: \n', mini_batch.word_ids_tks[0]
+Unique terms in the first document of mini_batch: 
+[    0  6144  3586     3     4  1541     8    10  3927    12  4621   527
+  9232  1112    20  2587  6172 10269    37    42  3117  1582  1585   435
+  9268   571    60    61    63    64  5185    11  4683   590  1103   592
+  5718  1623  1624    89  6234  8802  1638   103   600  9404   106  3691
+   720  2672   113  2165  5751   123  1148   128  1670  4231  1167   144
+   147   149  3735  5272  1732   673  5282    27  1700  9893   166   167
+   173   174  2224  2248   372   186  4284  3450   117   203  2244  5320
+   201  4215  9932   207   208  8914  7898   733  1760  1744   744   234
+  1259  4287  7254   249  8311  5884   298   254   767  2304  4876   270
+   557   786   789  2331   287  5409   290  5923  2854  1834   303  3888
+   817  9523   334  1333   311  1855  1417   325  1870  1361  1362  6995
+   342   343   344   857  5469   351  1377  2402   487   884   885   890
+  4477  3455  1410  5099  4489   395  2570   152   404  1429  1430  3992
+   416  3491  2033  3499   429  3502  5040   433  1971   437  9667   322
+  7119  8656  1102   985   989  1840  2529   997  2022  4071  2536 10219
+  1517  1009   221  3059   500   511]
+>>> print 'Frequency of unique terms in the first document of mini_batch: \n', mini_batch.cts_lens[0]
+Frequency of unique terms in the first document of mini_batch: 
+[1 1 2 1 1 1 1 1 1 7 1 1 1 2 1 1 1 2 1 1 1 1 3 1 3 2 1 1 2 2 1 1 1 2 2 1 1
+ 2 4 2 1 1 1 1 1 1 1 1 1 1 1 1 1 3 1 2 2 1 1 1 1 7 2 2 1 2 1 1 1 2 1 1 1 1
+ 1 1 2 1 3 2 2 1 1 1 1 1 2 2 5 1 1 2 1 1 1 1 2 1 1 1 1 2 1 1 2 1 1 1 1 1 2
+ 1 1 1 1 1 1 3 1 4 2 1 1 1 2 1 1 1 7 1 1 1 1 1 1 1 2 5 1 1 1 1 1 1 1 1 1 1
+ 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 4 1 2 1 1 1 1 1 1 1 1 1 2 1 1 1 1 1 1 1 1
+ 1]
+
 
 -----------------------------------------------------------
 Function shuffle_formatted_data_file
@@ -375,6 +483,12 @@ tmlib.datasets.base.shuffle_formatted_data_file(*data_path, batch_size*)
   - **batch_size**: the necessary parameter for the shuffling algorithm designed by us
 
 - **Return**: path of new file which is shuffled
+
+>>> from tmlib.datasets import base
+>>> path_file = '/home/kde/Desktop/topicmodel-lib/examples/ap/ap_train.txt'
+>>> path_file_shuffled = base.shuffle_formatted_data_file(path_file, 500)
+>>> print 'Path to file shuffled: ', path_file_shuffled
+Path to file shuffled:  /home/kde/Desktop/topicmodel-lib/examples/ap/ap_train.txt.shuffled
 
 ------------------------------
 Function base.compute_sparsity
@@ -391,6 +505,12 @@ tmlib.datasets.base.compute_sparsity(*doc_tp, num_docs, num_topics, _type*)
   - **_type**: string, if the value is 'z', the topic mixtures is estimated by the sampling method as CGS or CVB0, so we have the individual caculation for this. Otherwise, if the value of it isn't 'z', this is for the methods as: VB, OPE or FW
   
 - **Return**: float, sparsity of documents
+
+>>> import numpy as np
+>>> from tmlib.datasets import base
+>>> theta = np.array([[0.1, 0.3, 0.2, 0.2, 0.1, 0.1], [0.02, 0.05, 0.03, 0.5, 0.2, 0.2]], dtype='float32')
+>>> base.compute_sparsity(theta, theta.shape[0], theta.shape[1], _type='t')
+1.0
 
 ----------------------------------
 Function base.write_topic_mixtures 
@@ -415,6 +535,19 @@ tmlib.datasets.base. **read_vocab** (*path_vocab*)
 - **Parameters**:
   
   - **path_vocab**: path of file vocabulary 
+  
+>>> from tmlib.datasets import base
+>>> path_vocab = '/home/kde/Desktop/topicmodel-lib/examples/ap/vocab.txt'
+>>> list_unique_terms = open(path_vocab).readlines()
+>>> list_unique_terms[10].strip()
+'years'
+>>> dict_vocab = base.read_vocab(path_vocab)
+>>> dict_vocab['years']
+10
+>>> list_unique_terms[1021].strip()
+'laws'
+>>> dict_vocab['laws']
+1021
 
 -----------------------------------
 Function base.parse_doc_list
@@ -428,3 +561,22 @@ tmlib.datasets.base. **parse_doc_list** (*docs, vocab_dict*)
   - **vocab_dict**: vocabulary is represented as dictionary format described above
 
 - **Return**: object of class Corpus
+
+>>> path_vocab = '/home/kde/Desktop/topicmodel-lib/examples/ap/vocab.txt'
+>>> dict_vocab = base.read_vocab(path_vocab)
+>>> path_file_raw_text = '/home/kde/Desktop/topicmodel-lib/examples/ap/ap_infer_raw.txt'
+>>> list_docs = base.load_batch_raw_text(path_file_raw_text)
+>>> print 'The 9th document has the content: "%s"' %list_docs[8]
+The 9th document has the content: " Here is a summary of developments in forest and brush fires in Western states:"
+>>> corpus_tf = base.parse_doc_list(list_docs, dict_vocab)
+>>> list_unique_terms = open(path_vocab).readlines()
+>>> list_terms_in_doc_9th = list()
+>>> for index in corpus_tf.word_ids_tks[8]: \
+...     list_terms_in_doc_9th.append(list_unique_terms[index].strip())
+... 
+>>> print 'List of unique terms in the 9th document: ', '\nindexs: ', corpus_tf.word_ids_tks[8], '\nwords: ', list_terms_in_doc_9th 
+List of unique terms in the 9th document:  
+indexs:  [5829, 4040, 2891, 14, 1783, 381, 2693] 
+words:  ['summary', 'brush', 'fires', 'states', 'forest', 'western', 'developments']
+>>> print 'Frequency of unique terms: ', corpus_tf.cts_lens[8]
+Frequency of unique terms:  [1, 1, 1, 1, 1, 1, 1]
