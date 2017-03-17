@@ -48,7 +48,7 @@ This section includes some tutorials for process data input of model (documents 
 Our library is deployed with 5 inference methods: VB [3]_, CVB0 [4]_, CGS [5]_, `OPE`_, `FW`_ and apply with online scheme, stream scheme or regularized online learning
 
 - Online learning includes methods: Online-VB [2]_, Online-CVB0 [6]_, Online-CGS [5]_, Online-OPE, Online-FW
-- Stream learning includes: Streaming-VB [7]_, Streaming-OPE, Streaming-FW
+- Streaming learning includes: Streaming-VB [7]_, Streaming-OPE, Streaming-FW
 - Regularized online learning with CGS, FW, OPE: ML-CGS, ML-FW, ML-OPE.
 
 **Default setting parameters**: 
