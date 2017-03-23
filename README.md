@@ -46,8 +46,10 @@ Documentation
 
 - [Quick Start](doc/quick_start.rst)
 - [Tutorials](doc/tutorials.rst)
-- [User Guide](doc/user_guide.rst)
+- [User Guide](doc/user_guide.rst
 - [Official API documentation](doc/list_api.rst)
 
 Support
 -------
+Contributors:
+      VuVanTu
