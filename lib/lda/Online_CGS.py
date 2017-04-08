@@ -4,8 +4,8 @@ import numpy as np
 from scipy.special import psi
 import time
 
-from tmlib.datasets.base import DataFormat, convert_corpus_format
-from tmlib.lda.utils import util_funcs
+from lib.datasets.base import DataFormat, convert_corpus_format
+from lib.lda.utils import util_funcs
 from ldamodel import LdaModel
 from ldalearning import LdaLearning
 

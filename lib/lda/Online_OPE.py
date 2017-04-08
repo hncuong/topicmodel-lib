@@ -4,7 +4,7 @@ import time
 import numpy as np
 from ldamodel import LdaModel
 from ldalearning import LdaLearning
-from tmlib.datasets.base import DataFormat, convert_corpus_format
+from lib.datasets.base import DataFormat, convert_corpus_format
 
 
 class OnlineOPE(LdaLearning):

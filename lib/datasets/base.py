@@ -8,8 +8,8 @@ from time import time
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../..'))
 
 import logging
-from tmlib.preprocessing import preprocessing
-from tmlib import config
+from lib.preprocessing import preprocessing
+from lib import config
 
 # Name of current path directory which contains this file
 dir_path = os.path.dirname(os.path.realpath(__file__))

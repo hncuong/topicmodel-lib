@@ -6,7 +6,7 @@ import numpy as np
 
 from ldalearning import LdaLearning
 from ldamodel import LdaModel
-from tmlib.datasets.base import DataFormat, convert_corpus_format
+from lib.datasets.base import DataFormat, convert_corpus_format
 
 
 class OnlineFW(LdaLearning):

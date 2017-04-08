@@ -1,8 +1,8 @@
 import sys, os
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../..'))
-from tmlib.datasets import base
+from lib.datasets import base
 from ldamodel import LdaModel
-from tmlib.datasets.dataset import DataSet
+from lib.datasets.dataset import DataSet
 
 import logging
 

@@ -7,21 +7,21 @@ import numpy
 
 extensions = [
   Extension(
-     "tmlib.lda.utils.util_funcs",
-     ["tmlib/lda/utils/util_funcs.pyx"],
+     "lib.lda.utils.util_funcs",
+     ["lib/lda/utils/util_funcs.pyx"],
      include_dirs=[numpy.get_include()]
   )
 ]
 
 setup(
-    name="tmlib",
+    name="lib",
     version="0.1",
-    packages=find_packages(),#['tmlib'],
+    packages=find_packages(),#['lib'],
     cmdclass = {'build_ext': build_ext},
 
     # Project uses reStructuredText, so ensure that the docutils get
     # installed or upgraded on the target machine
-    install_requires=['docutils>=0.3', 'numpy>=1.8', 'scipy>=0.10', 'nltk'],
+    install_requires=['numpy>=1.8', 'scipy>=0.10', 'nltk'],
 
     package_data={
         # If any package contains *.txt or *.rst files, include them:
@@ -32,7 +32,7 @@ setup(
     ext_modules=extensions,
 
     # metadata for upload to PyPI
-    author="dslab tmlib team",
+    author="dslab topicmodel-lib team",
     author_email="",
     description="This is an LDA Package",
     license="MIT",
