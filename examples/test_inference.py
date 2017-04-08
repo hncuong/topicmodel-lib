@@ -2,20 +2,20 @@ import sys, os
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../..'))
 
-from tmlib.datasets import base
-from tmlib.lda.Online_VB import OnlineVB
-from tmlib.lda.ML_CGS import MLCGS
-from tmlib.lda.ML_FW import MLFW
-from tmlib.lda.ML_OPE import MLOPE
-from tmlib.lda.Online_CGS import OnlineCGS
-from tmlib.lda.Online_CVB0 import OnlineCVB0
-from tmlib.lda.Online_FW import OnlineFW
-from tmlib.lda.Online_OPE import OnlineOPE
-from tmlib.lda.Streaming_FW import StreamingFW
-from tmlib.lda.Streaming_OPE import StreamingOPE
-from tmlib.lda.Streaming_VB import StreamingVB
-from tmlib.lda.ldamodel import LdaModel
-from tmlib.datasets.base import get_data_home
+from lib.datasets import base
+from lib.lda.Online_VB import OnlineVB
+from lib.lda.ML_CGS import MLCGS
+from lib.lda.ML_FW import MLFW
+from lib.lda.ML_OPE import MLOPE
+from lib.lda.Online_CGS import OnlineCGS
+from lib.lda.Online_CVB0 import OnlineCVB0
+from lib.lda.Online_FW import OnlineFW
+from lib.lda.Online_OPE import OnlineOPE
+from lib.lda.Streaming_FW import StreamingFW
+from lib.lda.Streaming_OPE import StreamingOPE
+from lib.lda.Streaming_VB import StreamingVB
+from lib.lda.ldamodel import LdaModel
+from lib.datasets.base import get_data_home
 import logging
 
 #dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -85,4 +85,4 @@ def inference(method_name, file_beta_lambda, data_path='ap/ap_infer_raw.txt', vo
     base.write_topic_mixtures(theta, 'model/topic_mixtures.txt')
 
 if __name__ == '__main__':
-    inference('online-vb', 'model/lambda_final.txt')
+    inference('online-ope', 'model/lambda_final.txt')

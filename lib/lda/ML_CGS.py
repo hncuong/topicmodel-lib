@@ -7,10 +7,10 @@ from __future__ import division
 import numpy as np
 from scipy.special import psi
 import time
-from tmlib.lda.utils import util_funcs
+from lib.lda.utils import util_funcs
 from ldamodel import LdaModel
 from ldalearning import LdaLearning
-from tmlib.datasets.base import DataFormat, convert_corpus_format
+from lib.datasets.base import DataFormat, convert_corpus_format
 
 def dirichlet_expectation(alpha):
     """

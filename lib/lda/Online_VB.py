@@ -3,7 +3,7 @@ import numpy as n
 from scipy.special import gammaln, psi
 from ldamodel import LdaModel
 from ldalearning import LdaLearning
-from tmlib.datasets.base import DataFormat, convert_corpus_format
+from lib.datasets.base import DataFormat, convert_corpus_format
 
 n.random.seed(100000001)
 

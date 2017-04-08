@@ -2,7 +2,7 @@ import sys, os
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../..'))
 
-from tmlib.preprocessing import preprocessing
+from lib.preprocessing import preprocessing
 
 def main(file_path):
     raw_text = preprocessing.PreProcessing(file_path)

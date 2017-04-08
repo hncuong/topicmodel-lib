@@ -1,19 +1,19 @@
 import os, logging
 
-from tmlib.datasets.wiki_stream import WikiStream
-from tmlib.datasets import base
-from tmlib.lda.Online_VB import OnlineVB
-from tmlib.lda.ML_CGS import MLCGS
-from tmlib.lda.ML_FW import MLFW
-from tmlib.lda.ML_OPE import MLOPE
-from tmlib.lda.Online_CGS import OnlineCGS
-from tmlib.lda.Online_CVB0 import OnlineCVB0
-from tmlib.lda.Online_FW import OnlineFW
-from tmlib.lda.Online_OPE import OnlineOPE
-from tmlib.lda.Streaming_FW import StreamingFW
-from tmlib.lda.Streaming_OPE import StreamingOPE
-from tmlib.lda.Streaming_VB import StreamingVB
-from tmlib.lda.ldamodel import LdaModel
+from lib.datasets.wiki_stream import WikiStream
+from lib.datasets import base
+from lib.lda.Online_VB import OnlineVB
+from lib.lda.ML_CGS import MLCGS
+from lib.lda.ML_FW import MLFW
+from lib.lda.ML_OPE import MLOPE
+from lib.lda.Online_CGS import OnlineCGS
+from lib.lda.Online_CVB0 import OnlineCVB0
+from lib.lda.Online_FW import OnlineFW
+from lib.lda.Online_OPE import OnlineOPE
+from lib.lda.Streaming_FW import StreamingFW
+from lib.lda.Streaming_OPE import StreamingOPE
+from lib.lda.Streaming_VB import StreamingVB
+from lib.lda.ldamodel import LdaModel
 
 def learn(method_name):
     data = WikiStream(64, 100)
