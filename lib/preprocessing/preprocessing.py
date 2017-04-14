@@ -6,7 +6,6 @@ from nltk.stem.porter import PorterStemmer
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../..'))
 
 import logging
-from lib import config
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 tokenizer = RegexpTokenizer(r'\w+')
@@ -25,7 +24,7 @@ def get_data_home(data_home=None):
     If the folder does not already exist, it is automatically created.
     """
     if data_home is None:
-        data_home = config.get_config('datasets', 'tmlib_DATA_HOME')
+        data_home = "~/tmlib_data"
     data_home = os.path.expanduser(data_home)
     if not os.path.exists(data_home):
         os.makedirs(data_home)

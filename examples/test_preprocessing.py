@@ -15,7 +15,7 @@ def main(file_path):
     return (raw_text.path_file_vocab, raw_text.path_file_tf, raw_text.path_file_sq)
 
 if __name__ == '__main__':
-    (vocab, tf, sq) = main('ap/ap_train_raw.txt')
+    (vocab, tf, sq) = main('ap/ap_infer_raw.txt')
     print 'Vocab path: ', vocab
     print 'Term-frequency file path: ', tf
     print 'Term-sequence file path: ', sq
