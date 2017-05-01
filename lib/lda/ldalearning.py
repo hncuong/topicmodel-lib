@@ -1,6 +1,6 @@
 import sys, os
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../..'))
-from lib.datasets import base
+from lib.datasets import utilizies
 from ldamodel import LdaModel
 from lib.datasets.dataset import DataSet
 
@@ -102,6 +102,12 @@ class LdaLearning(object):
         # Iterating
         while not data.check_end_of_data():
             mini_batch = data.load_mini_batch()
+            # This using for streaming method
+            if self.num_terms != data.get_num_terms():
+                self.num_terms = data.get_num_terms()
+                new_model = LdaModel(self.num_terms, self.num_topics, random_type=1)
+                new_model.model[:, :self.lda_model.model.shape[1]] = self.lda_model.model
+                self.lda_model = new_model
 
             # run expectation - maximization algorithms
             time_e, time_m, theta = self.static_online(mini_batch.word_ids_tks, mini_batch.cts_lens)
@@ -109,7 +115,7 @@ class LdaLearning(object):
 
             # compute documents sparsity
             if compute_sparsity_every > 0 and (data.mini_batch_no % compute_sparsity_every) == 0:
-                sparsity = base.compute_sparsity(theta, theta.shape[0], theta.shape[1], 't')
+                sparsity = utilizies.compute_sparsity(theta, theta.shape[0], theta.shape[1], 't')
                 self.statistics.record_sparsity(sparsity)
 
             # save model : lambda, beta, N_phi

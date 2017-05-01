@@ -1,6 +1,6 @@
 import logging, os
-import base
-from .base import Corpus, DataIterator, DataFormat
+import utilizies
+from .utilizies import Corpus, DataIterator, DataFormat
 
 
 class DataSet(DataIterator):
@@ -19,9 +19,9 @@ class DataSet(DataIterator):
         self.batch_size = batch_size
         self.vocab_file = vocab_file
 
-        input_format = base.check_input_format(data_path)
+        input_format = utilizies.check_input_format(data_path)
         if input_format == DataFormat.RAW_TEXT:
-            vocab_file, tf_file, sq_file = base.pre_process(data_path)
+            vocab_file, tf_file, sq_file = utilizies.pre_process(data_path)
             self.data_path = tf_file
             self.vocab_file = vocab_file
             self.data_format = DataFormat.TERM_FREQUENCY
@@ -58,7 +58,7 @@ class DataSet(DataIterator):
             logging.info('Pass no: %s', self.pass_no)
             # shuffle after number of passes
             if self.shuffle_every > 0 and self.pass_no % self.shuffle_every == 0:
-                self.work_path = base.shuffle_formatted_data_file(self.data_path, self.batch_size)
+                self.work_path = utilizies.shuffle_formatted_data_file(self.data_path, self.batch_size)
 
         if self.batch_no_in_pass == 0:
             self.fp = open(self.work_path, 'r')
@@ -82,14 +82,14 @@ class DataSet(DataIterator):
         """
         if self.output_format == DataFormat.TERM_FREQUENCY:
             if self.data_format == DataFormat.TERM_FREQUENCY:
-                return base.load_mini_batch_term_frequency_from_term_frequency_file(self.fp, self.batch_size)
+                return utilizies.load_mini_batch_term_frequency_from_term_frequency_file(self.fp, self.batch_size)
             else:
-                return base.load_mini_batch_term_frequency_from_sequence_file(self.fp, self.batch_size)
+                return utilizies.load_mini_batch_term_frequency_from_sequence_file(self.fp, self.batch_size)
         else:
             if self.data_format == DataFormat.TERM_FREQUENCY:
-                return base.load_mini_batch_term_sequence_from_term_frequency_file(self.fp, self.batch_size)
+                return utilizies.load_mini_batch_term_sequence_from_term_frequency_file(self.fp, self.batch_size)
             else:
-                return base.load_mini_batch_term_sequence_from_sequence_file(self.fp, self.batch_size)
+                return utilizies.load_mini_batch_term_sequence_from_sequence_file(self.fp, self.batch_size)
 
     def check_end_of_data(self):
         if self.end_of_file and self.pass_no == self.passes:
@@ -111,7 +111,7 @@ class DataSet(DataIterator):
         return self.get_num_docs_per_pass() * self.passes
 
     def get_num_tokens(self):
-        sq_file_path = base.reformat_file_to_term_sequence(self.data_path)
+        sq_file_path = utilizies.reformat_file_to_term_sequence(self.data_path)
         sq_file = open(sq_file_path)
         line = sq_file.readline()
         num_tokens = 0

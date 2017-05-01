@@ -32,7 +32,7 @@ def get_data_home(data_home=None):
 
 
 class PreProcessing:
-    def __init__(self, file_path, stemmed=False, remove_rare_word=3, remove_common_word=None):
+    def __init__(self, file_path, stemmed=False, remove_rare_word=3, remove_common_word=0.5):
         self.file_path = file_path
         self.file_name = file_path.split('\\')[-1].split('/')[-1]
         self.main_name_file = self.file_name.split('.')[0]
@@ -126,8 +126,12 @@ class PreProcessing:
             logging.error('Unknown file data %s' % self.file_path)
             exit()
 
-        if self.remove_common_word is None:
+        if self.remove_common_word <= 0:
             self.remove_common_word = int(self.id_doc * 0.5)
+        elif self.remove_common_word >= 1:
+            self.remove_common_word = self.id_doc
+        else:
+            self.remove_common_word = int(self.id_doc * self.remove_common_word)
         self.filter(self.remove_rare_word, self.remove_common_word)
 
         self.num_docs = len(self.list_doc)

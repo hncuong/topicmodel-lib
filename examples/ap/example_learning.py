@@ -19,7 +19,7 @@ from lib.lda.ldamodel import LdaModel
 #dir_path = os.path.dirname(os.path.realpath(__file__))
 #train_file = dir_path + '/ap/ap_train_raw.txt'
 
-def learning(method_name, train_file='ap/ap_train_raw.txt', vocab_file=None):
+def learning(method_name, train_file='data/ap_train_raw.txt', vocab_file=None):
 
     data = DataSet(train_file, 100, passes=10, shuffle_every=2, vocab_file=vocab_file)
     #f = open(data.vocab_file)

@@ -2,8 +2,9 @@
 
 import sys, os, urllib2, re, time, threading
 import logging
-import base
-from base import Corpus, DataIterator, DataFormat
+from lib.datasets import utilizies
+from lib.datasets.utilizies import Corpus, DataIterator, DataFormat
+from lib.preprocessing.preprocessing import PreProcessing
 
 # Name of current path directory which contains this file
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -108,6 +109,18 @@ def get_random_wikipedia_articles(n):
 
     return (WikiThread.articles, WikiThread.articlenames)
 
+def save_articles(articles, articlenames):
+    f = open('data/wiki_articles.txt', 'w')
+    for d in range(len(articles)):
+        f.write('<DOC>\n')
+        f.write('<TITLE>'+articlenames[d]+'</TITLE>\n')
+        f.write('<TEXT>\n')
+        f.write(articles[d])
+        f.write('\n</TEXT>')
+        f.write('\n</DOC>\n')
+    f.close()
+    return os.path.expanduser('data/wiki_articles.txt')
+
 def save(fp, wordids, wordcts):
     D = len(wordids)
     for d in xrange(D):
@@ -131,28 +144,53 @@ class WikiStream(DataIterator):
         self.batch_size = batch_size
         self.num_batch = num_batch
         if save_into_file:
-            folder_data = base.get_data_home() + '/WikiStream'
+            folder_data = utilizies.get_data_home() + '/WikiStream'
             if not os.path.exists(folder_data):
                 os.mkdir(folder_data)
             self.fp = open(os.path.join(folder_data, 'articles.tf'), "w")
         self.save_into_file = save_into_file
         self.output_format = DataFormat.TERM_FREQUENCY
         if vocab_file is None:
-            self.vocab_file = dir_path + "/data/wikipedia/vocab.txt"
+            self.vocab_file = dir_path + "/data/vocab.txt"
         else:
             self.vocab_file = vocab_file
-        self.vocab = base.read_vocab(self.vocab_file)
+        self.vocab = utilizies.read_vocab(self.vocab_file)
 
     def load_mini_batch(self):
         (docset, articlenames) = get_random_wikipedia_articles(self.batch_size)
+        path_articles = save_articles(docset, articlenames)
+        raw_data = PreProcessing(path_articles, remove_rare_word=3, remove_common_word=1.0)
+        raw_data.process()
+        old_vocab = list()
+        f_vocab = open(self.vocab_file)
+        line = f_vocab.readline().strip()
+        while line:
+            old_vocab.append(line)
+            line = f_vocab.readline().strip()
+        f_vocab.close()
+        #old_vocab = set(old_vocab)
+        new_vocab = set(raw_data.vocab)
+        in_new_but_not_in_old = new_vocab - set(old_vocab)
+        result_vocab = old_vocab + list(in_new_but_not_in_old)
+        self.vocab_file = dir_path + '/data/current_vocab.txt'
+        f_new_vocab = open(self.vocab_file, 'w')
+        for term in result_vocab:
+            f_new_vocab.write(term+'\n')
+        f_new_vocab.close()
+        dict_vocab = utilizies.read_vocab(self.vocab_file)
+        corpus = Corpus(DataFormat.TERM_SEQUENCE)
+        for doc in raw_data.list_doc:
+            for i in range(len(doc)):
+                doc[i] = dict_vocab[raw_data.vocab[doc[i]]]
+            corpus.append_doc(doc, len(doc))
+
         logging.info("Mini batch no: %s", self.mini_batch_no)
-        mini_batch = base.parse_doc_list(docset, self.vocab)
         if self.output_format == DataFormat.TERM_FREQUENCY:
-            mini_batch = base.convert_corpus_format(mini_batch, DataFormat.TERM_FREQUENCY)
+            mini_batch = utilizies.convert_corpus_format(corpus, DataFormat.TERM_FREQUENCY)
             if self.save_into_file:
                 save(self.fp, mini_batch.word_ids_tks, mini_batch.cts_lens)
         else:
-            mini_batch = base.convert_corpus_format(mini_batch, DataFormat.TERM_SEQUENCE)
+            mini_batch = corpus
         self.mini_batch_no += 1
         return mini_batch
 
@@ -168,13 +206,13 @@ class WikiStream(DataIterator):
 
     def get_num_terms(self):
         if self.vocab_file is None:
-            self.vocab_file = dir_path + "/data/wikipedia/vocab.txt"
+            self.vocab_file = dir_path + "/data/vocab.txt"
         f = open(self.vocab_file , 'r')
         list_terms = f.readlines()
         return len(list_terms)
 
     def get_total_docs(self):
-	# The total number of documents in Wikipedia, refer Hoffman source code: https://github.com/blei-lab/onlineldavb/blob/master/onlinewikipedia.py
+        # The total number of documents in Wikipedia, refer Hoffman source code: https://github.com/blei-lab/onlineldavb/blob/master/onlinewikipedia.py
     	return 3.3e6
 
 
