@@ -2,7 +2,7 @@ import sys, os
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../..'))
 
-from lib.datasets import base
+from lib.datasets import utilizies
 from lib.lda.Online_VB import OnlineVB
 from lib.lda.ML_CGS import MLCGS
 from lib.lda.ML_FW import MLFW
@@ -15,28 +15,28 @@ from lib.lda.Streaming_FW import StreamingFW
 from lib.lda.Streaming_OPE import StreamingOPE
 from lib.lda.Streaming_VB import StreamingVB
 from lib.lda.ldamodel import LdaModel
-from lib.datasets.base import get_data_home
+from lib.datasets.utilizies import get_data_home
 import logging
 
 #dir_path = os.path.dirname(os.path.realpath(__file__))
 #new_file_path = dir_path + '/ap/ap_infer_raw.txt'
 vocab_file_path = get_data_home() + '/ap_train_raw/vocab.txt'
 
-def inference(method_name, file_beta_lambda, data_path='ap/ap_infer_raw.txt', vocab_path=vocab_file_path):
+def inference(method_name, file_beta_lambda, data_path='data/ap_infer_raw.txt', vocab_path=vocab_file_path):
     if not os.path.isfile(data_path):
         logging.error("Can't find file input: %s" %data_path)
     if not os.path.isfile(vocab_path):
         logging.error("Can't find file vocabulary %s" %vocab_path)
     if not os.path.isfile(file_beta_lambda):
         logging.error("Can't find file learned model %s" %file_beta_lambda)
-    input_format = base.check_input_format(data_path)
-    if input_format == base.DataFormat.RAW_TEXT:
-        docs = base.load_batch_raw_text(data_path)
-        vocab_dict_format = base.read_vocab(vocab_path)
-        new_corpus = base.parse_doc_list(docs, vocab_dict_format)
+    input_format = utilizies.check_input_format(data_path)
+    if input_format == utilizies.DataFormat.RAW_TEXT:
+        docs = utilizies.load_batch_raw_text(data_path)
+        vocab_dict_format = utilizies.read_vocab(vocab_path)
+        new_corpus = utilizies.parse_doc_list(docs, vocab_dict_format)
         print len(new_corpus.word_ids_tks)
     else:
-        new_corpus = base.load_batch_formatted_from_file(data_path)
+        new_corpus = utilizies.load_batch_formatted_from_file(data_path)
         print len(new_corpus.word_ids_tks)
 
     # learned_model is a object of class LdaModel
@@ -66,7 +66,7 @@ def inference(method_name, file_beta_lambda, data_path='ap/ap_infer_raw.txt', vo
     elif method_low == 'online-cgs':
         object = OnlineCGS(num_terms, lda_model=learned_model)
     elif method_low == 'online-cvb0':
-        sq_corpus = base.convert_corpus_format(new_corpus, base.DataFormat.TERM_SEQUENCE)
+        sq_corpus = utilizies.convert_corpus_format(new_corpus, utilizies.DataFormat.TERM_SEQUENCE)
         num_tokens = 0
         for N in sq_corpus.cts_lens:
             num_tokens += N
@@ -82,7 +82,7 @@ def inference(method_name, file_beta_lambda, data_path='ap/ap_infer_raw.txt', vo
             print '\t\t%s' % (method)
         exit()
     theta = object.infer_new_docs(new_corpus)
-    base.write_topic_mixtures(theta, 'model/topic_mixtures.txt')
+    utilizies.write_topic_mixtures(theta, 'model/topic_mixtures.txt')
 
 if __name__ == '__main__':
     inference('online-ope', 'model/lambda_final.txt')

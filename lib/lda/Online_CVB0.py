@@ -9,7 +9,7 @@ import time
 import numpy as np
 from ldamodel import LdaModel
 from ldalearning import LdaLearning
-from lib.datasets.base import DataFormat, convert_corpus_format
+from lib.datasets.utilizies import DataFormat, convert_corpus_format
 
 
 class OnlineCVB0(LdaLearning):

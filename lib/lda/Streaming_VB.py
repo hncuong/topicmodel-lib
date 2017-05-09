@@ -3,7 +3,7 @@ import numpy as n
 from scipy.special import gammaln, psi
 from ldamodel import LdaModel
 from ldalearning import LdaLearning
-from lib.datasets.base import DataFormat, convert_corpus_format
+from lib.datasets.utilizies import DataFormat, convert_corpus_format
 
 n.random.seed(100000001)
 
@@ -37,6 +37,8 @@ class StreamingVB(LdaLearning):
         self._expElogbeta = n.exp(self._Elogbeta)
 
     def static_online(self, wordids, wordcts):
+        self._Elogbeta = dirichlet_expectation(self.lda_model.model)
+        self._expElogbeta = n.exp(self._Elogbeta)
         # E step
         start = time.time()
         (gamma, sstats) = self.e_step(wordids, wordcts)
