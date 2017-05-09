@@ -32,21 +32,21 @@ After download library, you install by running file setup.py as follow:
 First, build the necessary packages:
 
       topicmodel-lib$ python setup.py build_ext --inplace
-    
+
   or if you need permission to build:
-  
+
       topicmodel-lib$ sudo python setup.py build_ext --inplace
-    
+
 After that, install library into your computer:
-  
+
       topicmodel-lib$ sudo python setup.py install
-    
+
 Documentation
 -------------
 
 - [Quick Start](doc/quick_start.rst)
 - [Tutorials](doc/tutorials.rst)
-- [User Guide](doc/user_guide.rst
+- [User Guide](doc/user_guide.rst)
 - [Official API documentation](doc/list_api.rst)
 
 Support
