@@ -108,7 +108,7 @@ class PreProcessing:
             while line:
                 line = line.strip()
                 if line == "<TEXT>":
-                    #print(num)
+                    print(num)
                     next_line = fread.readline().strip()
                     if len(next_line) > 10:
                         l = next_line
@@ -118,7 +118,7 @@ class PreProcessing:
                     while l != '</TEXT>' and len(l) > 10:
                         doc = doc + ' ' + l
                         l = fread.readline().strip()
-                    #num += 1
+                    num += 1
                     list_word = self.pro_per_doc(doc, stop_list)
                     self.list_doc.append(list_word)
                 line = fread.readline()

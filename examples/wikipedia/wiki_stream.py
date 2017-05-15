@@ -109,8 +109,9 @@ def get_random_wikipedia_articles(n):
 
     return (WikiThread.articles, WikiThread.articlenames)
 
-def save_articles(articles, articlenames):
-    f = open('data/wiki_articles.txt', 'w')
+def save_articles(articles, articlenames, data_wiki_folder):
+    path_file_articles = os.path.join(data_wiki_folder, 'wiki_articles.txt')
+    f = open(path_file_articles, 'w')
     for d in range(len(articles)):
         f.write('<DOC>\n')
         f.write('<TITLE>'+articlenames[d]+'</TITLE>\n')
@@ -119,7 +120,7 @@ def save_articles(articles, articlenames):
         f.write('\n</TEXT>')
         f.write('\n</DOC>\n')
     f.close()
-    return os.path.expanduser('data/wiki_articles.txt')
+    return path_file_articles
 
 def save(fp, wordids, wordcts):
     D = len(wordids)
@@ -131,7 +132,7 @@ def save(fp, wordids, wordcts):
             fp.write('\n')
 
 class WikiStream(DataIterator):
-    def __init__(self, batch_size, num_batch, save_into_file=False, vocab_file=None):
+    def __init__(self, batch_size, num_batch, vocab_file=None):
         """
         a class for crawl stream data from website wikipedia
         Args:
@@ -143,12 +144,9 @@ class WikiStream(DataIterator):
         super(WikiStream, self).__init__()
         self.batch_size = batch_size
         self.num_batch = num_batch
-        if save_into_file:
-            folder_data = utilizies.get_data_home() + '/WikiStream'
-            if not os.path.exists(folder_data):
-                os.mkdir(folder_data)
-            self.fp = open(os.path.join(folder_data, 'articles.tf'), "w")
-        self.save_into_file = save_into_file
+        self.data_wiki_folder = os.path.join(utilizies.get_data_home(), 'WikiStream')
+        if not os.path.exists(self.data_wiki_folder):
+            os.mkdir(self.data_wiki_folder)
         self.output_format = DataFormat.TERM_FREQUENCY
         if vocab_file is None:
             self.vocab_file = dir_path + "/data/vocab.txt"
@@ -158,8 +156,9 @@ class WikiStream(DataIterator):
 
     def load_mini_batch(self):
         (docset, articlenames) = get_random_wikipedia_articles(self.batch_size)
-        path_articles = save_articles(docset, articlenames)
-        raw_data = PreProcessing(path_articles, remove_rare_word=3, remove_common_word=1.0)
+        path_articles = save_articles(docset, articlenames, self.data_wiki_folder)
+        # add new terms to the vocabulary set
+        raw_data = PreProcessing(path_articles, remove_rare_word=1, remove_common_word=1.0)
         raw_data.process()
         old_vocab = list()
         f_vocab = open(self.vocab_file)
@@ -168,7 +167,6 @@ class WikiStream(DataIterator):
             old_vocab.append(line)
             line = f_vocab.readline().strip()
         f_vocab.close()
-        #old_vocab = set(old_vocab)
         new_vocab = set(raw_data.vocab)
         in_new_but_not_in_old = new_vocab - set(old_vocab)
         result_vocab = old_vocab + list(in_new_but_not_in_old)
@@ -177,6 +175,7 @@ class WikiStream(DataIterator):
         for term in result_vocab:
             f_new_vocab.write(term+'\n')
         f_new_vocab.close()
+        # create corpus to store mini-batch
         dict_vocab = utilizies.read_vocab(self.vocab_file)
         corpus = Corpus(DataFormat.TERM_SEQUENCE)
         for doc in raw_data.list_doc:
@@ -187,8 +186,6 @@ class WikiStream(DataIterator):
         logging.info("Mini batch no: %s", self.mini_batch_no)
         if self.output_format == DataFormat.TERM_FREQUENCY:
             mini_batch = utilizies.convert_corpus_format(corpus, DataFormat.TERM_FREQUENCY)
-            if self.save_into_file:
-                save(self.fp, mini_batch.word_ids_tks, mini_batch.cts_lens)
         else:
             mini_batch = corpus
         self.mini_batch_no += 1
@@ -211,14 +208,9 @@ class WikiStream(DataIterator):
         list_terms = f.readlines()
         return len(list_terms)
 
-    def get_total_docs(self):
-        # The total number of documents in Wikipedia, refer Hoffman source code: https://github.com/blei-lab/onlineldavb/blob/master/onlinewikipedia.py
-    	return 3.3e6
-
-
 if __name__ == '__main__':
-    wiki = WikiStream(8,3, save_into_file=True)
-    end = wiki.end_of_num_batch()
+    wiki = WikiStream(8,3)
+    end = wiki.check_end_of_data()
     while not end:
         wiki.load_mini_batch()
-        end = wiki.end_of_num_batch()
+        end = wiki.check_end_of_data()
