@@ -22,41 +22,34 @@ from lib.lda.ldamodel import LdaModel
 def learning(method_name, train_file='data/ap_train_raw.txt', vocab_file=None):
 
     data = DataSet(train_file, 100, passes=10, shuffle_every=2, vocab_file=vocab_file)
-    #f = open(data.vocab_file)
-    #lines = f.readlines()
-    #num_terms = len(lines)
-    #del lines
     # Check method and run algorithm
     methods = ['ml-fw', 'ml-ope', 'online-fw', 'online-ope', 'streaming-fw', 'streaming-ope',
                'ml-cgs', 'online-cgs', 'online-cvb0', 'online-vb', 'streaming-vb']
     method_low = method_name.lower()
-    #lda_model = LdaModel(num_terms, 100)
     num_terms = data.get_num_terms()
-    #lda_model.load('model/model_batch19.npy')
-    #print lda_model.model.shape
     if method_low == 'ml-fw':
-        object = MLFW(num_terms)
+        object = MLFW(num_terms, num_topics=20, alpha=0.05, eta=0.05)
     elif method_low == 'ml-ope':
-        object = MLOPE(num_terms)
+        object = MLOPE(num_terms, num_topics=20, alpha=0.05, eta=0.05)
     elif method_low == 'online-fw':
-        object = OnlineFW(num_terms)
+        object = OnlineFW(num_terms, num_topics=20, alpha=0.05, eta=0.05)
     elif method_low == 'online-ope':
-        object = OnlineOPE(num_terms)
+        object = OnlineOPE(num_terms, num_topics=20, alpha=0.05, eta=0.05)
     elif method_low == 'streaming-fw':
-        object = StreamingFW(num_terms)
+        object = StreamingFW(num_terms, num_topics=20, alpha=0.05, eta=0.05)
     elif method_low == 'streaming-ope':
-        object = StreamingOPE(num_terms)
+        object = StreamingOPE(num_terms, num_topics=20, alpha=0.05, eta=0.05)
     elif method_low == 'ml-cgs':
-        object = MLCGS(num_terms)
+        object = MLCGS(num_terms, num_topics=20, alpha=0.05, eta=0.05)
     elif method_low == 'online-cgs':
-        object = OnlineCGS(num_terms)
+        object = OnlineCGS(num_terms, num_topics=20, alpha=0.05, eta=0.05)
     elif method_low == 'online-cvb0':
         num_tokens = data.get_num_tokens()
-        object = OnlineCVB0(num_tokens, num_terms)
+        object = OnlineCVB0(num_tokens, num_terms, num_topics=20, alpha=0.05, eta=0.05)
     elif method_low == 'online-vb':
         object = OnlineVB(num_terms, num_topics=20, alpha=0.05, eta=0.05)
     elif method_low == 'streaming-vb':
-        object = StreamingVB(num_terms)
+        object = StreamingVB(num_terms, num_topics=20, alpha=0.05, eta=0.05)
     else:
         print '\ninput wrong method name: %s\n' % (method_name)
         print 'list of methods:'
@@ -64,12 +57,21 @@ def learning(method_name, train_file='data/ap_train_raw.txt', vocab_file=None):
             print '\t\t%s' % (method)
         exit()
 
+    model_folder_name = 'model-' + method_low
     model = object.learn_model(data, save_model_every=5, compute_sparsity_every=5,
-                               save_statistic=True, save_top_words_every=5, num_top_words=10, model_folder='model')
-    model.save('model/lambda_final.txt', file_type='text')
-    model.normalize()
-    model.print_top_words(10, data.vocab_file, result_file='model/top_words_final.txt')
-
+                               save_statistic=True, save_top_words_every=5, num_top_words=10, model_folder=model_folder_name)
+    model.save(os.path.join(model_folder_name, 'beta_final.txt'), file_type='text')
+    model.print_top_words(10, data.vocab_file, result_file=os.path.join(model_folder_name,'top_words_final.txt'))
 
 if __name__ == '__main__':
     learning('online-ope')
+    learning('online-vb')
+    learning('online-fw')
+    learning('online-cvb0')
+    learning('online-cgs')
+    learning('streaming-vb')
+    learning('streaming-fw')
+    learning('streaming-ope')
+    learning('ml-cgs')
+    learning('ml-fw')
+    learning('ml-ope')
