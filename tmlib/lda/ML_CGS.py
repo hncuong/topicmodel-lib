@@ -101,13 +101,9 @@ class MLCGS(LdaLearning):
         self.lda_model.model += _lambda * rhot
         self._update_t += 1
 
-    def learn_model(self, save_model_every=0, compute_sparsity_every=0, save_statistic=False,
-                    save_top_words_every=0, num_top_words=20, model_folder='model'):
+    def learn_model(self):
         self.data.set_output_format(DataFormat.TERM_SEQUENCE)
-        super(MLCGS, self). \
-            learn_model(save_model_every=save_model_every, compute_sparsity_every=compute_sparsity_every,
-                        save_statistic=save_statistic, save_top_words_every=save_top_words_every,
-                        num_top_words=num_top_words, model_folder=model_folder)
+        super(MLCGS, self).learn_model()
         return self.lda_model
 
     def infer_new_docs(self, new_corpus):

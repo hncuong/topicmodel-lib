@@ -19,7 +19,7 @@ from tmlib import LdaModel
 #dir_path = os.path.dirname(os.path.realpath(__file__))
 #train_file = dir_path + '/ap/ap_train_raw.txt'
 
-def learning(method_name, train_file='data/ap_train_raw.txt', vocab_file=None):
+def learning(method_name, train_file='data/ap_train.txt', vocab_file='data/vocab.txt'):
 
     data = DataSet(train_file, 100, passes=10, shuffle_every=2, vocab_file=vocab_file)
     # Check method and run algorithm
@@ -56,6 +56,8 @@ def learning(method_name, train_file='data/ap_train_raw.txt', vocab_file=None):
         exit()
 
     model_folder_name = 'model-' + method_low
+    if not os.path.exists(model_folder_name):
+        os.mkdir(model_folder_name)
     model = object.learn_model()
     model.save(os.path.join(model_folder_name, 'beta_final.txt'), file_type='text')
     model.print_top_words(10, data.vocab_file, result_file=os.path.join(model_folder_name,'top_words_final.txt'))

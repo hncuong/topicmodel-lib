@@ -95,8 +95,8 @@ class LdaLearning(object):
 
         """
         mini_batch_no = 0
-        if not os.path.exists(model_folder):
-            os.mkdir(model_folder)
+        #if not os.path.exists(model_folder):
+        #    os.mkdir(model_folder)
         logger.info("Start learning Lda model, passes over")
 
         # Iterating

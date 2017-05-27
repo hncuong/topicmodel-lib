@@ -116,13 +116,9 @@ class OnlineCVB0(LdaLearning):
         self.N_Z += rhot * N_Z
         self.updatect += 1
 
-    def learn_model(self, save_model_every=0, compute_sparsity_every=0, save_statistic=False,
-                    save_top_words_every=0, num_top_words=20, model_folder='model'):
+    def learn_model(self):
         self.data.set_output_format(DataFormat.TERM_SEQUENCE)
-        return super(OnlineCVB0, self). \
-            learn_model(save_model_every=save_model_every, compute_sparsity_every=compute_sparsity_every,
-                        save_statistic=save_statistic, save_top_words_every=save_top_words_every,
-                        num_top_words=num_top_words, model_folder=model_folder)
+        return super(OnlineCVB0, self).learn_model()
 
     def infer_new_docs(self, new_corpus):
         docs = convert_corpus_format(new_corpus, DataFormat.TERM_SEQUENCE)
