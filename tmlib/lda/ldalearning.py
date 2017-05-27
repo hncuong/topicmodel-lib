@@ -79,8 +79,7 @@ class LdaLearning(object):
     def __getitem__(self, docs):
         raise NotImplementedError("Should have implemented this!")
 
-    def learn_model(self, save_model_every=0, compute_sparsity_every=0, save_statistic=False,
-                    save_top_words_every=0, num_top_words=20, model_folder='model'):
+    def learn_model(self):
         """
 
         Args:
@@ -111,31 +110,31 @@ class LdaLearning(object):
                 self.lda_model = new_model
 
             # run expectation - maximization algorithms
-            time_e, time_m, theta = self.static_online(mini_batch.word_ids_tks, mini_batch.cts_lens)
-            self.statistics.record_time(time_e, time_m)
+            """time_e, time_m, theta = self.static_online(mini_batch.word_ids_tks, mini_batch.cts_lens)
+            self.statistics.record_time(time_e, time_m)"""
 
             # compute documents sparsity
-            if compute_sparsity_every > 0 and (self.data.mini_batch_no % compute_sparsity_every) == 0:
+            """if compute_sparsity_every > 0 and (self.data.mini_batch_no % compute_sparsity_every) == 0:
                 sparsity = utilizies.compute_sparsity(theta, theta.shape[0], theta.shape[1], 't')
-                self.statistics.record_sparsity(sparsity)
+                self.statistics.record_sparsity(sparsity)"""
 
             # save model : lambda, beta, N_phi
-            if save_model_every > 0 and (self.data.mini_batch_no % save_model_every) == 0:
+            """if save_model_every > 0 and (self.data.mini_batch_no % save_model_every) == 0:
                 model_file = model_folder + '/model_batch' + str(mini_batch_no) + '.txt'
-                self.lda_model.save(model_file)
+                self.lda_model.save(model_file)"""
 
             # save top words
-            if save_top_words_every > 0 and (self.data.mini_batch_no % save_top_words_every) == 0:
+            """if save_top_words_every > 0 and (self.data.mini_batch_no % save_top_words_every) == 0:
                 top_words_file = model_folder + '/top_words_batch_' + str(mini_batch_no) + '.txt'
-                self.lda_model.print_top_words(num_top_words, vocab_file=self.data.vocab_file, result_file=top_words_file)
+                self.lda_model.print_top_words(num_top_words, vocab_file=self.data.vocab_file, result_file=top_words_file)"""
             mini_batch_no += 1
 
         # save learning statistic
-        if save_statistic:
+        """if save_statistic:
             time_file = model_folder + '/time' + str(self.data.mini_batch_no) + '.csv'
             sparsity_file = model_folder + '/sparsity' + str(self.data.mini_batch_no) + '.csv'
             self.statistics.save_time(time_file)
-            self.statistics.save_sparsity(sparsity_file)
+            self.statistics.save_sparsity(sparsity_file)"""
         # Finish
         logger.info('Finish training!!!')
         return self.lda_model
