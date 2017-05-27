@@ -27,19 +27,25 @@ To use library, your computer must installed all of these packages first:
 
 **User Installation**
 
-After download library, you install by running file setup.py as follow:
+- Installing by pip
 
-First, build the necessary packages:
+      $ sudo pip install tmlib
 
-      topicmodel-lib$ python setup.py build_ext --inplace
+- Installing by run setup file
+
+  After download library, you install by running file setup.py in folder topicmodel-lib as follow:
+
+  First, build the necessary packages:
+
+      $ python setup.py build_ext --inplace
     
   or if you need permission to build:
   
-      topicmodel-lib$ sudo python setup.py build_ext --inplace
+      $ sudo python setup.py build_ext --inplace
     
-After that, install library into your computer:
+  After that, install library into your computer:
   
-      topicmodel-lib$ sudo python setup.py install
+      $ sudo python setup.py install
     
 Documentation
 -------------
@@ -51,3 +57,10 @@ Documentation
 
 Support
 -------
+
+Contributors:
+
+- VuVanTu
+- KhangTruong
+- HaNhatCuong
+- TungDoan
