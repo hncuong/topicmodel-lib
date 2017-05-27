@@ -9,11 +9,11 @@ import time
 import numpy as np
 from ldamodel import LdaModel
 from ldalearning import LdaLearning
-from lib.datasets.utilizies import DataFormat, convert_corpus_format
+from tmlib.datasets.utilizies import DataFormat, convert_corpus_format
 
 
 class OnlineCVB0(LdaLearning):
-    def __init__(self, num_tokens, num_terms, num_topics=100, alpha=0.01, eta=0.01, tau_phi=1.0,
+    def __init__(self, data, num_topics=100, alpha=0.01, eta=0.01, tau_phi=1.0,
                  kappa_phi=0.9, s_phi=1.0, tau_theta=10.0,
                  kappa_theta=0.9, s_theta=1.0, burn_in=25, lda_model=None):
         """
@@ -33,7 +33,9 @@ class OnlineCVB0(LdaLearning):
             burn_in:
             lda_model:
         """
-        super(OnlineCVB0, self).__init__(num_terms, num_topics, lda_model)
+        super(OnlineCVB0, self).__init__(data, num_topics, lda_model)
+        num_tokens = data.get_num_tokens()
+        num_terms = data.get_num_terms()
         self.num_tokens = num_tokens
         self.num_terms = num_terms
         self.num_topics = num_topics
@@ -114,11 +116,11 @@ class OnlineCVB0(LdaLearning):
         self.N_Z += rhot * N_Z
         self.updatect += 1
 
-    def learn_model(self, data, save_model_every=0, compute_sparsity_every=0, save_statistic=False,
+    def learn_model(self, save_model_every=0, compute_sparsity_every=0, save_statistic=False,
                     save_top_words_every=0, num_top_words=20, model_folder='model'):
-        data.set_output_format(DataFormat.TERM_SEQUENCE)
+        self.data.set_output_format(DataFormat.TERM_SEQUENCE)
         return super(OnlineCVB0, self). \
-            learn_model(data, save_model_every=save_model_every, compute_sparsity_every=compute_sparsity_every,
+            learn_model(save_model_every=save_model_every, compute_sparsity_every=compute_sparsity_every,
                         save_statistic=save_statistic, save_top_words_every=save_top_words_every,
                         num_top_words=num_top_words, model_folder=model_folder)
 

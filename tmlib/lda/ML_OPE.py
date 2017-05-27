@@ -4,7 +4,7 @@ import time
 import numpy as np
 from ldamodel import LdaModel
 from ldalearning import LdaLearning
-from lib.datasets.utilizies import DataFormat, convert_corpus_format
+from tmlib.datasets.utilizies import DataFormat, convert_corpus_format
 
 
 class MLOPE(LdaLearning):
@@ -12,7 +12,7 @@ class MLOPE(LdaLearning):
     Implements ML-OPE for LDA as described in "Inference in topic models II: provably guaranteed algorithms". 
     """
 
-    def __init__(self, num_terms, num_topics=100, alpha=0.01, tau0=1.0, kappa=0.9, iter_infer=50,
+    def __init__(self, data, num_topics=100, alpha=0.01, tau0=1.0, kappa=0.9, iter_infer=50,
                  lda_model=None):
         """
         Arguments:
@@ -27,9 +27,9 @@ class MLOPE(LdaLearning):
         Note that if you pass the same set of all documents in the corpus every time and
         set kappa=0 this class can also be used to do batch OPE.
         """
-        super(MLOPE, self).__init__(num_terms, num_topics, lda_model)
+        super(MLOPE, self).__init__(data, num_topics, lda_model)
         self.num_topics = num_topics
-        self.num_terms = num_terms
+        self.num_terms = data.get_num_terms()
         self.alpha = alpha
         self.tau0 = tau0
         self.kappa = kappa
@@ -38,7 +38,7 @@ class MLOPE(LdaLearning):
 
         # Initialize beta (topics)
         if self.lda_model is None:
-            self.lda_model = LdaModel(num_terms, num_topics)
+            self.lda_model = LdaModel(self.num_terms, num_topics)
         self.lda_model.normalize()
 
     def static_online(self, wordids, wordcts):

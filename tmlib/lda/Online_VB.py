@@ -3,7 +3,7 @@ import numpy as n
 from scipy.special import gammaln, psi
 from ldamodel import LdaModel
 from ldalearning import LdaLearning
-from lib.datasets.utilizies import DataFormat, convert_corpus_format
+from tmlib.datasets.utilizies import DataFormat, convert_corpus_format
 
 n.random.seed(100000001)
 
@@ -22,10 +22,11 @@ class OnlineVB(LdaLearning):
     Implements online VB for LDA as described in (Hoffman et al. 2010).
     """
 
-    def __init__(self, num_terms, num_topics=100, alpha=0.01, eta=0.01,
+    def __init__(self, data, num_topics=100, alpha=0.01, eta=0.01,
                  tau0=1.0, kappa=0.9,
                  conv_infer=0.0001, iter_infer=50, lda_model=None):
-        super(OnlineVB, self).__init__(num_terms, num_topics, lda_model)
+        super(OnlineVB, self).__init__(data, num_topics, lda_model)
+        num_terms = data.get_num_terms()
         self.num_docs = 0
         self._alpha = alpha
         self._eta = eta
@@ -154,11 +155,11 @@ class OnlineVB(LdaLearning):
         self._expElogbeta = n.exp(self._Elogbeta)
         self._updatect += 1
 
-    def learn_model(self, data, save_model_every=0, compute_sparsity_every=0, save_statistic=False,
+    def learn_model(self, save_model_every=0, compute_sparsity_every=0, save_statistic=False,
                     save_top_words_every=0, num_top_words=20, model_folder='model'):
-        self.num_docs += data.get_total_docs()
+        self.num_docs += self.data.get_total_docs()
         return super(OnlineVB, self). \
-            learn_model(data, save_model_every=save_model_every, compute_sparsity_every=compute_sparsity_every,
+            learn_model(save_model_every=save_model_every, compute_sparsity_every=compute_sparsity_every,
                         save_statistic=save_statistic, save_top_words_every=save_top_words_every,
                         num_top_words=num_top_words, model_folder=model_folder)
 

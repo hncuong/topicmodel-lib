@@ -3,7 +3,7 @@ import numpy as n
 from scipy.special import gammaln, psi
 from ldamodel import LdaModel
 from ldalearning import LdaLearning
-from lib.datasets.utilizies import DataFormat, convert_corpus_format
+from tmlib.datasets.utilizies import DataFormat, convert_corpus_format
 
 n.random.seed(100000001)
 
@@ -22,9 +22,10 @@ class StreamingVB(LdaLearning):
     Implements online VB for LDA as described in (Hoffman et al. 2010).
     """
 
-    def __init__(self, num_terms, num_topics=100, alpha=0.01, eta=0.01, conv_infer=0.0001, iter_infer=50,
+    def __init__(self, data, num_topics=100, alpha=0.01, eta=0.01, conv_infer=0.0001, iter_infer=50,
                  lda_model=None):
-        super(StreamingVB, self).__init__(num_terms, num_topics, lda_model)
+        super(StreamingVB, self).__init__(data, num_topics, lda_model)
+        num_terms = data.get_num_terms()
         self._alpha = alpha
         self._eta = eta
         self._conv_infer = conv_infer

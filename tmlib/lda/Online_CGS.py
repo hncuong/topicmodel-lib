@@ -4,8 +4,8 @@ import numpy as np
 from scipy.special import psi
 import time
 
-from lib.datasets.utilizies import DataFormat, convert_corpus_format
-from lib.lda.utils import util_funcs
+from tmlib.datasets.utilizies import DataFormat, convert_corpus_format
+from tmlib.lda.utils import util_funcs
 from ldamodel import LdaModel
 from ldalearning import LdaLearning
 
@@ -20,7 +20,7 @@ def dirichlet_expectation(alpha):
 
 
 class OnlineCGS(LdaLearning):
-    def __init__(self, num_terms, num_topics=100, alpha=0.01, eta=0.01, tau0=1.0, kappa=0.9,
+    def __init__(self, data, num_topics=100, alpha=0.01, eta=0.01, tau0=1.0, kappa=0.9,
                  burn_in=25, samples=25, lda_model=None):
         """
 
@@ -36,9 +36,9 @@ class OnlineCGS(LdaLearning):
             samples:
             lda_model:
         """
-        super(OnlineCGS, self).__init__(num_terms, num_topics, lda_model)
+        super(OnlineCGS, self).__init__(data, num_topics, lda_model)
         self.num_docs = 0
-        self.num_terms = num_terms
+        self.num_terms = data.get_num_terms()
         self.num_topics = num_topics
         self._alpha = alpha
         self._eta = eta
@@ -52,7 +52,7 @@ class OnlineCGS(LdaLearning):
 
         # initialize the variational distribution q(beta|lambda)
         if self.lda_model is None:
-            self.lda_model = LdaModel(num_terms, num_topics, 1)
+            self.lda_model = LdaModel(self.num_terms, num_topics, 1)
         self._Elogbeta = dirichlet_expectation(self.lda_model.model)
         self._expElogbeta = np.exp(self._Elogbeta)
 
@@ -89,12 +89,12 @@ class OnlineCGS(LdaLearning):
         self._expElogbeta = np.exp(self._Elogbeta)
         self._update_t += 1
 
-    def learn_model(self, data, save_model_every=0, compute_sparsity_every=0, save_statistic=False,
+    def learn_model(self, save_model_every=0, compute_sparsity_every=0, save_statistic=False,
                     save_top_words_every=0, num_top_words=20, model_folder='model'):
-        data.set_output_format(DataFormat.TERM_SEQUENCE)
-        self.num_docs += data.get_total_docs()
+        self.data.set_output_format(DataFormat.TERM_SEQUENCE)
+        self.num_docs += self.data.get_total_docs()
         return super(OnlineCGS, self). \
-            learn_model(data, save_model_every=save_model_every, compute_sparsity_every=compute_sparsity_every,
+            learn_model(save_model_every=save_model_every, compute_sparsity_every=compute_sparsity_every,
                         save_statistic=save_statistic, save_top_words_every=save_top_words_every,
                         num_top_words=num_top_words, model_folder=model_folder)
 
