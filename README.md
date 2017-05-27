@@ -31,6 +31,7 @@ To use library, your computer must installed all of these packages first:
 
       $ sudo pip install tmlib
 
+
 - Installing by run setup file
 
   After download library, you install by running file setup.py in folder topicmodel-lib as follow:
@@ -46,7 +47,7 @@ To use library, your computer must installed all of these packages first:
   After that, install library into your computer:
   
       $ sudo python setup.py install
-    
+
 Documentation
 -------------
 
@@ -58,9 +59,11 @@ Documentation
 Support
 -------
 
+
 Contributors:
 
 - VuVanTu
 - KhangTruong
 - HaNhatCuong
 - TungDoan
+
