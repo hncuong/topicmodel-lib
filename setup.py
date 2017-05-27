@@ -38,12 +38,12 @@ setup(
     license="MIT",
     keywords=['ordination', 'LDA', 'topic modeling'],
     url="https://github.com/hncuong/topicmodel-lib",   # project home page, if any
-    classifiers=[
-        'Development Status :: 1 - Planning',
-        'Intended Audience ::  Science/Research',
-        'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 2.7',
-    ],
+    #classifiers=[
+    #    'Development Status :: 1 - Planning',
+    #    'Intended Audience ::  Science/Research',
+    #    'License :: OSI Approved :: MIT License',
+    #    'Programming Language :: Python :: 2.7',
+    #],
 
     # could also include long_description, download_url, classifiers, etc.
 )
