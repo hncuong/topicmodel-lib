@@ -12,7 +12,7 @@ tokenizer = RegexpTokenizer(r'\w+')
 p_stemmer = PorterStemmer()
 
 def get_data_home(data_home=None):
-    """Return the path of the lib data dir.
+    """Return the path of the tmlib data dir.
 
     This folder is used by some large dataset loaders to avoid
     downloading the data several times.

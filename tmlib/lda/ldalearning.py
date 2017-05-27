@@ -1,8 +1,8 @@
 import sys, os
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../..'))
-from lib.datasets import utilizies
+from tmlib.datasets import utilizies
 from ldamodel import LdaModel
-from lib.datasets.dataset import DataSet
+from tmlib.datasets.dataset import DataSet
 
 import logging
 
@@ -62,13 +62,14 @@ class LearningStatistics(object):
 class LdaLearning(object):
     """docstring for LdaLearning"""
 
-    def __init__(self, num_terms, num_topics, lda_model=None):
+    def __init__(self, data, num_topics, lda_model=None):
         self.statistics = LearningStatistics()
-        self.num_terms = num_terms
+        self.data = data
         self.num_topics = num_topics
+        self.num_terms = self.data.get_num_terms()
         # Checking shape of input model
         if lda_model is not None:
-            assert lda_model.model.shape == (num_topics, num_terms), "Shape error: model must be shape of " \
+            assert lda_model.model.shape == (num_topics, self.num_terms), "Shape error: model must be shape of " \
                                                                      "(num_topics * num_terms)"
         self.lda_model = lda_model
 
@@ -78,7 +79,7 @@ class LdaLearning(object):
     def __getitem__(self, docs):
         raise NotImplementedError("Should have implemented this!")
 
-    def learn_model(self, data, save_model_every=0, compute_sparsity_every=0, save_statistic=False,
+    def learn_model(self, save_model_every=0, compute_sparsity_every=0, save_statistic=False,
                     save_top_words_every=0, num_top_words=20, model_folder='model'):
         """
 
@@ -100,11 +101,11 @@ class LdaLearning(object):
         logger.info("Start learning Lda model, passes over")
 
         # Iterating
-        while not data.check_end_of_data():
-            mini_batch = data.load_mini_batch()
+        while not self.data.check_end_of_data():
+            mini_batch = self.data.load_mini_batch()
             # This using for streaming method
-            if self.num_terms != data.get_num_terms():
-                self.num_terms = data.get_num_terms()
+            if self.num_terms != self.data.get_num_terms():
+                self.num_terms = self.data.get_num_terms()
                 new_model = LdaModel(self.num_terms, self.num_topics, random_type=1)
                 new_model.model[:, :self.lda_model.model.shape[1]] = self.lda_model.model
                 self.lda_model = new_model
@@ -114,25 +115,25 @@ class LdaLearning(object):
             self.statistics.record_time(time_e, time_m)
 
             # compute documents sparsity
-            if compute_sparsity_every > 0 and (data.mini_batch_no % compute_sparsity_every) == 0:
+            if compute_sparsity_every > 0 and (self.data.mini_batch_no % compute_sparsity_every) == 0:
                 sparsity = utilizies.compute_sparsity(theta, theta.shape[0], theta.shape[1], 't')
                 self.statistics.record_sparsity(sparsity)
 
             # save model : lambda, beta, N_phi
-            if save_model_every > 0 and (data.mini_batch_no % save_model_every) == 0:
+            if save_model_every > 0 and (self.data.mini_batch_no % save_model_every) == 0:
                 model_file = model_folder + '/model_batch' + str(mini_batch_no) + '.txt'
                 self.lda_model.save(model_file)
 
             # save top words
-            if save_top_words_every > 0 and (data.mini_batch_no % save_top_words_every) == 0:
+            if save_top_words_every > 0 and (self.data.mini_batch_no % save_top_words_every) == 0:
                 top_words_file = model_folder + '/top_words_batch_' + str(mini_batch_no) + '.txt'
-                self.lda_model.print_top_words(num_top_words, vocab_file=data.vocab_file, result_file=top_words_file)
+                self.lda_model.print_top_words(num_top_words, vocab_file=self.data.vocab_file, result_file=top_words_file)
             mini_batch_no += 1
 
         # save learning statistic
         if save_statistic:
-            time_file = model_folder + '/time' + str(data.mini_batch_no) + '.csv'
-            sparsity_file = model_folder + '/sparsity' + str(data.mini_batch_no) + '.csv'
+            time_file = model_folder + '/time' + str(self.data.mini_batch_no) + '.csv'
+            sparsity_file = model_folder + '/sparsity' + str(self.data.mini_batch_no) + '.csv'
             self.statistics.save_time(time_file)
             self.statistics.save_sparsity(sparsity_file)
         # Finish

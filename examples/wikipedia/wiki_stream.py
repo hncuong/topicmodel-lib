@@ -2,9 +2,9 @@
 
 import sys, os, urllib2, re, time, threading
 import logging
-from lib.datasets import utilizies
-from lib.datasets.utilizies import Corpus, DataIterator, DataFormat
-from lib.preprocessing.preprocessing import PreProcessing
+from tmlib.datasets import utilizies
+from tmlib.datasets.utilizies import Corpus, DataIterator, DataFormat
+from tmlib.preprocessing.preprocessing import PreProcessing
 
 # Name of current path directory which contains this file
 dir_path = os.path.dirname(os.path.realpath(__file__))

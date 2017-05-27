@@ -1,11 +1,11 @@
 import os, logging
 
 from wiki_stream import WikiStream
-from lib.datasets import utilizies
-from lib.lda.Streaming_FW import StreamingFW
-from lib.lda.Streaming_OPE import StreamingOPE
-from lib.lda.Streaming_VB import StreamingVB
-from lib.lda.ldamodel import LdaModel
+from tmlib.datasets import utilizies
+from tmlib.lda.Streaming_FW import StreamingFW
+from tmlib.lda.Streaming_OPE import StreamingOPE
+from tmlib.lda.Streaming_VB import StreamingVB
+from tmlib.lda.ldamodel import LdaModel
 
 def learn(method_name):
     data = WikiStream(5000, 100)

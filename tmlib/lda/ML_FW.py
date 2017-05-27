@@ -4,7 +4,7 @@ import time
 import numpy as np
 from ldamodel import LdaModel
 from ldalearning import LdaLearning
-from lib.datasets.utilizies import convert_corpus_format, DataFormat
+from tmlib.datasets.utilizies import convert_corpus_format, DataFormat
 
 
 class MLFW(LdaLearning):
@@ -12,7 +12,7 @@ class MLFW(LdaLearning):
     Implements ML-FW for LDA as described in "Inference in topic models I: sparsity and trade-off". 
     """
 
-    def __init__(self, num_terms, num_topics=100, tau0=1.0, kappa=0.9, iter_infer=50, lda_model=None):
+    def __init__(self, data, num_topics=100, tau0=1.0, kappa=0.9, iter_infer=50, lda_model=None):
         """
         Arguments:
             num_terms: Number of unique terms in the corpus (length of the vocabulary).
@@ -25,8 +25,8 @@ class MLFW(LdaLearning):
         Note that if you pass the same set of all documents in the corpus every time and
         set kappa=0 this class can also be used to do batch FW.
         """
-        super(MLFW, self).__init__(num_terms, num_topics, lda_model)
-        self.num_terms = num_terms
+        super(MLFW, self).__init__(data, num_topics, lda_model)
+        self.num_terms = data.get_num_terms()
         self.num_topics = num_topics
         self.tau0 = tau0
         self.kappa = kappa
@@ -35,7 +35,7 @@ class MLFW(LdaLearning):
 
         # Initialize beta (topics)
         if self.lda_model is None:
-            self.lda_model = LdaModel(num_terms, num_topics)
+            self.lda_model = LdaModel(self.num_terms, num_topics)
         self.lda_model.normalize()
         self.logbeta = np.log(self.lda_model.model)
 

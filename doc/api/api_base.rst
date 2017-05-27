@@ -248,7 +248,7 @@ tmlib.datasets.base.reformat_file_to_term_sequence(*file_path*)
 - **Return**: path of file which is formatted to term-sequence
 
 >>> from tmlib.datasets import base
->>> path_file_tf = '/home/kde/Desktop/topicmodel-lib/examples/ap/ap_train.txt'
+>>> path_file_tf = tmlib
 >>> path_file_sq = base.reformat_file_to_term_sequence(path_file_tf)
 >>> print 'path to file term-sequence: ', path_file_sq
 path to file term-sequence:  /home/kde/tmlib_data/ap_train/ap_train.sq
