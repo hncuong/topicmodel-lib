@@ -39,7 +39,7 @@ setup(
     keywords=['ordination', 'LDA', 'topic modeling'],
     url="https://github.com/hncuong/topicmodel-lib",   # project home page, if any
     classifiers=[
-        'Intended Audience ::  Data Science/Research',
+        'Intended Audience ::  Science/Research',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 2.7',
     ],
