@@ -1,6 +1,6 @@
 import logging
 
-__version__ = '0.1.0'
+__version__ = '0.2.1'
 
 class NullHandler(logging.Handler):
     """For python versions <= 2.6; same as `logging.NullHandler` in 2.7."""
