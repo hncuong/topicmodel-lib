@@ -2,6 +2,8 @@ import logging, os
 import utilizies
 from .utilizies import Corpus, DataIterator, DataFormat
 
+logger = logging.getLogger(__name__)
+
 
 class DataSet(DataIterator):
     def __init__(self, data_path, batch_size, passes=1, shuffle_every=None,
@@ -27,9 +29,11 @@ class DataSet(DataIterator):
             self.data_format = DataFormat.TERM_FREQUENCY
         else:
             if vocab_file is None:
-                logging.error('File input is formatted, but you must supply file vocabulary!')
+                logger.error('File input is formatted, but you must supply file vocabulary!')
+                raise ValueError('Value of vocab_file should not be None')
             if not os.path.isfile(vocab_file):
-                logging.error("Can't find the vocabulary file")
+                logger.error("Can't find the vocabulary file")
+                raise ValueError('The vocabulary file is not exist')
             self.data_path = data_path
             self.data_format = input_format
         self.output_format = DataFormat.TERM_FREQUENCY
@@ -55,7 +59,7 @@ class DataSet(DataIterator):
             self.batch_no_in_pass = 0
             self.pass_no += 1
             self.end_of_file = False
-            logging.info('Pass no: %s', self.pass_no)
+            logger.info('Pass no: %s', self.pass_no)
             # shuffle after number of passes
             if self.shuffle_every > 0 and self.pass_no % self.shuffle_every == 0:
                 self.work_path = utilizies.shuffle_formatted_data_file(self.data_path, self.batch_size)
@@ -63,7 +67,7 @@ class DataSet(DataIterator):
         if self.batch_no_in_pass == 0:
             self.fp = open(self.work_path, 'r')
 
-        logging.info("Mini batch no: %s", self.batch_no_in_pass)
+        logger.info("Mini batch no: %s", self.batch_no_in_pass)
 
         mini_batch, end_of_file = self.load_mini_batch_and_state_with_format()
         if end_of_file:
@@ -94,6 +98,8 @@ class DataSet(DataIterator):
     def check_end_of_data(self):
         if self.end_of_file and self.pass_no == self.passes:
             self.end_of_data = True
+            if (self.shuffle_every > 0) and (self.passes > self.shuffle_every):
+                os.remove(self.work_path)
         return self.end_of_data
 
     def set_output_format(self, output_format):
@@ -111,19 +117,30 @@ class DataSet(DataIterator):
         return self.get_num_docs_per_pass() * self.passes
 
     def get_num_tokens(self):
-        sq_file_path = utilizies.reformat_file_to_term_sequence(self.data_path)
-        sq_file = open(sq_file_path)
-        line = sq_file.readline()
         num_tokens = 0
-        while line:
-            tks = line.strip().split()
-            num_tokens += len(tks)
-            line = sq_file.readline()
+        if self.data_format == DataFormat.TERM_FREQUENCY:
+            fp = open(self.data_path)
+            line = fp.readline()
+            while line:
+                arr = line.strip().split()
+                N = int(arr[0])
+                for i in range(1, N+1):
+                    tf = arr[i].split(':')
+                    num_tokens += int(tf[1])
+                line = fp.readline()
+        elif self.data_format == DataFormat.TERM_SEQUENCE:
+            fp = open(self.data_path)
+            line = fp.readline()
+            while line:
+                tks = line.strip().split()
+                num_tokens += len(tks)
+                line = fp.readline()
+        else:
+            logger.error('Format of data input is not valid')
+            raise ValueError('Format of data input is not valid')
         return num_tokens
 
     def get_num_terms(self):
-        if self.vocab_file is None:
-            logging.error('File vocabulary is not found!')
         f = open(self.vocab_file, 'r')
         list_terms = f.readlines()
         return len(list_terms)

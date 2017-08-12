@@ -79,7 +79,8 @@ class LdaLearning(object):
     def __getitem__(self, docs):
         raise NotImplementedError("Should have implemented this!")
 
-    def learn_model(self):
+    def learn_model(self, save_statistic=False, save_model_every=0, compute_sparsity_every=0,
+                    save_top_words_every=0, num_top_words=0, model_folder=None):
         """
 
         Args:
@@ -95,13 +96,17 @@ class LdaLearning(object):
 
         """
         mini_batch_no = 0
-        #if not os.path.exists(model_folder):
-        #    os.mkdir(model_folder)
+        # create model_folder
+        if model_folder is not None:
+            if not os.path.exists(model_folder):
+                os.mkdir(model_folder)
         logger.info("Start learning Lda model, passes over")
 
         # Iterating
         while not self.data.check_end_of_data():
             mini_batch = self.data.load_mini_batch()
+            if self.data.end_of_file:
+                continue
             # This using for streaming method
             if self.num_terms != self.data.get_num_terms():
                 self.num_terms = self.data.get_num_terms()
@@ -110,31 +115,31 @@ class LdaLearning(object):
                 self.lda_model = new_model
 
             # run expectation - maximization algorithms
-            """time_e, time_m, theta = self.static_online(mini_batch.word_ids_tks, mini_batch.cts_lens)
-            self.statistics.record_time(time_e, time_m)"""
+            time_e, time_m, theta = self.static_online(mini_batch.word_ids_tks, mini_batch.cts_lens)
+            self.statistics.record_time(time_e, time_m)
 
             # compute documents sparsity
-            """if compute_sparsity_every > 0 and (self.data.mini_batch_no % compute_sparsity_every) == 0:
+            if compute_sparsity_every > 0 and (self.data.mini_batch_no % compute_sparsity_every) == 0:
                 sparsity = utilizies.compute_sparsity(theta, theta.shape[0], theta.shape[1], 't')
-                self.statistics.record_sparsity(sparsity)"""
+                self.statistics.record_sparsity(sparsity)
 
             # save model : lambda, beta, N_phi
-            """if save_model_every > 0 and (self.data.mini_batch_no % save_model_every) == 0:
+            if save_model_every > 0 and (self.data.mini_batch_no % save_model_every) == 0:
                 model_file = model_folder + '/model_batch' + str(mini_batch_no) + '.txt'
-                self.lda_model.save(model_file)"""
+                self.lda_model.save(model_file)
 
             # save top words
-            """if save_top_words_every > 0 and (self.data.mini_batch_no % save_top_words_every) == 0:
+            if save_top_words_every > 0 and (self.data.mini_batch_no % save_top_words_every) == 0:
                 top_words_file = model_folder + '/top_words_batch_' + str(mini_batch_no) + '.txt'
-                self.lda_model.print_top_words(num_top_words, vocab_file=self.data.vocab_file, result_file=top_words_file)"""
+                self.lda_model.print_top_words(num_top_words, vocab_file=self.data.vocab_file, result_file=top_words_file)
             mini_batch_no += 1
 
         # save learning statistic
-        """if save_statistic:
+        if save_statistic:
             time_file = model_folder + '/time' + str(self.data.mini_batch_no) + '.csv'
             sparsity_file = model_folder + '/sparsity' + str(self.data.mini_batch_no) + '.csv'
             self.statistics.save_time(time_file)
-            self.statistics.save_sparsity(sparsity_file)"""
+            self.statistics.save_sparsity(sparsity_file)
         # Finish
         logger.info('Finish training!!!')
         return self.lda_model

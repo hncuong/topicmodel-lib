@@ -1,6 +1,6 @@
 """Reference: M.Hoffman - onlineldavb"""
 
-import sys, os, urllib2, re, time, threading
+import sys, os, urllib2, re, string, threading
 import logging
 from tmlib.datasets import utilizies
 from tmlib.datasets.utilizies import Corpus, DataIterator, DataFormat
@@ -109,6 +109,71 @@ def get_random_wikipedia_articles(n):
 
     return (WikiThread.articles, WikiThread.articlenames)
 
+def parse_doc_list(docs, vocab):
+    """
+    Parse a document into a list of word ids and a list of counts,
+    or parse a set of documents into two lists of lists of word ids
+    and counts.
+
+    Arguments:
+    docs:  List of D documents. Each document must be represented as
+           a single string. (Word order is unimportant.) Any
+           words not in the vocabulary will be ignored.
+    vocab: Dictionary mapping from words to integer ids.
+
+    Returns a pair of lists of lists.
+
+    The first, wordids, says what vocabulary tokens are present in
+    each document. wordids[i][j] gives the jth unique token present in
+    document i. (Don't count on these tokens being in any particular
+    order.)
+
+    The second, wordcts, says how many times each vocabulary token is
+    present. wordcts[i][j] is the number of times that the token given
+    by wordids[i][j] appears in document i.
+    """
+    if (type(docs).__name__ == 'str'):
+        temp = list()
+        temp.append(docs)
+        docs = temp
+
+    D = len(docs)
+
+    #wordids = list()
+    #wordcts = list()
+    copus = Corpus(DataFormat.TERM_FREQUENCY)
+    for d in range(0, D):
+        docs[d] = docs[d].lower()
+        docs[d] = re.sub(r'-', ' ', docs[d])
+        docs[d] = re.sub(r'[^a-z ]', '', docs[d])
+        docs[d] = re.sub(r' +', ' ', docs[d])
+        words = string.split(docs[d])
+        ddict = dict()
+        for word in words:
+            if (word in vocab):
+                wordtoken = vocab[word]
+                if (not wordtoken in ddict):
+                    ddict[wordtoken] = 0
+                ddict[wordtoken] += 1
+        copus.append_doc(ddict.keys(), ddict.values())
+
+    return copus
+
+def read_vocab(path_vocab):
+    if (os.path.isfile(path_vocab)):
+        f = open(path_vocab, 'r')
+        l_vocab = f.readlines()
+        f.close()
+    else:
+        logging.error('Unknown file %s' % path_vocab)
+    d_vocab = dict()
+    for word in l_vocab:
+        word = word.lower()
+        word = re.sub(r'[^a-z]', '', word)
+        d_vocab[word] = len(d_vocab)
+    del l_vocab
+    return d_vocab
+
 def save_articles(articles, articlenames, data_wiki_folder):
     path_file_articles = os.path.join(data_wiki_folder, 'wiki_articles.txt')
     f = open(path_file_articles, 'w')
@@ -144,6 +209,7 @@ class WikiStream(DataIterator):
         super(WikiStream, self).__init__()
         self.batch_size = batch_size
         self.num_batch = num_batch
+        self.end_of_file = False
         self.data_wiki_folder = os.path.join(utilizies.get_data_home(), 'WikiStream')
         if not os.path.exists(self.data_wiki_folder):
             os.mkdir(self.data_wiki_folder)
@@ -152,13 +218,13 @@ class WikiStream(DataIterator):
             self.vocab_file = dir_path + "/data/vocab.txt"
         else:
             self.vocab_file = vocab_file
-        self.vocab = utilizies.read_vocab(self.vocab_file)
+        self.vocab = read_vocab(self.vocab_file)
 
     def load_mini_batch(self):
         (docset, articlenames) = get_random_wikipedia_articles(self.batch_size)
         path_articles = save_articles(docset, articlenames, self.data_wiki_folder)
         # add new terms to the vocabulary set
-        raw_data = PreProcessing(path_articles, remove_rare_word=1, remove_common_word=1.0)
+        raw_data = PreProcessing(path_articles, remove_rare_word=1, remove_common_word=0.5)
         raw_data.process()
         old_vocab = list()
         f_vocab = open(self.vocab_file)
@@ -170,18 +236,19 @@ class WikiStream(DataIterator):
         new_vocab = set(raw_data.vocab)
         in_new_but_not_in_old = new_vocab - set(old_vocab)
         result_vocab = old_vocab + list(in_new_but_not_in_old)
-        self.vocab_file = dir_path + '/data/current_vocab.txt'
+        self.vocab_file = self.data_wiki_folder + '/current_vocab.txt'
         f_new_vocab = open(self.vocab_file, 'w')
         for term in result_vocab:
             f_new_vocab.write(term+'\n')
         f_new_vocab.close()
         # create corpus to store mini-batch
-        dict_vocab = utilizies.read_vocab(self.vocab_file)
+        dict_vocab = read_vocab(self.vocab_file)
         corpus = Corpus(DataFormat.TERM_SEQUENCE)
         for doc in raw_data.list_doc:
             for i in range(len(doc)):
                 doc[i] = dict_vocab[raw_data.vocab[doc[i]]]
-            corpus.append_doc(doc, len(doc))
+            if len(doc) > 0:
+                corpus.append_doc(doc, len(doc))
 
         logging.info("Mini batch no: %s", self.mini_batch_no)
         if self.output_format == DataFormat.TERM_FREQUENCY:

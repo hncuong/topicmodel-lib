@@ -15,7 +15,7 @@ extensions = [
 
 setup(
     name="tmlib",
-    version="0.0.2",
+    version="0.2.0",
     packages=find_packages(),#['lib'],
     cmdclass = {'build_ext': build_ext},
 

@@ -99,7 +99,7 @@ class PreProcessing:
             line = fin.readline()
         fin.close()
         stop_list = stop_list + ['_', ]
-        print("Waiting...")
+        print("Preprocessing...")
         if isfile(self.file_path):
             #print 'hello'
             fread = open(self.file_path)
