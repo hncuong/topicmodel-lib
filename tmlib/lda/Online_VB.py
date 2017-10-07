@@ -22,11 +22,11 @@ class OnlineVB(LdaLearning):
     Implements online VB for LDA as described in (Hoffman et al. 2010).
     """
 
-    def __init__(self, data, num_topics=100, alpha=0.01, eta=0.01,
+    def __init__(self, data=None, num_topics=100, alpha=0.01, eta=0.01,
                  tau0=1.0, kappa=0.9,
                  conv_infer=0.0001, iter_infer=50, lda_model=None):
         super(OnlineVB, self).__init__(data, num_topics, lda_model)
-        num_terms = data.get_num_terms()
+
         self.num_docs = 0
         self._alpha = alpha
         self._eta = eta
@@ -36,11 +36,19 @@ class OnlineVB(LdaLearning):
         self._conv_infer = conv_infer
         self._iter_infer = iter_infer
 
-        # Initialize the variational distribution q(beta|lambda)
-        if self.lda_model is None:
-            self.lda_model = LdaModel(num_terms, num_topics, 1)
-        self._Elogbeta = dirichlet_expectation(self.lda_model.model)
-        self._expElogbeta = n.exp(self._Elogbeta)
+        if self.data is not None or self.lda_model is not None:
+            if self.data is not None:
+                self.num_terms = data.get_num_terms()
+
+            if self.lda_model is not None:
+                self.num_topics, self.num_terms = self.lda_model.model.shape
+            else:
+                # Initialize the variational distribution q(beta|lambda)
+                self.lda_model = LdaModel(self.num_terms, num_topics, 1)
+            self._Elogbeta = dirichlet_expectation(self.lda_model.model)
+            self._expElogbeta = n.exp(self._Elogbeta)
+
+
 
     def static_online(self, wordids, wordcts):
         batch_size = len(wordids)
@@ -156,16 +164,22 @@ class OnlineVB(LdaLearning):
         self._updatect += 1
 
     def learn_model(self, save_statistic=False, save_model_every=0, compute_sparsity_every=0,
-                    save_top_words_every=0, num_top_words=0, model_folder=None):
+                    save_top_words_every=0, num_top_words=0, model_folder=None, save_topic_proportions=None):
         self.num_docs += self.data.get_total_docs()
         return super(OnlineVB, self).learn_model(save_statistic=save_statistic, save_model_every=save_model_every,
                                                  compute_sparsity_every=compute_sparsity_every,
                                                  save_top_words_every=save_top_words_every,
-                                                 num_top_words=num_top_words, model_folder=model_folder)
+                                                 num_top_words=num_top_words, model_folder=model_folder,
+                                                 save_topic_proportions=save_topic_proportions)
 
     def infer_new_docs(self, new_corpus):
         docs = convert_corpus_format(new_corpus, DataFormat.TERM_FREQUENCY)
         gamma, sstats = self.e_step(docs.word_ids_tks, docs.cts_lens)
         gamma_norm = gamma.sum(axis=1)
         theta = gamma / gamma_norm[:, n.newaxis]
+        return theta
+
+    def estimate_topic_proportions(self, param_theta):
+        gamma_norm = param_theta.sum(axis=1)
+        theta = param_theta / gamma_norm[:, n.newaxis]
         return theta

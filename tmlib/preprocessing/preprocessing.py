@@ -108,7 +108,7 @@ class PreProcessing:
             while line:
                 line = line.strip()
                 if line == "<TEXT>":
-                    print(num)
+                    #print(num)
                     next_line = fread.readline().strip()
                     if len(next_line) > 10:
                         l = next_line

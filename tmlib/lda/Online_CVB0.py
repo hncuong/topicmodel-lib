@@ -13,7 +13,7 @@ from tmlib.datasets.utilizies import DataFormat, convert_corpus_format
 
 
 class OnlineCVB0(LdaLearning):
-    def __init__(self, data, num_topics=100, alpha=0.01, eta=0.01, tau_phi=1.0,
+    def __init__(self, data=None, num_topics=100, alpha=0.01, eta=0.01, tau_phi=1.0,
                  kappa_phi=0.9, s_phi=1.0, tau_theta=10.0,
                  kappa_theta=0.9, s_theta=1.0, burn_in=25, lda_model=None):
         """
@@ -34,10 +34,7 @@ class OnlineCVB0(LdaLearning):
             lda_model:
         """
         super(OnlineCVB0, self).__init__(data, num_topics, lda_model)
-        num_tokens = data.get_num_tokens()
-        num_terms = data.get_num_terms()
-        self.num_tokens = num_tokens
-        self.num_terms = num_terms
+
         self.num_topics = num_topics
         self.alpha = alpha
         self.eta = eta
@@ -51,11 +48,19 @@ class OnlineCVB0(LdaLearning):
         self.burn_in = burn_in
         self.updatect = 1
 
-        # self.N_phi = np.random.rand(num_topics, num_terms)
-        # replace N_phi with lda model
-        if self.lda_model is None:
-            self.lda_model = LdaModel(num_terms, num_topics)
-        self.N_Z = self.lda_model.model.sum(axis=1)
+        if self.data is not None or self.lda_model is not None:
+            if self.data is not None:
+                self.num_tokens = data.get_num_tokens()
+                self.num_terms = data.get_num_terms()
+
+            if self.lda_model is not None:
+                self.num_topics, self.num_terms = self.lda_model.model.shape
+            else:
+                # self.N_phi = np.random.rand(num_topics, num_terms)
+                # replace N_phi with lda model
+                self.lda_model = LdaModel(self.num_terms, self.num_topics)
+            self.N_Z = self.lda_model.model.sum(axis=1)
+
 
     def static_online(self, wordtks, lengths):
         # E step
@@ -117,14 +122,21 @@ class OnlineCVB0(LdaLearning):
         self.updatect += 1
 
     def learn_model(self, save_statistic=False, save_model_every=0, compute_sparsity_every=0,
-                    save_top_words_every=0, num_top_words=0, model_folder=None):
+                    save_top_words_every=0, num_top_words=0, model_folder=None, save_topic_proportions=None):
         self.data.set_output_format(DataFormat.TERM_SEQUENCE)
         return super(OnlineCVB0, self).learn_model(save_statistic=save_statistic, save_model_every=save_model_every,
                                                   compute_sparsity_every=compute_sparsity_every,
                                                   save_top_words_every=save_top_words_every,
-                                                  num_top_words=num_top_words, model_folder=model_folder)
+                                                  num_top_words=num_top_words, model_folder=model_folder,
+                                                   save_topic_proportions=save_topic_proportions)
 
     def infer_new_docs(self, new_corpus):
         docs = convert_corpus_format(new_corpus, DataFormat.TERM_SEQUENCE)
         N_phi, N_Z, theta = self.e_step(docs.word_ids_tks, docs.cts_lens)
+        return theta
+
+    def estimate_topic_proportions(self, param_theta):
+        N_theta = param_theta + self.alpha
+        norm = N_theta.sum(axis=1)
+        theta = N_theta / norm[:, np.newaxis]
         return theta

@@ -1,5 +1,5 @@
 import sys, os
-import math
+import pandas as pd
 import numpy as np
 import logging
 
@@ -7,7 +7,7 @@ import logging
 class LdaModel(object):
     """docstring for ClassName"""
 
-    def __init__(self, num_terms, num_topics, random_type=0):
+    def __init__(self, num_terms=None, num_topics=None, random_type=0):
         """
 
         Args:
@@ -18,10 +18,32 @@ class LdaModel(object):
         self.num_topics = num_topics
         self.num_terms = num_terms
         self.random_type = random_type
-        if self.random_type == 0:
-            self.model = np.random.rand(self.num_topics, self.num_terms) + 1e-10
-        else:
-            self.model = 1 * np.random.gamma(100., 1. / 100., (self.num_topics, self.num_terms))
+        if num_topics != None and num_terms != None:
+            self.presence_score = np.zeros(num_topics)
+            if self.random_type == 0:
+                self.model = np.random.rand(self.num_topics, self.num_terms) + 1e-10
+            else:
+                self.model = 1 * np.random.gamma(100., 1. / 100., (self.num_topics, self.num_terms))
+
+    def save(self, path_file):
+        store = pd.HDFStore(path_file)
+        model_frame = pd.DataFrame(self.model)
+        presence_score_frame = pd.DataFrame(self.presence_score)
+        if '/model' in store.keys():
+            store.remove('model')
+        if '/presence_score' in store.keys():
+            store.remove('presence_score')
+        store['model'] = model_frame
+        store['presence_score'] = presence_score_frame
+        store.close()
+
+    def load(self, path_file):
+        store = pd.HDFStore(path_file, 'r')
+        self.model = store['model'].values
+        self.presence_score = store['presence_score'][0].values
+        self.num_topics = self.model.shape[0]
+        self.num_terms = self.model.shape[1]
+        store.close()
 
     def normalize(self):
         """
@@ -31,8 +53,9 @@ class LdaModel(object):
         """
         beta_norm = self.model.sum(axis=1)
         self.model = self.model / beta_norm[:, np.newaxis]
+        return self.model
 
-    def print_top_words(self, num_words, vocab_file, show_topics=None, result_file=None):
+    def print_top_words(self, num_words, vocab_file, show_topics=None, display_result=None, type='word', distribution=False):
         """
         display top words of topics:
         Args:
@@ -46,28 +69,45 @@ class LdaModel(object):
 
         """
         # get the vocabulary
-        if vocab_file:
-            if not os.path.isfile(vocab_file):
-                logging.error('Unknown file %s', vocab_file)
-            vocab = open(vocab_file, 'r').readlines()
-            vocab = map(lambda x: x.strip(), vocab)
-        else:
-            vocab = range()
+        if not os.path.isfile(vocab_file):
+            logging.error('Unknown file %s', vocab_file)
+            exit()
+        fvocab = open(vocab_file, 'r')
+        vocab = fvocab.readlines()
+        fvocab.close()
+        vocab = map(lambda x: x.strip().split()[-1], vocab)
+
         if show_topics is not None:
             index_list = np.random.randint(self.num_topics, size=show_topics)
             topic_list = self.model[index_list, :]
         else:
             topic_list = self.model
-        if result_file is not None:
+        top_words = list()
+        if display_result is not None and display_result != 'screen':
             # open file to write
-            fp = open(result_file, 'w')
+            fp = open(display_result, 'w')
             topic_no = 0
             for topic in topic_list:
-                fp.write('topic %03d\n' % topic_no)
+                str_topic = 'topic %d: ' % topic_no
+                #fp.write('topic %d\n' % topic_no)
                 index_sorted = np.argsort(topic)[::-1]  # sort in decending order
+                words = list()
                 for i in range(num_words):
                     index = index_sorted[i]
-                    fp.write('   %s \t\t %f\n' % (vocab[index], topic[index]))
+                    if distribution:
+                        if type == 'word':
+                            str_topic += '(%s %f), ' %(vocab[index], topic[index])
+                        else:
+                            str_topic += '(%d %f), ' %(index, topic[index])
+                    else:
+                        if type == 'word':
+                            str_topic += '%s, ' %(vocab[index])
+                        else:
+                            str_topic += '%d, ' %(index)
+                    #fp.write('   %s \t\t %f\n' % (vocab[index], topic[index]))
+                    words.append(vocab[index])
+                fp.write('%s\n' %str_topic)
+                top_words.append(words)
                 topic_no = topic_no + 1
                 fp.write('\n')
             fp.close()
@@ -75,29 +115,45 @@ class LdaModel(object):
             # display to screen
             topic_no = 0
             for topic in topic_list:
-                print('topic %03d\n' % (topic_no))
+                str_topic = 'topic %d: ' % topic_no
                 index_sorted = np.argsort(topic)[::-1]
+                words = list()
                 for i in range(num_words):
                     index = index_sorted[i]
-                    print('   %s \t\t %f\n' % (vocab[index], topic[index]))
+                    if display_result == 'screen':
+                        if distribution:
+                            if type == 'word':
+                                str_topic += '(%s %f), ' % (vocab[index], topic[index])
+                            else:
+                                str_topic += '(%d %f), ' % (index, topic[index])
+                        else:
+                            if type == 'word':
+                                str_topic += '%s, ' % (vocab[index])
+                            else:
+                                str_topic += '%d, ' % (index)
+                    words.append(vocab[index])
+                if display_result == 'screen':
+                    print('%s' %str_topic)
+                top_words.append(words)
                 topic_no += 1
-                print('\n')
 
-    def load(self, model_file):
+        return top_words
+
+    def load_model(self, path_file):
         """
         load model (beta or lambda) from a file which is learnt to learn continue
         Args:
-            model_file:
+            path_file:
 
         Returns:
 
         """
-        if os.path.isfile(model_file):
-            tail = model_file.split('.')[-1]
+        if os.path.isfile(path_file):
+            tail = path_file.split('.')[-1]
             assert tail != 'txt' or tail != 'npy', \
                 'Unsupported format.Please convert to .txt (text file) or .npy (binary file)!'
             if tail == 'txt':
-                f = open(model_file)
+                f = open(path_file)
                 lines = f.readlines()
                 words = lines[0].strip().split()
                 K = len(lines)
@@ -106,22 +162,24 @@ class LdaModel(object):
                 for i in xrange(K):
                     words = lines[0].strip().split()
                     if len(words) != W:
-                        print('File %s is error' % model_file)
+                        print('File %s is error' % path_file)
                         exit()
                     for j in xrange(W):
                         beta[i][j] = float(words[j])
                 f.close()
             elif tail == 'npy':
-                beta = np.load(model_file)
+                beta = np.load(path_file)
             self.model = beta
             self.num_topics = beta.shape[0]
             self.num_terms = beta.shape[1]
+            self.presence_score = np.zeros(self.num_topics)
+
             return beta
         else:
-            print('Unknown file %s' % model_file)
+            print('Unknown file %s' % path_file)
             exit()
 
-    def save(self, model_file, file_type='binary'):
+    def save_model(self, path_file, file_type='binary'):
         """
             save model into a file.
             <optional>: type file default is binary, file is saved with tail is .npy
@@ -129,8 +187,8 @@ class LdaModel(object):
         """
         type_file = file_type.lower()
         if type_file == 'text':
-            tail = model_file.split('.')[-1]
-            filename = model_file[:-(len(tail))] + 'txt'
+            tail = path_file.split('.')[-1]
+            filename = path_file[:-(len(tail))] + 'txt'
             f = open(filename, 'w')
             for k in range(self.num_topics):
                 for i in range(self.num_terms - 1):
@@ -138,11 +196,18 @@ class LdaModel(object):
                 f.write('%.10f\n' % (self.model[k][self.num_terms - 1]))
             f.close()
         else:
-            tail = model_file.split('.')[-1]
-            filename = model_file[:-(len(tail))] + 'npy'
+            tail = path_file.split('.')[-1]
+            filename = path_file[:-(len(tail))] + 'npy'
             np.save(filename, self.model)
 
+    def save_presence_score_topics(self, path_file):
+        np.save(path_file, self.presence_score)
+
+    def load_presence_score_topics(self, path_file):
+        arr = np.load(path_file)
+        self.presence_score = arr
+        return arr
 
 if __name__ == '__main__':
     lda = LdaModel(10, 10)
-    lda.save('abc.txt')
+    lda.save_model('abc.txt')

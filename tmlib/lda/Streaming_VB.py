@@ -22,20 +22,27 @@ class StreamingVB(LdaLearning):
     Implements online VB for LDA as described in (Hoffman et al. 2010).
     """
 
-    def __init__(self, data, num_topics=100, alpha=0.01, eta=0.01, conv_infer=0.0001, iter_infer=50,
+    def __init__(self, data=None, num_topics=100, alpha=0.01, eta=0.01, conv_infer=0.0001, iter_infer=50,
                  lda_model=None):
         super(StreamingVB, self).__init__(data, num_topics, lda_model)
-        num_terms = data.get_num_terms()
+
         self._alpha = alpha
         self._eta = eta
         self._conv_infer = conv_infer
         self._iter_infer = iter_infer
 
-        # Initialize the variational distribution q(beta|lambda)
-        if self.lda_model is None:
-            self.lda_model = LdaModel(num_terms, num_topics, 1)
-        self._Elogbeta = dirichlet_expectation(self.lda_model.model)
-        self._expElogbeta = n.exp(self._Elogbeta)
+        if self.data is not None or self.lda_model is not None:
+            if self.data is not None:
+                self.num_terms = data.get_num_terms()
+
+            if self.lda_model is not None:
+                self.num_topics, self.num_terms = self.lda_model.model.shape
+            else:
+                # Initialize the variational distribution q(beta|lambda)
+                self.lda_model = LdaModel(self.num_terms, num_topics, 1)
+            self._Elogbeta = dirichlet_expectation(self.lda_model.model)
+            self._expElogbeta = n.exp(self._Elogbeta)
+
 
     def static_online(self, wordids, wordcts):
         self._Elogbeta = dirichlet_expectation(self.lda_model.model)
@@ -130,4 +137,9 @@ class StreamingVB(LdaLearning):
         gamma, sstats = self.e_step(docs.word_ids_tks, docs.cts_lens)
         gamma_norm = gamma.sum(axis=1)
         theta = gamma / gamma_norm[:, n.newaxis]
+        return theta
+
+    def estimate_topic_proportions(self, param_theta):
+        gamma_norm = param_theta.sum(axis=1)
+        theta = param_theta / gamma_norm[:, n.newaxis]
         return theta

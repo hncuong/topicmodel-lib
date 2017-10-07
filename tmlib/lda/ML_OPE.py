@@ -12,7 +12,7 @@ class MLOPE(LdaLearning):
     Implements ML-OPE for LDA as described in "Inference in topic models II: provably guaranteed algorithms". 
     """
 
-    def __init__(self, data, num_topics=100, alpha=0.01, tau0=1.0, kappa=0.9, iter_infer=50,
+    def __init__(self, data=None, num_topics=100, alpha=0.01, tau0=1.0, kappa=0.9, iter_infer=50,
                  lda_model=None):
         """
         Arguments:
@@ -29,17 +29,23 @@ class MLOPE(LdaLearning):
         """
         super(MLOPE, self).__init__(data, num_topics, lda_model)
         self.num_topics = num_topics
-        self.num_terms = data.get_num_terms()
         self.alpha = alpha
         self.tau0 = tau0
         self.kappa = kappa
         self.updatect = 1
         self.INF_MAX_ITER = iter_infer
 
-        # Initialize beta (topics)
-        if self.lda_model is None:
-            self.lda_model = LdaModel(self.num_terms, num_topics)
-        self.lda_model.normalize()
+        if self.data is not None or self.lda_model is not None:
+            if self.data is not None:
+                self.num_terms = data.get_num_terms()
+
+            if self.lda_model is not None:
+                self.num_topics, self.num_terms = self.lda_model.model.shape
+            else:
+                # Initialize beta (topics)
+                self.lda_model = LdaModel(self.num_terms, num_topics)
+            self.lda_model.normalize()
+
 
     def static_online(self, wordids, wordcts):
         """
@@ -143,3 +149,6 @@ class MLOPE(LdaLearning):
         docs = convert_corpus_format(new_corpus, DataFormat.TERM_FREQUENCY)
         theta = self.e_step(docs.word_ids_tks, docs.cts_lens)
         return theta
+
+    def estimate_topic_proportions(self, param_theta):
+        return param_theta

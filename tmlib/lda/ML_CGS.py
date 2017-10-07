@@ -22,7 +22,7 @@ def dirichlet_expectation(alpha):
 
 
 class MLCGS(LdaLearning):
-    def __init__(self, data, num_topics=100, alpha=0.01, tau0=1.0, kappa=0.9, burn_in=25, samples=25,
+    def __init__(self, data=None, num_topics=100, alpha=0.01, tau0=1.0, kappa=0.9, burn_in=25, samples=25,
                  lda_model=None):
         """
 
@@ -37,7 +37,7 @@ class MLCGS(LdaLearning):
             lda_model:
         """
         super(MLCGS, self).__init__(data, num_topics, lda_model)
-        self.num_terms = data.get_num_terms()
+
         self.num_topics = num_topics
         self._alpha = alpha
         self._tau0 = tau0
@@ -48,10 +48,18 @@ class MLCGS(LdaLearning):
         self.update_unit = 1. / samples
         self._update_t = 1
 
-        # initialize the variational distribution q(beta|lambda)
-        if self.lda_model is None:
-            self.lda_model = LdaModel(self.num_terms, num_topics)
-        self.lda_model.normalize()
+        if self.data is not None or self.lda_model is not None:
+            if self.data is not None:
+                self.num_terms = data.get_num_terms()
+
+            if self.lda_model is not None:
+                self.num_topics, self.num_terms = self.lda_model.model.shape
+            else:
+                # initialize the variational distribution q(beta|lambda)
+                self.lda_model = LdaModel(self.num_terms, num_topics)
+
+            self.lda_model.normalize()
+
 
     def static_online(self, wordtks, lengths):
         # E step
@@ -102,15 +110,22 @@ class MLCGS(LdaLearning):
         self._update_t += 1
 
     def learn_model(self, save_statistic=False, save_model_every=0, compute_sparsity_every=0,
-                    save_top_words_every=0, num_top_words=0, model_folder=None):
+                    save_top_words_every=0, num_top_words=0, model_folder=None, save_topic_proportions=None):
         self.data.set_output_format(DataFormat.TERM_SEQUENCE)
         super(MLCGS, self).learn_model(save_statistic=save_statistic, save_model_every=save_model_every,
                                        compute_sparsity_every=compute_sparsity_every,
                                        save_top_words_every=save_top_words_every,
-                                       num_top_words=num_top_words, model_folder=model_folder)
+                                       num_top_words=num_top_words, model_folder=model_folder,
+                                       save_topic_proportions=save_topic_proportions)
         return self.lda_model
 
     def infer_new_docs(self, new_corpus):
         docs = convert_corpus_format(new_corpus, DataFormat.TERM_SEQUENCE)
         theta, z = self.sample_z(docs.word_ids_tks, docs.cts_lens)
+        return theta
+
+    def estimate_topic_proportions(self, param_theta):
+        param_theta = param_theta + self._alpha
+        norm = param_theta.sum(axis=1)
+        theta = param_theta / norm[:, np.newaxis]
         return theta

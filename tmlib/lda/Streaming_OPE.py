@@ -12,7 +12,7 @@ class StreamingOPE(LdaLearning):
     Implements Streaming-OPE for LDA as described in "Inference in topic models II: provably guaranteed algorithms". 
     """
 
-    def __init__(self, data, num_topics=100, alpha=0.01, eta=0.01, iter_infer=50, lda_model=None):
+    def __init__(self, data=None, num_topics=100, alpha=0.01, eta=0.01, iter_infer=50, lda_model=None):
         """
         Arguments:
             num_terms: Number of unique terms in the corpus (length of the vocabulary).
@@ -22,19 +22,26 @@ class StreamingOPE(LdaLearning):
             iter_infer: Number of iterations of FW algorithm.
         """
         super(StreamingOPE, self).__init__(data, num_topics, lda_model)
-        num_terms = data.get_num_terms()
+
         self.num_topics = num_topics
-        self.num_terms = num_terms
         self.alpha = alpha
         self.eta = eta
         self.INF_MAX_ITER = iter_infer
 
-        # Initialize lambda (variational parameters of topics beta)
-        # beta_norm stores values, each of which is sum of elements in each row
-        # of _lambda.
-        if self.lda_model is None:
-            self.lda_model = LdaModel(num_terms, num_topics)
-        self.beta_norm = self.lda_model.model.sum(axis=1)
+        if self.data is not None or self.lda_model is not None:
+            if self.data is not None:
+                self.num_terms = data.get_num_terms()
+
+            if self.lda_model is not None:
+                self.num_topics, self.num_terms = self.lda_model.model.shape
+            else:
+                # Initialize lambda (variational parameters of topics beta)
+                # beta_norm stores values, each of which is sum of elements in each row
+                # of _lambda.
+                self.lda_model = LdaModel(self.num_terms, num_topics)
+            self.beta_norm = self.lda_model.model.sum(axis=1)
+
+
 
     def static_online(self, wordids, wordcts):
         """
@@ -130,3 +137,6 @@ class StreamingOPE(LdaLearning):
         docs = convert_corpus_format(new_corpus, DataFormat.TERM_FREQUENCY)
         theta = self.e_step(docs.word_ids_tks, docs.cts_lens)
         return theta
+
+    def estimate_topic_proportions(self, param_theta):
+        return param_theta

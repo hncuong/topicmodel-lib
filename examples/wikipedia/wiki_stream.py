@@ -5,6 +5,7 @@ import logging
 from tmlib.datasets import utilizies
 from tmlib.datasets.utilizies import Corpus, DataIterator, DataFormat
 from tmlib.preprocessing.preprocessing import PreProcessing
+import pandas as pd
 
 # Name of current path directory which contains this file
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -46,7 +47,7 @@ def get_random_wikipedia_article():
                   % articletitle
             failed = True
             continue
-        print 'downloaded %s. parsing...' % articletitle
+        #print 'downloaded %s. parsing...' % articletitle
 
         try:
             all = re.search(r'<text.*?>(.*)</text', all, flags=re.DOTALL).group(1)
@@ -176,6 +177,19 @@ def read_vocab(path_vocab):
 
 def save_articles(articles, articlenames, data_wiki_folder):
     path_file_articles = os.path.join(data_wiki_folder, 'wiki_articles.txt')
+    f = open(path_file_articles, 'a')
+    for d in range(len(articles)):
+        f.write('<DOC>\n')
+        f.write('<TITLE>'+articlenames[d]+'</TITLE>\n')
+        f.write('<TEXT>\n')
+        f.write(articles[d])
+        f.write('\n</TEXT>')
+        f.write('\n</DOC>\n')
+    f.close()
+    return path_file_articles
+
+def save_articles_per_batch(articles, articlenames, data_wiki_folder):
+    path_file_articles = os.path.join(data_wiki_folder, 'wiki_articles_per_batch.txt')
     f = open(path_file_articles, 'w')
     for d in range(len(articles)):
         f.write('<DOC>\n')
@@ -219,12 +233,14 @@ class WikiStream(DataIterator):
         else:
             self.vocab_file = vocab_file
         self.vocab = read_vocab(self.vocab_file)
+        self.database_path = None
 
     def load_mini_batch(self):
         (docset, articlenames) = get_random_wikipedia_articles(self.batch_size)
-        path_articles = save_articles(docset, articlenames, self.data_wiki_folder)
+        path_articles = save_articles_per_batch(docset, articlenames, self.data_wiki_folder)
+        save_articles(docset, articlenames, self.data_wiki_folder)
         # add new terms to the vocabulary set
-        raw_data = PreProcessing(path_articles, remove_rare_word=1, remove_common_word=0.5)
+        raw_data = PreProcessing(path_articles, remove_rare_word=2, remove_common_word=0.5)
         raw_data.process()
         old_vocab = list()
         f_vocab = open(self.vocab_file)
@@ -261,6 +277,9 @@ class WikiStream(DataIterator):
     def check_end_of_data(self):
         if self.mini_batch_no == self.num_batch:
             self.end_of_data = True
+            if self.database_path is not None:
+                if os.path.exists(self.database_path):
+                    self.database.close()
         return self.end_of_data
 
     def set_output_format(self, output_format):
@@ -271,9 +290,24 @@ class WikiStream(DataIterator):
     def get_num_terms(self):
         if self.vocab_file is None:
             self.vocab_file = dir_path + "/data/vocab.txt"
-        f = open(self.vocab_file , 'r')
+        f = open(self.vocab_file, 'r')
         list_terms = f.readlines()
         return len(list_terms)
+
+    def init_database(self, database_path):
+        self.database_path = database_path
+        self.database = pd.HDFStore(database_path, 'w')
+        self.end_index = 0
+
+    def store_topic_proportions(self, theta):
+        #self.table_name_topic_propotions = table_name
+        #if self.pass_no == self.passes:
+        dist_topics = ['dist_topic' + str(i) for i in range(theta.shape[1])]
+        start = self.end_index + 1
+        end = start+theta.shape[0]
+        self.end_index = end - 1
+        theta_frame = pd.DataFrame(theta, columns=dist_topics, index=list(range(start, end)))
+        self.database.append('theta', theta_frame, data_columns=True, complevel=9, complib='blosc')
 
 if __name__ == '__main__':
     wiki = WikiStream(8,3)

@@ -12,7 +12,7 @@ class MLFW(LdaLearning):
     Implements ML-FW for LDA as described in "Inference in topic models I: sparsity and trade-off". 
     """
 
-    def __init__(self, data, num_topics=100, tau0=1.0, kappa=0.9, iter_infer=50, lda_model=None):
+    def __init__(self, data=None, num_topics=100, tau0=1.0, kappa=0.9, iter_infer=50, lda_model=None):
         """
         Arguments:
             num_terms: Number of unique terms in the corpus (length of the vocabulary).
@@ -26,22 +26,29 @@ class MLFW(LdaLearning):
         set kappa=0 this class can also be used to do batch FW.
         """
         super(MLFW, self).__init__(data, num_topics, lda_model)
-        self.num_terms = data.get_num_terms()
+
         self.num_topics = num_topics
         self.tau0 = tau0
         self.kappa = kappa
         self.updatect = 1
         self.INF_MAX_ITER = iter_infer
 
-        # Initialize beta (topics)
-        if self.lda_model is None:
-            self.lda_model = LdaModel(self.num_terms, num_topics)
-        self.lda_model.normalize()
-        self.logbeta = np.log(self.lda_model.model)
-
-        # Generate values used for initilization of topic mixture of each document 
+        # Generate values used for initilization of topic mixture of each document
         self.theta_init = [1e-10] * num_topics
         self.theta_vert = 1. - 1e-10 * (num_topics - 1)
+
+        if self.data is not None or self.lda_model is not None:
+            if self.data is not None:
+                self.num_terms = data.get_num_terms()
+
+            if self.lda_model is not None:
+                self.num_topics, self.num_terms = self.lda_model.model.shape
+            else:
+                # Initialize beta (topics)
+                self.lda_model = LdaModel(self.num_terms, num_topics)
+
+            self.lda_model.normalize()
+            self.logbeta = np.log(self.lda_model.model)
 
     def static_online(self, wordids, wordcts):
         """
@@ -108,7 +115,7 @@ class MLFW(LdaLearning):
         # with the largest value of the objective function
         theta = np.array(self.theta_init)
         f = np.dot(logbeta, cts)
-        index = np.argmax(f);
+        index = np.argmax(f)
         nonzero.add(index)
         theta[index] = self.theta_vert
         # x = sum_(k=2)^K theta_k * beta_{kj}
@@ -118,7 +125,7 @@ class MLFW(LdaLearning):
             # Select a vertex with the largest value of  
             # derivative of the objective function
             df = np.dot(beta, cts / x)
-            index = np.argmax(df);
+            index = np.argmax(df)
             nonzero.add(index)
             alpha = 2. / (l + 3)
             # Update theta
@@ -140,7 +147,7 @@ class MLFW(LdaLearning):
         # For each document, the computation only take nonzero elements of 
         # theta_d into consideration.
         batch_size = len(wordids)
-        beta = np.zeros((self.num_topics, self.num_terms))
+        beta = np.zeros((self.num_topics, self.num_terms)) + 1e-100
         for d in range(batch_size):
             for i in index[d]:
                 beta[i, wordids[d]] += theta[d, i] * wordcts[d]
@@ -188,3 +195,6 @@ class MLFW(LdaLearning):
         docs = convert_corpus_format(new_corpus, DataFormat.TERM_FREQUENCY)
         theta, index = self.e_step(docs.word_ids_tks, docs.cts_lens)
         return theta
+
+    def estimate_topic_proportions(self, param_theta):
+        return param_theta

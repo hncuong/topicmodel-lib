@@ -62,25 +62,26 @@ class LearningStatistics(object):
 class LdaLearning(object):
     """docstring for LdaLearning"""
 
-    def __init__(self, data, num_topics, lda_model=None):
+    def __init__(self, data=None, num_topics=None, lda_model=None):
         self.statistics = LearningStatistics()
         self.data = data
         self.num_topics = num_topics
-        self.num_terms = self.data.get_num_terms()
-        # Checking shape of input model
-        if lda_model is not None:
-            assert lda_model.model.shape == (num_topics, self.num_terms), "Shape error: model must be shape of " \
-                                                                     "(num_topics * num_terms)"
         self.lda_model = lda_model
+        if data is not None:
+            self.num_terms = self.data.get_num_terms()
+            # Checking shape of input model
+            if lda_model is not None:
+                assert lda_model.model.shape == (num_topics, self.num_terms), "Shape error: model must be shape of " \
+                                                                              "(num_topics * num_terms)"
 
     def static_online(self, word_ids_tks, cts_lens):
         raise NotImplementedError("Should have implemented static_online!")
 
-    def __getitem__(self, docs):
-        raise NotImplementedError("Should have implemented this!")
+    def estimate_topic_proportions(self, param_theta):
+        raise NotImplementedError("Should have implemented estimate_topic_proportions!")
 
     def learn_model(self, save_statistic=False, save_model_every=0, compute_sparsity_every=0,
-                    save_top_words_every=0, num_top_words=0, model_folder=None):
+                    save_top_words_every=0, num_top_words=10, model_folder=None, save_topic_proportions=None):
         """
 
         Args:
@@ -100,13 +101,15 @@ class LdaLearning(object):
         if model_folder is not None:
             if not os.path.exists(model_folder):
                 os.mkdir(model_folder)
+        if save_topic_proportions is not None:
+            self.data.init_database(save_topic_proportions)
+
         logger.info("Start learning Lda model, passes over")
 
         # Iterating
         while not self.data.check_end_of_data():
             mini_batch = self.data.load_mini_batch()
-            if self.data.end_of_file:
-                continue
+
             # This using for streaming method
             if self.num_terms != self.data.get_num_terms():
                 self.num_terms = self.data.get_num_terms()
@@ -115,12 +118,17 @@ class LdaLearning(object):
                 self.lda_model = new_model
 
             # run expectation - maximization algorithms
-            time_e, time_m, theta = self.static_online(mini_batch.word_ids_tks, mini_batch.cts_lens)
+            time_e, time_m, param_theta = self.static_online(mini_batch.word_ids_tks, mini_batch.cts_lens)
+            theta = self.estimate_topic_proportions(param_theta)
+            if save_topic_proportions is not None:
+                self.data.store_topic_proportions(theta)
+            self.lda_model.presence_score += theta.sum(axis=0)
+            del theta
             self.statistics.record_time(time_e, time_m)
 
             # compute documents sparsity
             if compute_sparsity_every > 0 and (self.data.mini_batch_no % compute_sparsity_every) == 0:
-                sparsity = utilizies.compute_sparsity(theta, theta.shape[0], theta.shape[1], 't')
+                sparsity = utilizies.compute_sparsity(param_theta, param_theta.shape[0], param_theta.shape[1], 't')
                 self.statistics.record_sparsity(sparsity)
 
             # save model : lambda, beta, N_phi
@@ -131,15 +139,19 @@ class LdaLearning(object):
             # save top words
             if save_top_words_every > 0 and (self.data.mini_batch_no % save_top_words_every) == 0:
                 top_words_file = model_folder + '/top_words_batch_' + str(mini_batch_no) + '.txt'
-                self.lda_model.print_top_words(num_top_words, vocab_file=self.data.vocab_file, result_file=top_words_file)
+                self.lda_model.print_top_words(num_top_words, vocab_file=self.data.vocab_file, display_result=top_words_file)
+
+            if self.data.end_of_file and not self.data.check_end_of_data():
+                self.lda_model.presence_score *= 0
             mini_batch_no += 1
 
         # save learning statistic
         if save_statistic:
             time_file = model_folder + '/time' + str(self.data.mini_batch_no) + '.csv'
-            sparsity_file = model_folder + '/sparsity' + str(self.data.mini_batch_no) + '.csv'
             self.statistics.save_time(time_file)
-            self.statistics.save_sparsity(sparsity_file)
+            if compute_sparsity_every > 0:
+                sparsity_file = model_folder + '/sparsity' + str(self.data.mini_batch_no) + '.csv'
+                self.statistics.save_sparsity(sparsity_file)
         # Finish
         logger.info('Finish training!!!')
         return self.lda_model

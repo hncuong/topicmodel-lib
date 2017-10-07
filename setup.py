@@ -15,13 +15,13 @@ extensions = [
 
 setup(
     name="tmlib",
-    version="0.2.1",
+    version="0.2.2",
     packages=find_packages(),#['lib'],
     cmdclass = {'build_ext': build_ext},
 
     # Project uses reStructuredText, so ensure that the docutils get
     # installed or upgraded on the target machine
-    install_requires=['numpy>=1.8', 'scipy>=0.10', 'nltk', 'Cython'],
+    install_requires=['numpy>=1.8', 'scipy>=0.10', 'nltk', 'Cython', 'pandas==0.20.3'],
 
     package_data={
         # If any package contains *.txt or *.rst files, include them:
