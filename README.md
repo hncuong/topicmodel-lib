@@ -90,10 +90,7 @@ To use the library, your computer must installed all of these packages first:
 Documentation
 -------------
 
-- [Quick Start](doc/quick_start.rst)
-- [Tutorials](doc/tutorials.rst)
-- [User Guide](doc/user_guide.rst)
-- [Official API documentation](doc/list_api.rst)
+See detail at http://test-dslab.readthedocs.io
 
 Support
 -------
