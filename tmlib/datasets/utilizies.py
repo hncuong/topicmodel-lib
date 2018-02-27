@@ -200,16 +200,23 @@ def reformat_file_to_term_frequency(file_path):
 
 
 class Corpus(object):
-    def __init__(self, format_type):
+    def __init__(self, format_type, label=False):
         assert format_type == DataFormat.TERM_FREQUENCY or format_type == DataFormat.TERM_SEQUENCE, \
             "Corpus format type must be term-frequency (tf) or sequences (sq)!"
         self.word_ids_tks = []
         self.cts_lens = []
         self.format_type = format_type
+        if label:
+            self.labels = []
+        else:
+            self.labels = None
 
     def append_doc(self, ids_tks, cts_len):
         self.word_ids_tks.append(ids_tks)
         self.cts_lens.append(cts_len)
+        
+    def append_label(self, label):
+        self.labels.append(label)
 
 def convert_corpus_format(corpus, data_format):
     assert data_format == DataFormat.TERM_FREQUENCY or data_format == DataFormat.TERM_SEQUENCE, \

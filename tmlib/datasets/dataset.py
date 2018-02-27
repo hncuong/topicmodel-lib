@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 class DataSet(DataIterator):
     def __init__(self, data_path=None, batch_size=None, passes=1, shuffle_every=None,
-                 vocab_file=None):
+                 vocab_file=None, label=False):
         """
         A class for loading mini-batches of data from a file
         Args:
@@ -67,6 +67,8 @@ class DataSet(DataIterator):
             self.fp = None
             self.end_of_file = False
             self.database_path = None
+            
+            self.label = label
 
 
     def load_mini_batch(self):
@@ -163,7 +165,7 @@ class DataSet(DataIterator):
         Returns:
 
         """
-        mini_batch = Corpus(DataFormat.TERM_SEQUENCE)
+        mini_batch = Corpus(DataFormat.TERM_SEQUENCE, label=self.label)
         # end_file = False
         try:
             for i in range(0, self.batch_size):
@@ -174,10 +176,13 @@ class DataSet(DataIterator):
                     break
                 list_word = doc.strip().split()
                 N = int(list_word[0])
-                if N + 1 != len(list_word):
-                    logging.error("Line in file Term frequency is error!")
+                if self.label:
+                    mini_batch.append_label(N)
+                else:
+                    if N + 1 != len(list_word):
+                        logging.error("Line in file Term frequency is error!")
                 tokens = list()
-                for j in range(1, N + 1):
+                for j in range(1, len(list_word)):
                     tf = list_word[j].split(":")
                     for k in range(0, int(tf[1])):
                         tokens.append(int(tf[0]))
@@ -197,7 +202,7 @@ class DataSet(DataIterator):
         Returns:
 
         """
-        mini_batch = Corpus(DataFormat.TERM_FREQUENCY)
+        mini_batch = Corpus(DataFormat.TERM_FREQUENCY, label=self.label)
         # end_file = False
         try:
             for i in range(0, self.batch_size):
@@ -208,11 +213,14 @@ class DataSet(DataIterator):
                     break
                 list_word = doc.strip().split()
                 N = int(list_word[0])
-                if N + 1 != len(list_word):
-                    logging.error("Line in file Term frequency is error!")
-                doc_terms = np.zeros(N, dtype=np.int32)
-                doc_frequency = np.zeros(N, dtype=np.int32)
-                for j in range(1, N + 1):
+                if self.label:
+                    mini_batch.append_label(N)
+                else:
+                    if N + 1 != len(list_word):
+                        logging.error("Line in file Term frequency is error!")
+                doc_terms = np.zeros(len(list_word)-1, dtype=np.int32)
+                doc_frequency = np.zeros(len(list_word)-1, dtype=np.int32)
+                for j in range(1, len(list_word)):
                     tf = list_word[j].split(":")
                     doc_terms[j - 1] = int(tf[0])
                     doc_frequency[j - 1] = int(tf[1])
@@ -256,7 +264,7 @@ class DataSet(DataIterator):
         except Exception as inst:
             logging.error(inst)
 
-    def load_new_documents(self, path_file, vocab_file=None):
+    def load_new_documents(self, path_file, vocab_file=None, label=False):
         format = utilizies.check_input_format(path_file)
         if format == DataFormat.RAW_TEXT:
             if vocab_file is None:
@@ -293,7 +301,7 @@ class DataSet(DataIterator):
                 corpus.append_doc(ddict.keys(), ddict.values())
             return corpus
         elif format == DataFormat.TERM_FREQUENCY:
-            corpus = Corpus(DataFormat.TERM_FREQUENCY)
+            corpus = Corpus(DataFormat.TERM_FREQUENCY, label=label)
             try:
                 fp = open(path_file)
                 line = fp.readline()
@@ -305,11 +313,14 @@ class DataSet(DataIterator):
                         break
                     list_word = doc.strip().split()
                     N = int(list_word[0])
-                    if N + 1 != len(list_word):
-                        logging.error("Line in file Term frequency is error!")
-                    doc_terms = np.zeros(N, dtype=np.int32)
-                    doc_frequency = np.zeros(N, dtype=np.int32)
-                    for j in range(1, N + 1):
+                    if label:
+                        corpus.append_label(label)
+                    else:
+                        if N + 1 != len(list_word):
+                            logging.error("Line in file Term frequency is error!")
+                    doc_terms = np.zeros(len(list_word)-1, dtype=np.int32)
+                    doc_frequency = np.zeros(len(list_word)-1, dtype=np.int32)
+                    for j in range(1, len(list_word)):
                         tf = list_word[j].split(":")
                         doc_terms[j - 1] = int(tf[0])
                         doc_frequency[j - 1] = int(tf[1])
@@ -413,3 +424,8 @@ class DataSet(DataIterator):
                 end = start+theta.shape[0]
                 theta_frame = pd.DataFrame(theta, columns=dist_topics, index=list(range(start, end)))
             self.database.append('theta', theta_frame, data_columns=True, complevel=9, complib='blosc')
+
+if __name__ == '__main__':
+    data = DataSet(data_path='/home/khangtg/Documents/news20.dat', batch_size=15935, vocab_file='/home/khangtg/Documents/vocab.txt', label=True)
+    corpus = data.load_mini_batch()
+    print corpus.labels[:10]
